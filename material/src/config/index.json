@@ -1,0 +1,24 @@
+{
+    "leagues":  {
+        "NASL": {
+            "id": "nasl",
+            "name": "NA Superleague (NASL)",
+            "address": "99.89.93.227:5150"
+        },
+        "ESL": {
+            "id": "esl",
+            "name": "Elite: Sim League (E:SL)",
+            "address": "99.89.93.227:5151"
+        },
+        "GHL": {
+            "id": "ghl",
+            "name": "Global Hockey League (GHL)",
+            "address": "99.89.93.227:5152"
+        },
+        "LOCAL": {
+            "id": "local",
+            "name": "Local Test Database",
+            "address": "localhost:10010"
+        }
+    }
+}

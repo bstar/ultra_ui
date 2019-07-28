@@ -1,0 +1,84 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import classnames from 'classnames';
+import { Link, withRouter } from 'react-router-dom';
+import $ from 'jquery';
+import APPCONFIG from 'constants/Config';
+import {
+    toggleCollapsedNav
+} from '../../actions';
+import SidenavContent from './SidenavContent';
+import DEMO from 'constants/demoData';
+
+class Sidebar extends React.Component {
+
+  componentDidMount() {
+    // AutoCloseMobileNav
+    const { history } = this.props;
+    const $body = $('#body');
+
+    if (APPCONFIG.AutoCloseMobileNav) {
+      history.listen((location) => {
+        setTimeout(() => {
+          $body.removeClass('sidebar-mobile-open');
+        }, 0);
+      });
+    }
+  }
+
+  onToggleCollapsedNav = (e) => {
+    const val = !this.props.navCollapsed;
+    const { handleToggleCollapsedNav } = this.props;
+    handleToggleCollapsedNav(val);
+  }
+
+  render() {
+    const { navCollapsed, colorOption } = this.props;
+    let toggleIcon = null;
+    if (navCollapsed) {
+      toggleIcon = <i className="material-icons">radio_button_unchecked</i>;
+    } else {
+      toggleIcon = <i className="material-icons">radio_button_checked</i>;
+    }
+
+    return (
+      <nav style={{ boxShadow: '10px 0 30px -2px #202020' }}
+        className={classnames('app-sidebar', {
+          'bg-color-light': ['31', '32', '33', '34', '35', '36'].indexOf(colorOption) >= 0,
+          'bg-color-dark': ['31', '32', '33', '34', '35', '36'].indexOf(colorOption) < 0 })}
+            >
+
+        <section className="sidebar-content" style={{ background: 'url(assets/images/side-background.png)', backgroundAttachment: 'fixed', backgroundRepeat: 'repeat-y', borderRight: '1px solid #2e6e73' }}>
+          <SidenavContent />
+        </section>
+
+        {/* <section className="sidebar-footer">
+          <ul className="nav">
+            <li>
+              <a target="_blank" href={APPCONFIG.productLink}>
+                <i className="nav-icon material-icons">help</i>
+                <span className="nav-text"><span>Help</span> & <span>Support</span></span>
+              </a>
+            </li>
+          </ul>
+        </section> */}
+      </nav>
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  navCollapsed: state.settings.navCollapsed,
+  colorOption: state.settings.colorOption
+});
+
+const mapDispatchToProps = dispatch => ({
+  handleToggleCollapsedNav: (isNavCollapsed) => {
+    dispatch(toggleCollapsedNav(isNavCollapsed));
+  },
+});
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Sidebar));

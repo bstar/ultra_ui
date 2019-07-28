@@ -1,0 +1,100 @@
+.stat, .red, .orange, .green, .blue {
+  font-weight: bold;
+}
+
+.red {
+  color: #d64f4f;
+}
+
+.orange {
+  color: #d99d2e;
+}
+
+.green {
+  color: #3cae3c;
+}
+
+.blue {
+  color: #5895d2;
+}
+
+.callout {
+  margin: 20px 0;
+  padding: 5px 5px 5px 10px;
+  border-left: 3px solid #eee;
+  border-color: transparent;
+  text-transform: capitalize;
+
+  h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: $font-size-lg;
+    line-height: $line-height-base;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.callout-container {
+  position: relative;
+  height: 28px;
+  margin: 0px;
+  padding: 4px 0px 0px 0px;
+}
+
+.callout-data {
+  position: absolute;
+  height: 100%;
+  // color: #3d96df;
+}
+
+.callout-right {
+  right: 8px;
+}
+
+.callout-left {
+  left: 8px;
+}
+
+
+
+
+
+// use rgba so that background-color also works for dark theme
+.callout-success {
+  background-color: rgba(#3eb43e, .07); // #f3faf3
+  border-color: rgba(#3eb43e, .6);
+
+  h4 {
+    color: rgba(#3eb43e, .6);
+  }
+}
+
+.callout-info {
+  background-color: rgba(#49abd1, .15); // #f4f8fa
+  border-color: rgba(#49abd1, .7);
+
+  h4 {
+    color: rgba(#49abd1, .6);
+  }
+}
+
+.callout-warning {
+  background-color: rgba(#c7995c, .07); // #fcf8f2
+  border-color: rgba(#c7995c, .4);
+
+  h4 {
+    color: #c7995c;
+  }
+}
+
+.callout-danger {
+  background-color: rgba(#d44a7f, .05); // #fdf7f7
+  border-color:rgba(#d44a7f, .5);
+
+  h4 {
+    color: d44a7f;
+  }
+}

@@ -1,0 +1,808 @@
+{
+    "offence": {
+        "all_around": {
+            "primary": [
+                "positioning",
+                "work_rate"
+            ],
+            "secondary": [
+                "passing",
+                "wristshot",
+                "movement",
+                "checking",
+                "strength"
+            ],
+            "tertiary": [
+                "anticipation",
+                "hitting",
+                "vision",
+                "sickhandling"
+            ],
+            "useless": []
+        },
+        "finesse": {
+            "primary": [
+                "stickhandling",
+                "deking"
+            ],
+            "secondary": [
+                "passing",
+                "anticipation",
+                "wristshot",
+                "movement",
+                "vision"
+            ],
+            "tertiary": [
+                "strength",
+                "bravery"
+            ],
+            "useless": [
+                "hitting"
+            ]
+        },
+        "grinder": {
+            "primary": [
+                "hitting",
+                "checking"
+            ],
+            "secondary": [
+                "work_rate",
+                "fighting",
+                "strength",
+                "bravery",
+                "deflections"
+            ],
+            "tertiary": [
+                "vision",
+                "deking",
+                "anticipation",
+                "movement"
+            ],
+            "useless": [
+                "offensive_role"
+            ]
+        },
+        "power_forward": {
+            "primary": [
+                "strength",
+                "deflections"
+            ],
+            "secondary": [
+                "bravery",
+                "hitting",
+                "wristshot",
+                "slapshot",
+                "fighting"
+            ],
+            "tertiary": [
+                "stickhandling",
+                "deking",
+                "pokecheck",
+                "vision"
+            ],
+            "useless": []
+        },
+        "enforcer": {
+            "primary": [
+                "fighting",
+                "aggression"
+            ],
+            "secondary": [
+                "strength",
+                "hitting",
+                "checking",
+                "work_rate",
+                "bravery"
+            ],
+            "tertiary": [
+                "anticipation",
+                "slapshot",
+                "wristshot",
+                "vision",
+                "passing",
+                "stickhandling",
+                "offensive_role"
+            ],
+            "useless": []
+        },
+        "defensive": {
+            "primary": [
+                "positioning",
+                "checking",
+                "defensive_role"
+            ],
+            "secondary": [
+                "pokecheck",
+                "decisions",
+                "passing",
+                "work_rate",
+                "strength"
+            ],
+            "tertiary": [
+                "anticipation",
+                "slapshot",
+                "vision",
+                "stickhandling"
+            ],
+            "useless": [
+                "offensive_role"
+            ]
+        },
+        "defensive_finesse": {
+            "primary": [
+                "pokecheck",
+                "positioning",
+                "defensive_role"
+            ],
+            "secondary": [
+                "passing",
+                "decisions",
+                "balance",
+                "checking",
+                "stickhandling"
+            ],
+            "tertiary": [
+                "strength",
+                "movement"
+            ],
+            "useless": [
+                "hitting",
+                "offensive_role"
+            ]
+        },
+        "defensive_physical": {
+            "primary": [
+                "hitting",
+                "positioning",
+                "defensive_role"
+            ],
+            "secondary": [
+                "bravery",
+                "decisions",
+                "pokecheck",
+                "checking",
+                "strength"
+            ],
+            "tertiary":[
+                "wristshot",
+                "vision",
+                "deking",
+                "slapshot"
+            ],
+            "useless": [
+                "offensive_role"
+            ]
+        },
+        "playmaker": {
+            "primary": [
+                "vision",
+                "passing",
+                "pass_tendency",
+                "offensive_role"
+            ],
+            "secondary": [
+                "movement",
+                "anticipation",
+                "wristshot",
+                "pokecheck",
+                "deflections"
+            ],
+            "tertiary": [
+                "positioning",
+                "checking",
+                "deking",
+                "hitting"
+            ],
+            "useless": [
+                "defensive_role"
+            ]
+        },
+        "playmaker_finesse": {
+            "primary": [
+                "vision",
+                "passing",
+                "pass_tendency",
+                "offensive_role"
+            ],
+            "secondary": [
+                "stickhandling",
+                "anticipation",
+                "wristshot",
+                "movement",
+                "deking"
+            ],
+            "tertiary": [
+                "strength",
+                "bravery"
+            ],
+            "useless": [
+                "hitting",
+                "defensive_role"
+            ]
+        },
+        "playmaker_physical": {
+            "primary": [
+                "vision",
+                "strength",
+                "pass_tendency",
+                "offensive_role"
+            ],
+            "secondary": [
+                "passing",
+                "anticipation",
+                "hitting",
+                "movement",
+                "deflections"
+            ],
+            "tertiary": [
+                "positioning",
+                "checking",
+                "deking",
+                "pokecheck"
+            ],
+            "useless": [
+                "defensive_role"
+            ]
+        },
+        "sniper": {
+            "primary": [
+                "wristshot",
+                "slapshot",
+                "offensive_role"
+            ],
+            "secondary": [
+                "stickhandling",
+                "movement",
+                "deking",
+                "deflections"
+            ],
+            "tertiary": [
+                "hitting",
+                "checking",
+                "pokecheck",
+                "positioning"
+            ],
+            "useless": [
+                "defensive_role",
+                "pass_tendency"
+            ]
+        },
+        "sniper_finesse": {
+            "primary": [
+                "wristshot",
+                "anticipation",
+                "offensive_role"
+            ],
+            "secondary": [
+                "movement",
+                "deflections",
+                "deking",
+                "stickhandling"
+            ],
+            "tertiary": [
+                "strength",
+                "bravery"
+            ],
+            "useless": [
+                "hitting",
+                "pass_tendency",
+                "defensive_role"
+            ]
+        },
+        "sniper_physical": {
+            "primary": [
+                "slapshot",
+                "strength",
+                "offensive_role"
+            ],
+            "secondary": [
+                "anticipation",
+                "wristshot",
+                "hitting",
+                "movement",
+                "deflections"
+            ],
+            "tertiary": [
+                "positioning",
+                "checking",
+                "vision",
+                "pokecheck"
+            ],
+            "useless": [
+                "pass_tendency",
+                "defensive_role"
+            ]
+        }
+    },
+    "defence": {
+        "power_forward": {
+            "primary": [
+                "strength",
+                "deflections"
+            ],
+            "secondary": [
+                "bravery",
+                "hitting",
+                "wristshot",
+                "slapshot",
+                "fighting"
+            ],
+            "tertiary": [
+                "stickhandling",
+                "deking",
+                "pokecheck",
+                "vision"
+            ],
+            "useless": []
+        },
+        "grinder": {
+            "primary": [
+                "hitting",
+                "checking"
+            ],
+            "secondary": [
+                "work_rate",
+                "fighting",
+                "strength",
+                "bravery",
+                "deflections"
+            ],
+            "tertiary": [
+                "vision",
+                "deking",
+                "anticipation",
+                "movement"
+            ],
+            "useless": [
+                "offensive_role"
+            ]
+        },
+        "all_around": {
+            "primary": [
+                "positioning",
+                "work_rate"
+            ],
+            "secondary": [
+                "passing",
+                "wristshot",
+                "movement",
+                "checking",
+                "strength"
+            ],
+            "tertiary": [
+                "anticipation",
+                "hitting",
+                "vision",
+                "sickhandling"
+            ],
+            "useless": []
+        },
+        "offensive": {
+            "primary": [
+                "passing",
+                "movement",
+                "offensive_role"
+            ],
+            "secondary": [
+                "wristshot",
+                "pokecheck",
+                "anticipation",
+                "stickhandling",
+                "vision"
+            ],
+            "tertiary": [
+                "checking",
+                "strength"
+            ],
+            "useless": [
+                "hitting"
+            ]
+        },
+        "offensive_finesse": {
+            "primary": [
+                "vision",
+                "passing",
+                "offensive_role"
+            ],
+            "secondary": [
+                "pokecheck",
+                "movement",
+                "slapshot",
+                "wristshot",
+                "stickhandling"
+            ],
+            "tertiary": [
+                "bravery",
+                "strength"
+            ],
+            "useless": [
+                "hitting"
+            ]
+        },
+        "offensive_physical": {
+            "primary": [
+                "strength",
+                "passing",
+                "offensive_role"
+            ],
+            "secondary": [
+                "hitting",
+                "checking",
+                "slapshot",
+                "movement",
+                "vision"
+            ],
+            "tertiary": [
+                "bravery",
+                "agility"
+            ],
+            "useless": [
+                "pokecheck"
+            ]
+        },
+        "pointman": {
+            "primary": [
+                "slapshot",
+                "passing",
+                "offensive_role"
+            ],
+            "secondary": [
+                "stickhandling",
+                "vision",
+                "positioning",
+                "wristshot",
+                "pokecheck"
+            ],
+            "tertiary": [
+                "strength",
+                "checking"
+            ],
+            "useless": [
+                "hitting",
+                "pass_tendency"
+            ]
+        },
+        "pointman_finesse": {
+            "primary": [
+                "passing",
+                "wristshot",
+                "offensive_role"
+            ],
+            "secondary": [
+                "pokecheck",
+                "positioning",
+                "anticipation",
+                "slapshot",
+                "stickhandling"
+            ],
+            "tertiary": [
+                "bravery",
+                "strength"
+            ],
+            "useless": [
+                "hitting",
+                "pass_tendency"
+            ]
+        },
+        "pointman_physical": {
+            "primary": [
+                "slapshot",
+                "strength"
+            ],
+            "secondary": [
+                "bravery",
+                "positioning",
+                "checking",
+                "hitting",
+                "passing"
+            ],
+            "tertiary": [
+                "wristshot",
+                "vision"
+            ],
+            "useless": [
+                "pokecheck",
+                "pass_tendency"
+            ]
+        },
+        "playmaker": {
+            "primary": [
+                "vision",
+                "pass_tendency",
+                "offensive_role"
+            ],
+            "secondary": [
+                "pokecheck",
+                "positioning",
+                "checking",
+                "anticipation",
+                "decision"
+            ],
+            "tertiary": [
+                "wristshot",
+                "agility"
+            ],
+            "useless": [
+                "spalshot"
+            ]
+        },
+        "playmaker_finesse": {
+            "primary": [
+                "vision",
+                "passing",
+                "offensive_role"
+            ],
+            "secondary": [
+                "pokecheck",
+                "movement",
+                "slapshot",
+                "wristshot",
+                "stickhandling"
+            ],
+            "tertiary": [
+                "bravery",
+                "strength"
+            ],
+            "useless": [
+                "hitting",
+                "pass_tendency"
+            ]
+        },
+        "playmaker_physical": {
+            "primary": [
+                "vision",
+                "passing",
+                "pass_tendency"
+            ],
+            "secondary": [
+                "pokecheck",
+                "positioning",
+                "checking",
+                "hitting",
+                "strength"
+            ],
+            "tertiary": [
+                "wristshot",
+                "agility"
+            ],
+            "useless": [
+                "slapshot"
+            ]
+        },
+        "defensive": {
+            "primary": [
+                "positioning",
+                "checking",
+                "defensive_role"
+            ],
+            "secondary": [
+                "pokecheck",
+                "work_rate",
+                "hitting",
+                "decisions",
+                "bravery"
+            ],
+            "tertiary": [
+                "wristshot",
+                "slapshot",
+                "vision",
+                "passing"
+            ],
+            "useless": [
+                "offensive_role"
+            ]
+        },
+        "defensive_finesse": {
+            "primary": [
+                "checking",
+                "positioning",
+                "defensive_role"
+            ],
+            "secondary": [
+                "pokecheck",
+                "stickhandling",
+                "agility",
+                "decisions",
+                "passing"
+            ],
+            "tertiary": [
+                "strength",
+                "movement"
+            ],
+            "useless": [
+                "hitting",
+                "offensive_role"
+            ]
+        },
+        "defensive_physical": {
+            "primary": [
+                "strength",
+                "hitting",
+                "defensive_role"
+            ],
+            "secondary": [
+                "pokecheck",
+                "positioning",
+                "checking",
+                "balance",
+                "work_rate"
+            ],
+            "tertiary": [
+                "stickhandling",
+                "passing",
+                "wristshot",
+                "movement"
+            ],
+            "useless": [
+                "offensive_role"
+            ]
+        },
+        "standard": {
+            "primary": [
+                "positioning",
+                "checking"
+            ],
+            "secondary": [
+                "pokecheck",
+                "decisions",
+                "hitting",
+                "passing",
+                "strength"
+            ],
+            "tertiary": [
+                "wristshot",
+                "slapshot",
+                "vision",
+                "anticipation"
+            ],
+            "useless": []
+        },
+        "rugged": {
+            "primary": [
+                "hitting",
+                "strength"
+            ],
+            "secondary": [
+                "checking",
+                "fighting",
+                "positioning",
+                "bravery",
+                "work_rate"
+            ],
+            "tertiary": [
+                "wristshot",
+                "slapshot",
+                "vision",
+                "stickhandling"
+            ],
+            "useless": [
+                "offensive_role"
+            ]
+        },
+        "enforcer": {
+            "primary": [
+                "fighting",
+                "aggression"
+            ],
+            "secondary": [
+                "strength",
+                "positioning",
+                "bravery",
+                "hitting",
+                "checking"
+            ],
+            "tertiary": [
+                "acceleration",
+                "speed",
+                "passing",
+                "vision",
+                "wristshot",
+                "slapshot"
+            ],
+            "useless": [
+                "offensive_role"
+            ]
+        }
+    },
+    "goalie": {
+        "mixed": {
+            "primary": [
+                "positioning",
+                "reflexes"
+            ],
+            "secondary": [
+                "agility",
+                "blocker",
+                "glove",
+                "one_on_ones",
+                "rebounds"
+            ],
+            "tertiary": [
+                "acceleration",
+                "deflections",
+                "speed",
+                "recovery"
+            ],
+            "useless": [
+                "faceoffs",
+                "flair",
+                "fighting",
+                "strength"
+            ]
+        },
+        "butterfly": {
+            "primary": [
+                "agility",
+                "recovery"
+            ],
+            "secondary": [
+                "blocker",
+                "glove",
+                "one_on_ones",
+                "positioning",
+                "reflexes"
+            ],
+            "tertiary": [
+                "acceleration",
+                "deflections",
+                "speed",
+                "rebounds"
+            ],
+            "useless": [
+                "faceoffs",
+                "flair",
+                "fighting",
+                "strength"
+            ]
+        },
+        "standup": {
+            "primary": [
+                "positioning",
+                "stickhandling"
+            ],
+            "secondary": [
+                "blocker",
+                "glove",
+                "one_on_ones",
+                "rebounds",
+                "reflexes"
+            ],
+            "tertiary": [
+                "acceleration",
+                "agility",
+                "deflections",
+                "speed"
+            ],
+            "useless": [
+                "faceoffs",
+                "flair",
+                "fighting",
+                "strength"
+            ]
+        },
+        "unorthodox": {
+            "primary": [
+                "agility",
+                "flair"
+            ],
+            "secondary": [
+                "blocker",
+                "glove",
+                "one_on_ones",
+                "reflexes",
+                "stickhandling"
+            ],
+            "tertiary": [
+                "acceleration",
+                "deflections",
+                "speed"
+            ],
+            "useless": [
+                "faceoffs",
+                "fighting",
+                "recovery",
+                "strength"
+            ]
+        }
+    }
+}

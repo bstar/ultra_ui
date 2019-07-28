@@ -1,0 +1,299 @@
+// shared
+.theme-gray,
+.theme-dark {
+  // scaffolding
+  color: $theme_dark_text_color;
+  a {
+    &:hover,
+    &:focus {
+      color: $link-color;
+    }
+  }
+
+  // sidebar
+  .app-sidebar {
+    .sidebar-header {
+      color: #fff;
+      a {
+        color: #fff;
+      }
+      a.collapsednav-toggler {
+        color: #fff;
+        opacity: .5;
+      }
+    }
+  }
+
+  .app-sidebar .sidebar-content {
+      height: 100% !important;
+  }
+
+  // overlay
+  .app-overlay {
+    background: rgba(0,0,0,.7);
+    color: $theme_dark_text_color;
+    input {
+      color: $theme_dark_text_color;
+    }
+
+    a.overlay-close {
+      color: $text-muted;
+    }
+  }
+
+  // sidebar
+  .app-sidebar {
+    background: #304152 !important;
+    .sidebar-header {
+      background: rgba(54,64,75,1) !important;
+      color: $sidebar_text_color;
+      a {
+        color: $sidebar_text_color !important;
+      }
+    }
+  }
+
+  .app-footer {
+    .brand {
+      color: $theme_dark_text_color;
+    }
+  }
+}
+
+// Gray
+// --------------------------------------------------
+.theme-gray {
+
+  // sidebar
+  .app-sidebar {
+    background-color: $theme_gray_sidebar_bg_color;
+
+    .sidebar-header {
+      background-color: $theme_gray_sidebar_bg_color;
+    }
+    .sidebar-footer {
+      background-color: $theme_gray_sidebar_bg_color;
+    }
+
+    // overrides light bg sidebar style
+    .nav {
+      color: $sidebar_text_color !important;
+      a {
+        color: $sidebar_text_color !important;
+      }
+    }
+  }
+
+  // page-container
+  .app-page-container {
+    .app-content-wrapper{
+      background-color: $theme_gray_page_bg;
+    }
+  }
+  @media only screen and (max-width: $l_screen_sm_max) {
+    .app-page-container {
+      background-color: $theme_gray_page_bg;
+    }
+  }
+
+  // header
+  .app-header-inner {
+    &.bg-color-light,
+    &.bg-color-dark,
+    &.bg-color-primary,
+    &.bg-color-success,
+    &.bg-color-info,
+    &.bg-color-warning,
+    &.bg-color-danger {
+      background-color: $theme_gray_header_bg_color;
+      color: $theme_gray_text_color;
+      a {
+        color: $theme_gray_text_color;
+      }
+    }
+  }
+
+}
+
+
+// Dark
+// --------------------------------------------------
+.theme-dark {
+
+  // sidebar
+  .app-sidebar {
+    background-color: $theme_dark_sidebar_bg_color;
+
+    .sidebar-header {
+      background-color: $theme_dark_sidebar_bg_color;
+    }
+    .sidebar-footer {
+      background-color: $theme_dark_sidebar_bg_color;
+    }
+
+    // overrides light bg sidebar style
+    .nav {
+      color: $sidebar_text_color !important;
+      a {
+        color: $sidebar_text_color !important;
+      }
+    }
+  }
+
+  // page-container
+  .app-page-container {
+    .app-content-wrapper{
+      // background-color: $theme_dark_page_bg;
+      // background: url('#{$image_path}background6.png');
+      // background: url('#{$image_path}background/6.png');
+      // background-size: cover;
+
+    }
+  }
+  @media only screen and (max-width: $l_screen_sm_max) {
+    .app-page-container {
+      background-color: $theme_dark_page_bg;
+    }
+  }
+
+  // header
+  .app-header-inner {
+    &.bg-color-light,
+    &.bg-color-dark,
+    &.bg-color-primary,
+    &.bg-color-success,
+    &.bg-color-info,
+    &.bg-color-warning,
+    &.bg-color-danger {
+      background: rgba(54,64,75,1) !important;
+      border-bottom: 1px solid #2e6e73;
+      // background-color: $theme_dark_header_bg_color;
+      color: $theme_gray_text_color;
+      a {
+        color: $theme_gray_text_color;
+      }
+    }
+  }
+}
+
+// e.g. for pages like maintaince
+.theme-dark {
+  background-color: $theme_dark_page_bg;
+
+}
+.theme-gray {
+  background-color: $theme_gray_page_bg;
+}
+
+
+.box-body {
+    padding: 0rem 1.5rem 1rem 1.5rem !important;
+    min-height: 420px !important;
+    border: 1px solid rgb(46, 110, 115);
+    border-radius: 0.2rem;
+}
+
+.box-default {
+  z-index: 1 !important;
+}
+
+// .box-default::before {
+//   opacity: 0.7 !important;
+//   z-index: -1 !important;
+//   // background-color: $theme_dark_page_bg !important;
+// }
+
+.box {
+  z-index: 1 !important;
+  background: rgba(109, 125, 130, .2) !important;
+  // background-color: blue !important;
+}
+
+.box.box-default {
+  box-shadow: 1px 1px 18px rgba(1, 1, 1, .2) !important;
+}
+
+.box::before {
+  opacity: 0.1 !important;
+  z-index: -1 !important;
+  // background-color: $theme_dark_page_bg !important;
+}
+
+
+
+.box-top {
+  border: 1px solid rgb(46, 110, 115);
+  border-radius: 0.2rem;
+}
+
+.theme-dark .page-dashboard .box .box-info span {
+  // border: 1px solid #555 !important;
+}
+
+.brand {
+  font-size: 18px !important;
+}
+
+h6 {
+  margin-top: 16px !important;
+  font-size: 18px !important;
+}
+
+.container-fluid.no-breadcrumbs {
+    padding-top: 1.5em !important;
+    padding-bottom: 1em !important;
+}
+
+.container-fluid {
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+}
+
+.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col, .col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm, .col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md, .col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg, .col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl, .col-xl-auto {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+}
+
+.player-list tr:nth-child(odd) {
+  background-color:rgba(0, 0, 0, 0.1)
+}
+
+.player-list td {
+    padding: 8px;
+}
+
+.player-list td {
+    padding: 8px;
+}
+
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: rgb(36, 38, 39);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(46, 110, 115);
+  outline: 1px solid rgb(73, 110, 110);
+}
+
+div::-webkit-scrollbar {
+  width: 8px;
+}
+
+div::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: rgb(36, 38, 39);
+}
+
+div::-webkit-scrollbar-thumb {
+  background-color: rgb(46, 110, 115);
+  outline: 1px solid rgb(73, 110, 110);
+}
