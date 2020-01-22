@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import {withRouter} from 'react-router';
-import QueueAnim from 'rc-queue-anim';
-import LinearProgress from 'material-ui/LinearProgress';
 import TextField from 'material-ui/TextField';
 import Slider from 'material-ui/Slider';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import { leagues } from '../../../../../config/index.json';
-
 
 
 const styles = {
@@ -84,12 +80,11 @@ class Main extends Component {
   }
 
   componentWillMount () {
+
     const searchString = localStorage.getItem('player_search');
 
     if (searchString) {
-      this.setState({ search: JSON.parse(searchString) }, () => {
-        this.getPlayersByFilter();
-      });
+      this.setState({ search: JSON.parse(searchString) }, () => this.getPlayersByFilter());
     }
   }
 
@@ -113,12 +108,10 @@ class Main extends Component {
 
     const leagueId = localStorage.getItem('league_id');
     const league = leagues[leagueId];
-
     const { search } = this.state;
     const newOrder = search.order ? `&order=${search.order}` : '';
     const noatts = '&noatts=true';
     const limit = '&limit=100'
-
     const playerName = search.name ? `|name:${search.name}` : '';
     const team = search.club_contracted ? `|club_contracted:${search.club_contracted}` : '';
     const age = `age_between:${search.ageMin},${search.ageMax}`;
@@ -198,8 +191,6 @@ class Main extends Component {
   onChangeRadio (e, value) {
 
     const { search } = this.state
-    const fieldName = e.target.name;
-    const fieldValue = e.target.value;
 
     if (value === 'goalies') {
       search.positions_short = 'G';
@@ -223,7 +214,7 @@ class Main extends Component {
 
   render () {
 
-    const { players, loading, name, club_contracted, onChangeOrderBy, order, search } = this.state;
+    const { players, search } = this.state;
     const playerType = search.positions_short === 'G' ? 'goalies' : 'players';
 
     return (
@@ -249,9 +240,8 @@ class Main extends Component {
                   label="Goalies"
                 />
               </RadioButtonGroup>
-
-
             </div>
+
             <div className="col-xl-4">
 
               {this.ageSlider()}
@@ -273,6 +263,7 @@ class Main extends Component {
                 style={{ width: '200px' }}
               />
             </div>
+
             <div className="col-xl-4">
               <TextField
                 floatingLabelText="Filter by Position"
@@ -281,7 +272,6 @@ class Main extends Component {
                 value={search.positions_short}
                 hintText="Use: c, lw, rw, ld, rd, g"
               />
-
             </div>
 
             <div className="col-xl-2">
@@ -334,7 +324,7 @@ class Main extends Component {
   }
 };
 
-const Page = () => (
+const PlayerSearch = () => (
   <section className="container-fluid">
       <div key="2">
         <Main />
@@ -342,4 +332,4 @@ const Page = () => (
   </section>
 );
 
-export default Page;
+export default PlayerSearch;

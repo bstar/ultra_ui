@@ -1,3 +1,3 @@
-import ResponsiveTables from './components/ResponsiveTables';
+import PlayerSearch from './components/PlayerSearch';
 
-export default ResponsiveTables;
+export default PlayerSearch;
