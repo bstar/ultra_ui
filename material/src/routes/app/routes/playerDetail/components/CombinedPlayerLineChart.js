@@ -6,31 +6,15 @@ import CHARTCONFIG from 'constants/ChartConfig';
 const line = {};
 
 
+line.options = ({ attributes }) => {
 
-line.options = ({ player, attributes }) => {
-
-  const combinedRating = _.map(attributes, attribute => {
-    return attribute.combined_rating;
-  });
-
-  const technicalRating = _.map(attributes, attribute => {
-    return attribute.technical_rating;
-  });
-
-  const mentalRating = _.map(attributes, attribute => {
-    return attribute.mental_rating;
-  });
-
-  const physicalRating = _.map(attributes, attribute => {
-    return attribute.physical_rating;
-  });
+  const combinedRating = _.map(attributes, attribute => attribute.combined_rating);
 
   const dates = _.map(attributes, attribute => {
     const num = attribute.game_date.match(/^\S{3}/);
 
     return `${num && num[0]} — ${attribute.att_growth}`; // TODO save age in attributes array
   });
-
 
   return (
     {
@@ -123,8 +107,10 @@ line.options = ({ player, attributes }) => {
 };
 
 
-const Chart = ({ player, attributes }) => (
-  <div><ReactEcharts style={{ height: '200px' }} option={line.options({ player, attributes })} showLoading={false} /></div>
+const CombinedPlayerLineChart = ({ attributes }) => (
+  <div>
+    <ReactEcharts style={{ height: '200px' }} option={line.options({ attributes })} showLoading={false} />
+  </div>
 );
 
-export default Chart;
+export default CombinedPlayerLineChart;

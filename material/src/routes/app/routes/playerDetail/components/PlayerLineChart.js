@@ -5,7 +5,8 @@ import CHARTCONFIG from 'constants/ChartConfig';
 
 const line = {};
 
-line.options = ({ player, attributes }) => {
+
+line.options = ({ attributes }) => {
 
   const technicalRating = _.map(attributes, attribute => {
     return attribute.technical_rating;
@@ -22,7 +23,7 @@ line.options = ({ player, attributes }) => {
   const dates = _.map(attributes, attribute => {
     const num = attribute.game_date.match(/^\S{3}/);
 
-    return `${num && num[0]} — ${attribute.att_growth}`; // TODO save age in attributes array
+    return `${num && num[0]} — ${attribute.att_growth}`;
   });;
 
 
@@ -123,8 +124,10 @@ line.options = ({ player, attributes }) => {
 };
 
 
-const Chart = ({ player, attributes }) => (
-  <div><ReactEcharts style={{ height: '200px' }} option={line.options({ player, attributes })} showLoading={false} /></div>
+const PlayerLineChart = ({ attributes }) => (
+  <div>
+    <ReactEcharts style={{ height: '200px' }} option={line.options({ attributes })} showLoading={false} />
+  </div>
 );
 
-export default Chart;
+export default PlayerLineChart;

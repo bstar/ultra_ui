@@ -1,10 +1,9 @@
 import React from 'react';
-import ReactEcharts from 'components/ReactECharts';
-import CHARTCONFIG from 'constants/ChartConfig';
 
 const Statboxes = ({ player }) => {
 
-  const getRatingColor = (rating) => {
+  const getRatingColor = rating => {
+
     if (rating < 30) {
       return 'red';
     }
@@ -20,7 +19,8 @@ const Statboxes = ({ player }) => {
     return 'blue';
   }
 
-  const getMentalRatingColor = (rating) => {
+  const getMentalRatingColor = rating => {
+
     if (rating < 30) {
       return 'red';
     }
@@ -35,14 +35,6 @@ const Statboxes = ({ player }) => {
 
     return 'blue';
   }
-
-
-  const totals = {
-    technical: 12,
-    mental: 9,
-    physical: 6,
-    total: 27,
-  };
 
   const styles = {
     statText: {
@@ -69,11 +61,6 @@ const Statboxes = ({ player }) => {
       boxShadow: '1px 1px 18px rgba(1, 1, 1, .35)'
     }
   }
-
-  const ageRatingTotal = (((player.combined_rating / totals.total) / (player.age * .01)) * 1.5).toFixed(0);
-  const ageRatingTechnical = (((player.combined_rating / totals.technical) / (player.age * .01)) * 1.5).toFixed(0);
-  const ageRatingMental = (((player.combined_rating / totals.mental) / (player.age * .01)) * 1.5).toFixed(0);
-  const ageRatingPhysical = (((player.combined_rating / totals.physical) / (player.age * .01)) * 1.5).toFixed(0);
 
   return (
     <div className="row">

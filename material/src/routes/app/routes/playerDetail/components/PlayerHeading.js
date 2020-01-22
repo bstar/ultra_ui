@@ -1,22 +1,9 @@
 import React from 'react';
 import { get } from 'lodash';
-import ReactImageFallback from "react-image-fallback";
+import ReactImageFallback from 'react-image-fallback';
 
-import ContentInbox from 'material-ui/svg-icons/content/inbox';
-import ActionGrade from 'material-ui/svg-icons/action/grade';
-import ContentSend from 'material-ui/svg-icons/content/send';
-import ContentDrafts from 'material-ui/svg-icons/content/drafts';
-import Divider from 'material-ui/Divider';
-import ActionInfo from 'material-ui/svg-icons/action/info';
-import BenchmarkChart from './BenchmarkChart';
+import { leagueConversionMap } from '../../../../../constants';
 
-const leagueConversionMap = {
-  NHL: 'National Hockey League',
-  AHL: 'American Hockey League',
-  'Kontinental Hockey League': 'Russia',
-  ECHL: 'ECHL',
-  USHL: 'USHL',
-};
 
 const styles = {
   smallHead: {
@@ -43,26 +30,31 @@ const styles = {
   }
 };
 
-const Chart = ({ player }) => (
+const PlayerHeading = ({ player, fallbackImage }) => (
 
   <div className="row" style={{ minHeight: '100px', marginTop: '-10px' }}>
     <div>
       <ReactImageFallback
         src={`assets/img/clubs/huge/${leagueConversionMap[player.division_playing] || player.division_playing}/${get(player, 'club_playing', '').toLowerCase()}.png`}
-        fallbackImage="assets/img/default-team.png"
+        fallbackImage={fallbackImage}
         style={ styles.logo } />
     </div>
 
-    <div>
-      <h3 style={{ ...styles.nameText }}>
-        { player.name } <span style={styles.smallHead}>({player.positions_short})</span>
-      </h3>
-      <h4 style={{ ...styles.teamText }}>
-        {player.club_contracted} <span style={styles.smallHead}> #{player.ehm_id}</span>
-      </h4>
-
-    </div>
+    { player.ehm_id &&
+      <div>
+        <h3 style={{ ...styles.nameText }}>
+          { player.name } <span style={styles.smallHead}>({player.positions_short})</span>
+        </h3>
+        <h4 style={{ ...styles.teamText }}>
+          {player.club_contracted} <span style={styles.smallHead}> #{player.ehm_id}</span>
+        </h4>
+      </div>
+    }
   </div>
 );
 
-export default Chart;
+PlayerHeading.defaultProps = {
+  fallbackImage: 'assets/img/default-team.png',
+}
+
+export default PlayerHeading;

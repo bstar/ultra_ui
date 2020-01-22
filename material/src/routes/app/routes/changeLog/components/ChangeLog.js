@@ -101,11 +101,11 @@ class Blog extends React.Component {
           {
             this.state.posts.map((post, index) => (
               <article style={{ margin: '0px', padding: '0px' }} className="blog-item" key={index}>
-                <h2><a href={DEMO.link}>{post.title}</a></h2>
+                <h2><a>{post.title}</a></h2>
                 <div className="blog-info">
-                  <span><a href={DEMO.link} className="author">{post.author}</a></span>
+                  <span><a className="author">{post.author}</a></span>
                   <span className="date">{post.date}</span>
-                  <span className="category"><a href={DEMO.link}>{post.category}</a></span>
+                  <span className="category"><a>{post.category}</a></span>
                 </div>
                 <p className="desc">{post.content}</p>
 

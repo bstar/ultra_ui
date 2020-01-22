@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import QueueAnim from 'rc-queue-anim';
-import KPIsChart from './KPIsChart';
-import PlayerStrengthsChart from './PlayerStrengthsChart';
 import PlayerAttributes from './PlayerAttributes';
 import StatBoxes from './StatBoxes';
-import EngagementStats from './EngagementStats';
-import BenchmarkChart from './BenchmarkChart';
-import DonutChart from './DonutChart';
-import LineChart from './LineChart';
-import CombinedChart from './CombinedChart';
+import PlayerLineChart from './PlayerLineChart';
+import CombinedPlayerLineChart from './CombinedPlayerLineChart';
 import PlayerPersonalInfo from './PlayerPersonalInfo';
 import PlayerHeading from './PlayerHeading';
-import { leagues } from '../../../../../config/index.json';
+import { leagues } from '../../../../../config/index.json'; // scope this better
 
-const league = leagues[0];
 
 class Main extends Component {
 
@@ -34,8 +28,6 @@ class Main extends Component {
     const { playerId } = this.props;
     const leagueId = localStorage.getItem('league_id');
     const league = leagues[leagueId];
-    const domain = window && window.config && window.config.domain || '192.168.86.108'; //'localhost';
-    const port = window && window.config && window.config.port || 5150; //10010;
 
     if (league) { // league_id is loaded from local storage
       const url = `http://${league.address}/boid/${playerId}?noatts=true`;
@@ -88,7 +80,19 @@ class Main extends Component {
           <div className="col-xl-4">
             <div className="box box-default">
               <div className="box-body">
-                <PlayerPersonalInfo player={player} attributes={attributes} />
+                <PlayerPersonalInfo
+                  dob={player.dob}
+                  age={player.age}
+                  birth_town={player.birth_town}
+                  nation={player.nation}
+                  handedness={player.handedness}
+                  player_roles={player.player_roles}
+                  combined_rating={player.combined_rating}
+                  technical_rating={player.technical_rating}
+                  mental_rating={player.mental_rating}
+                  physical_rating={player.physical_rating}
+                  physical_rating={player.physical_rating}
+                  attributes={attributes} />
               </div>
             </div>
           </div>
@@ -103,10 +107,10 @@ class Main extends Component {
         <StatBoxes player={player} />
         <div className="row">
           <div className="col-xl-6 col-lg-6">
-            <CombinedChart player={player} attributes={attributes} />
+            <CombinedPlayerLineChart attributes={attributes} />
           </div>
           <div className="col-xl-6 col-lg-6">
-            <LineChart player={player} attributes={attributes} />
+            <PlayerLineChart attributes={attributes} />
           </div>
         </div>
       </div>

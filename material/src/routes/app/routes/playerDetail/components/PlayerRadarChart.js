@@ -1,41 +1,31 @@
 import React from 'react';
-import _ from 'lodash';
 import ReactEcharts from 'components/ReactECharts';
 import CHARTCONFIG from 'constants/ChartConfig';
 
+import { getCategotyValues } from '../../../../../utils';
 
 const radar = {};
-const getCategotyValues = (atts) => {
 
-  return {
-    offence: (atts.stickhandling + atts.wristshot + atts.deking + atts.passing + atts.creativity)/5,
-    defence: (atts.checking + atts.positioning + atts.slapshot + atts.passing)/4,
-    skating: (atts.acceleration + atts.speed + atts.stamina)/3,
-    tenacity: (atts.determination + atts.work_rate + atts.bravery + atts.strength)/4,
-    leadership: (atts.influence + atts.teamwork + atts.work_rate)/3,
-  }
-}
-
-radar.options = ({ player, attsArray }) => {
+radar.options = ({ position, attsArray }) => {
   const attributes = attsArray ? attsArray[attsArray.length - 1] : {};
-  console.log("ATTS", attributes)
-  const speed = attributes.speed;
-  const acceleration = attributes.acceleration;
-  const wristshot = attributes.wristshot;
-  const stickhandling = attributes.stickhandling;
   const passing = attributes.passing;
-  const deking = attributes.deking;
   const anticipation = attributes.anticipation;
-  const influence = attributes.influence;
   const determination = attributes.determination;
   const positioning = attributes.positioning;
-  const checking = attributes.checking;
   const categories = getCategotyValues(attributes);
   const glove = attributes.glove;
   const blocker = attributes.blocker;
   const reflexes = attributes.reflexes;
   const rebound_control = attributes.rebound_control;
   const agility = attributes.agility;
+
+  // const speed = attributes.speed;
+  // const acceleration = attributes.acceleration;
+  // const wristshot = attributes.wristshot;
+  // const stickhandling = attributes.stickhandling;
+  // const deking = attributes.deking;
+  // const influence = attributes.influence;
+  // const checking = attributes.checking;
 
   const playerIndicator = [
     { name: 'Anticipation', max: 20},
@@ -61,8 +51,8 @@ radar.options = ({ player, attsArray }) => {
 
   const playerValue = [ anticipation, categories.offence, categories.skating, passing, determination, categories.leadership, categories.tenacity, categories.defence ];
   const goalieValue = [ anticipation, glove, blocker, positioning, determination, reflexes, agility, rebound_control ];
-  const value = player.positions_short === 'G' ? goalieValue : playerValue;
-  const indicator = player.positions_short === 'G' ? goalieIndicator : playerIndicator;
+  const value = position === 'G' ? goalieValue : playerValue;
+  const indicator = position === 'G' ? goalieIndicator : playerIndicator;
 
   return ({
     radar: [
@@ -116,9 +106,8 @@ radar.options = ({ player, attsArray }) => {
   })
 };
 
-
-const Chart = ({ player, attributes }) => (
-  <ReactEcharts style={{ height: '207px', marginTop: '30px' }} option={radar.options({ player, attsArray: attributes })} showLoading={false} />
+const PlayerRadarChart = ({ position, attributes }) => (
+  <ReactEcharts style={{ height: '207px', marginTop: '30px' }} option={radar.options({ position, attsArray: attributes })} showLoading={false} />
 );
 
-export default Chart;
+export default PlayerRadarChart;
