@@ -8,7 +8,7 @@
         "ESL": {
             "id": "esl",
             "name": "Elite: Sim League (E:SL)",
-            "address": "99.89.93.227:5151"
+            "address": "localhost:5151"
         },
         "GHL": {
             "id": "ghl",

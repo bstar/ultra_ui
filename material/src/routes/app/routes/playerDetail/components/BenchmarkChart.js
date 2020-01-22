@@ -3,10 +3,8 @@ import _ from 'lodash';
 import ReactEcharts from 'components/ReactECharts';
 import CHARTCONFIG from 'constants/ChartConfig';
 
+
 const radar = {};
-
-
-
 const getCategotyValues = (atts) => {
 
   return {
@@ -18,10 +16,9 @@ const getCategotyValues = (atts) => {
   }
 }
 
-
-radar.options = (player) => {
-
-  const attributes = player.attributes ? player.attributes[player.attributes.length - 1] : {};
+radar.options = ({ player, attsArray }) => {
+  const attributes = attsArray ? attsArray[attsArray.length - 1] : {};
+  console.log("ATTS", attributes)
   const speed = attributes.speed;
   const acceleration = attributes.acceleration;
   const wristshot = attributes.wristshot;
@@ -120,8 +117,8 @@ radar.options = (player) => {
 };
 
 
-const Chart = ({player}) => (
-  <ReactEcharts style={{ height: '207px', marginTop: '30px' }} option={radar.options(player)} showLoading={false} />
+const Chart = ({ player, attributes }) => (
+  <ReactEcharts style={{ height: '207px', marginTop: '30px' }} option={radar.options({ player, attsArray: attributes })} showLoading={false} />
 );
 
 export default Chart;

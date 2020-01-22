@@ -23,7 +23,8 @@ class Main extends Component {
     super(props);
 
     this.state = {
-      player: { },
+      player: {},
+      attribtues: {},
       metrics: { total: 0 }
     }
   }
@@ -37,7 +38,7 @@ class Main extends Component {
     const port = window && window.config && window.config.port || 5150; //10010;
 
     if (league) { // league_id is loaded from local storage
-      const url = `http://${league.address}/boid/${playerId}`;
+      const url = `http://${league.address}/boid/${playerId}?noatts=true`;
 
       fetch(url, {
         method: 'GET',
@@ -51,9 +52,30 @@ class Main extends Component {
     }
   }
 
+  componentDidUpdate () {
+
+    const leagueId = localStorage.getItem('league_id');
+    const league = leagues[leagueId]
+    const id = this.state.player.id;
+
+    if (id && !this.state.attributes) {
+      const url = `http://${league.address}/attributes?where=boidId:${id}`;
+
+      fetch(url, {
+        method: 'GET',
+        headers: { Accept: 'application/json' }
+      })
+        .then(response => response.json())
+        .then(attributes => {
+
+          this.setState({ attributes });
+        })
+    }
+  }
+
   render () {
 
-    const { player } = this.state;
+    const { player, attributes } = this.state;
 
     return (
       <div>
@@ -66,14 +88,14 @@ class Main extends Component {
           <div className="col-xl-4">
             <div className="box box-default">
               <div className="box-body">
-                <PlayerPersonalInfo player={player} />
+                <PlayerPersonalInfo player={player} attributes={attributes} />
               </div>
             </div>
           </div>
           <div className="col-xl-8">
             <div className="box box-default">
               <div className="box-body">
-                <PlayerAttributes attributes={player.attributes} position={player.positions_short} playerRoles={player.player_roles} />
+                <PlayerAttributes attributes={attributes} position={player.positions_short} playerRoles={player.player_roles} />
               </div>
             </div>
           </div>
@@ -81,10 +103,10 @@ class Main extends Component {
         <StatBoxes player={player} />
         <div className="row">
           <div className="col-xl-6 col-lg-6">
-            <CombinedChart player={player} />
+            <CombinedChart player={player} attributes={attributes} />
           </div>
           <div className="col-xl-6 col-lg-6">
-            <LineChart player={player} />
+            <LineChart player={player} attributes={attributes} />
           </div>
         </div>
       </div>

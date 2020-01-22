@@ -149,7 +149,7 @@ const styles = {
   }
 };
 
-const Chart = ({ player }) => (
+const Chart = ({ player, attributes }) => (
   <div>
     <div className="row" style={{ minHeight: '250px' }}>
       <div className="col-xl-5">
@@ -157,7 +157,7 @@ const Chart = ({ player }) => (
       </div>
 
       <div className="col-xl-7">
-        <BenchmarkChart player={player} />
+        <BenchmarkChart player={player} attributes={attributes} />
       </div>
 
     </div>

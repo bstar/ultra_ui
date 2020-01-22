@@ -5,22 +5,21 @@ import CHARTCONFIG from 'constants/ChartConfig';
 
 const line = {};
 
-line.options = (player) => {
+line.options = ({ player, attributes }) => {
 
-  console.log("PLAYER", player)
-  const technicalRating = _.map(player.player.attributes, (attribute) => {
+  const technicalRating = _.map(attributes, attribute => {
     return attribute.technical_rating;
   });
 
-  const mentalRating = _.map(player.player.attributes, (attribute) => {
+  const mentalRating = _.map(attributes, attribute => {
     return attribute.mental_rating;
   });
 
-  const physicalRating = _.map(player.player.attributes, (attribute) => {
+  const physicalRating = _.map(attributes, attribute => {
     return attribute.physical_rating;
   });
 
-  const dates = _.map(player.player.attributes, (attribute) => {
+  const dates = _.map(attributes, attribute => {
     const num = attribute.game_date.match(/^\S{3}/);
 
     return `${num && num[0]} — ${attribute.att_growth}`; // TODO save age in attributes array
@@ -124,8 +123,8 @@ line.options = (player) => {
 };
 
 
-const Chart = (player) => (
-  <div><ReactEcharts style={{ height: '200px' }} option={line.options(player)} showLoading={false} /></div>
+const Chart = ({ player, attributes }) => (
+  <div><ReactEcharts style={{ height: '200px' }} option={line.options({ player, attributes })} showLoading={false} /></div>
 );
 
 export default Chart;

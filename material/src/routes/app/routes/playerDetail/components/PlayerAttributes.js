@@ -212,6 +212,8 @@ class Attributes extends React.Component {
   render () {
 
     const { attributes, position, playerRoles } = this.props;
+
+    console.log("ATTRIBUTES", attributes)
     const { cursor } = this.state;
     const currentCursor = cursor !== null ? cursor : attributes.length - 1;
     const selectedAttributes = attributes[currentCursor];
@@ -300,20 +302,7 @@ class Attributes extends React.Component {
 // };
 
 Attributes.defaultProps = {
-    attributes: [{
-      checking: 0,
-      deflection: 0,
-      deking: 0,
-      faceoffs: 0,
-      hitting: 0,
-      'off the puck': 0,
-      passing: 0,
-      pokecheck: 0,
-      positioning: 0,
-      slapshot: 0,
-      stickhandling: 0,
-      wristshot: 0,
-    }]
+    attributes: [{}],
 };
 
 
