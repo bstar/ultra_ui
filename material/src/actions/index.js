@@ -21,3 +21,9 @@ export function changeColorOption(colorOption) {
 export function changeTheme(themeOption) {
   return { type: types.CHANGE_THEME, theme: themeOption };
 }
+
+export function getPlayer(id) {
+
+  console.log("GET PLAYER ID ACTION", id);
+  return { type: types.GET_PLAYER, id };
+}

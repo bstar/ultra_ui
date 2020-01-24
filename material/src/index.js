@@ -10,13 +10,12 @@ import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
 
 import Page404 from 'routes/404/components/404'
-
 const history = createHistory();
 const middleware = routerMiddleware(history);
 
 const store = createStore(
   reducers,
-  undefined,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   compose(applyMiddleware(middleware))
 );
 
@@ -35,4 +34,4 @@ render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+serviceWorker.register();

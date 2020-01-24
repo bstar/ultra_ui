@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+// import { withRouter } from 'react-router';
 import QueueAnim from 'rc-queue-anim';
+import { getPlayer } from 'actions';
 import PlayerAttributes from './PlayerAttributes';
 import StatBoxes from './StatBoxes';
 import PlayerLineChart from './PlayerLineChart';
@@ -9,6 +11,20 @@ import PlayerPersonalInfo from './PlayerPersonalInfo';
 import PlayerHeading from './PlayerHeading';
 import { leagues } from '../../../../../config/index.json'; // scope this better
 
+
+const mapStateToProps = state => {
+  console.log("MAP STATE TO PROPS", state.settings.theme);
+
+  return ({
+    theme: state.settings.theme,
+  });
+};
+
+const mapDispatchToProps = dispatch => ({
+  handleChange: id => {
+    dispatch(getPlayer(id));
+  }
+});
 
 class Main extends Component {
 
@@ -19,15 +35,19 @@ class Main extends Component {
     this.state = {
       player: {},
       attribtues: {},
-      metrics: { total: 0 }
+      metrics: { total: 0 },
     }
   }
 
   componentDidMount () {
 
-    const { playerId } = this.props;
+    const { playerId, handleChange } = this.props;
     const leagueId = localStorage.getItem('league_id');
     const league = leagues[leagueId];
+
+    console.log("HANDLE CHANGE", this.props);
+
+    handleChange(playerId);
 
     if (league) { // league_id is loaded from local storage
       const url = `http://${league.address}/boid/${playerId}?noatts=true`;
@@ -118,15 +138,20 @@ class Main extends Component {
   }
 }
 
-const PlayerDetail = ({ match }) => {
+const PlayerDetail = ({ match, handleChange }) => {
 
   return (
     <div className="container-fluid no-breadcrumbs page-dashboard">
       <QueueAnim type="bottom" className="ui-animate">
-        <Main playerId={match.params.playerId} />
+        <Main playerId={match.params.playerId} handleChange={handleChange} />
       </QueueAnim>
     </div>
   );
 };
 
-export default withRouter(PlayerDetail);
+// export default withRouter(PlayerDetail);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlayerDetail);
