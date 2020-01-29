@@ -2,45 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { withRouter } from 'react-router-dom';
-import $ from 'jquery';
-import APPCONFIG from 'constants/Config';
-import {
-    toggleCollapsedNav
-} from '../../actions';
 import SidenavContent from './SidenavContent';
 
 
 class Sidebar extends React.Component {
 
-  componentDidMount() {
-    // AutoCloseMobileNav
-    const { history } = this.props;
-    const $body = $('#body');
-
-    if (APPCONFIG.AutoCloseMobileNav) {
-      history.listen(location => {
-        setTimeout(() => {
-          $body.removeClass('sidebar-mobile-open');
-        }, 0);
-      });
-    }
-  }
-
-  onToggleCollapsedNav = (e) => {
-    const val = !this.props.navCollapsed;
-    const { handleToggleCollapsedNav } = this.props;
-    handleToggleCollapsedNav(val);
-  }
-
-  render() {
-    const { colorOption } = this.props;
-
+  render () {
     return (
-      <nav style={{ boxShadow: '10px 0 30px -2px #202020' }}
-        className={classnames('app-sidebar', {
-          'bg-color-light': ['31', '32', '33', '34', '35', '36'].indexOf(colorOption) >= 0,
-          'bg-color-dark': ['31', '32', '33', '34', '35', '36'].indexOf(colorOption) < 0 })}
-            >
+      <nav style={{ boxShadow: '10px 0 30px -2px #202020' }} className={classnames('app-sidebar', 'bg-color-dark')}>
 
         <section className="sidebar-content" style={{ background: 'url(assets/images/side-background.png)', backgroundAttachment: 'fixed', backgroundRepeat: 'repeat-y', borderRight: '1px solid #2e6e73' }}>
           <SidenavContent />
@@ -55,13 +24,7 @@ const mapStateToProps = state => ({
   colorOption: state.settings.colorOption
 });
 
-const mapDispatchToProps = dispatch => ({
-  handleToggleCollapsedNav: (isNavCollapsed) => {
-    dispatch(toggleCollapsedNav(isNavCollapsed));
-  },
-});
-
 export default withRouter(connect(
   mapStateToProps,
-  mapDispatchToProps
+  null,
 )(Sidebar));
