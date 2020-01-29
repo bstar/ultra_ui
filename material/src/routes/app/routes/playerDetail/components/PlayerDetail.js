@@ -8,14 +8,13 @@ import PlayerLineChart from './PlayerLineChart';
 import CombinedPlayerLineChart from './CombinedPlayerLineChart';
 import PlayerPersonalInfo from './PlayerPersonalInfo';
 import PlayerHeading from './PlayerHeading';
-import { leagues } from 'config/index.json'; // scope this better
 
 
 const mapStateToProps = state => {
-  console.log("MAP STATE TO PROPS", state);
 
   return ({
     playerMap: state.player,
+    attributesMap: state.attribute,
   });
 };
 
@@ -41,52 +40,18 @@ class Main extends Component {
   componentDidMount () {
 
     const { playerId, getPlayerById } = this.props;
-    const leagueId = localStorage.getItem('league_id');
-    const league = leagues[leagueId];
 
     getPlayerById(playerId);
-
-    // TODO kill this in favor of saga
-    if (league) { // league_id is loaded from local storage
-      const url = `http://${league.address}/boid/${playerId}?noatts=true`;
-
-      fetch(url, {
-        method: 'GET',
-        headers: { Accept: 'application/json' }
-      })
-        .then(response => response.json())
-        .then((response) => {
-
-          this.setState({ player: response });
-        })
-    }
-  }
-
-  componentDidUpdate () {
-
-    // const { playerMap } = this.props;
-    const leagueId = localStorage.getItem('league_id');
-    const league = leagues[leagueId]
-    const id = this.state.player.id;
-
-    if (id && !this.state.attributes) {
-      const url = `http://${league.address}/attributes?where=boidId:${id}`;
-
-      fetch(url, {
-        method: 'GET',
-        headers: { Accept: 'application/json' }
-      })
-        .then(response => response.json())
-        .then(attributes => {
-
-          this.setState({ attributes });
-        })
-    }
   }
 
   render () {
 
-    const { player, attributes } = this.state;
+    const { playerMap, attributesMap, playerId } = this.props;
+
+    const player = playerMap[playerId];
+    const attributes = attributesMap[playerId];
+
+    if (!player) return (<span></span>);
 
     return (
       <div>
@@ -136,12 +101,12 @@ class Main extends Component {
   }
 }
 
-const PlayerDetail = ({ match, getPlayerById, playerMap }) => {
+const PlayerDetail = ({ match, getPlayerById, playerMap, attributesMap }) => {
 
   return (
     <div className="container-fluid no-breadcrumbs page-dashboard">
       <QueueAnim type="bottom" className="ui-animate">
-        <Main playerId={match.params.playerId} getPlayerById={getPlayerById} playerMap={playerMap} />
+        <Main playerId={match.params.playerId} getPlayerById={getPlayerById} playerMap={playerMap} attributesMap={attributesMap} />
       </QueueAnim>
     </div>
   );

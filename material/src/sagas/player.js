@@ -6,7 +6,7 @@ import { fetchPlayer } from '../api/player';
 import {
     getPlayerSuccess,
     // getPlayerFailure,
-} from '../actions'
+} from '../actions';
 
 
 function* getPlayerSaga (action) {
