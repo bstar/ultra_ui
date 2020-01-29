@@ -1,3 +1,34 @@
+import moment from 'moment';
+
+
+const universalActionCreator = (type, payload, meta = {}, isError = false) => {
+
+    const action = {
+        type,
+        payload,
+        meta,
+    };
+
+    if (isError) {
+        return {
+            ...action,
+            meta: {
+                ...action.meta,
+                timestamp: moment(),
+            },
+            error: isError,
+        };
+    }
+
+    return action;
+};
+
+const parseJson = response => {
+
+  return response.json()
+      .then(json => ({ json, response }))
+};
+
 const getCombinedColor = rating => {
     if (rating < 200) {
         return 'red';
@@ -226,4 +257,6 @@ export {
   technicalAttsGoalie,
   mentalAtts,
   physicalAtts,
+  universalActionCreator,
+  parseJson,
 };

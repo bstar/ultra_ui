@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import $ from 'jquery';
 import APPCONFIG from 'constants/Config';
 import {
     toggleCollapsedNav
 } from '../../actions';
 import SidenavContent from './SidenavContent';
-import DEMO from 'constants/demoData';
+
 
 class Sidebar extends React.Component {
 
@@ -18,7 +18,7 @@ class Sidebar extends React.Component {
     const $body = $('#body');
 
     if (APPCONFIG.AutoCloseMobileNav) {
-      history.listen((location) => {
+      history.listen(location => {
         setTimeout(() => {
           $body.removeClass('sidebar-mobile-open');
         }, 0);
@@ -33,13 +33,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const { navCollapsed, colorOption } = this.props;
-    let toggleIcon = null;
-    if (navCollapsed) {
-      toggleIcon = <i className="material-icons">radio_button_unchecked</i>;
-    } else {
-      toggleIcon = <i className="material-icons">radio_button_checked</i>;
-    }
+    const { colorOption } = this.props;
 
     return (
       <nav style={{ boxShadow: '10px 0 30px -2px #202020' }}
@@ -51,17 +45,6 @@ class Sidebar extends React.Component {
         <section className="sidebar-content" style={{ background: 'url(assets/images/side-background.png)', backgroundAttachment: 'fixed', backgroundRepeat: 'repeat-y', borderRight: '1px solid #2e6e73' }}>
           <SidenavContent />
         </section>
-
-        {/* <section className="sidebar-footer">
-          <ul className="nav">
-            <li>
-              <a target="_blank" href={APPCONFIG.productLink}>
-                <i className="nav-icon material-icons">help</i>
-                <span className="nav-text"><span>Help</span> & <span>Support</span></span>
-              </a>
-            </li>
-          </ul>
-        </section> */}
       </nav>
     );
   }

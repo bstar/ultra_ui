@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import FlatButton from 'material-ui/FlatButton';
 import $ from 'jquery';
 import 'jquery-slimscroll/jquery.slimscroll.min';
-import DEMO from 'constants/demoData';
 
 const styles = {
   textItem: {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { withRouter } from 'react-router';
 import QueueAnim from 'rc-queue-anim';
 import { getPlayer } from 'actions';
 import PlayerAttributes from './PlayerAttributes';
@@ -9,20 +8,20 @@ import PlayerLineChart from './PlayerLineChart';
 import CombinedPlayerLineChart from './CombinedPlayerLineChart';
 import PlayerPersonalInfo from './PlayerPersonalInfo';
 import PlayerHeading from './PlayerHeading';
-import { leagues } from '../../../../../config/index.json'; // scope this better
+import { leagues } from 'config/index.json'; // scope this better
 
 
 const mapStateToProps = state => {
-  console.log("MAP STATE TO PROPS", state.settings.theme);
+  console.log("MAP STATE TO PROPS", state);
 
   return ({
-    theme: state.settings.theme,
+    playerMap: state.player,
   });
 };
 
 const mapDispatchToProps = dispatch => ({
-  handleChange: id => {
-    dispatch(getPlayer(id));
+  getPlayerById: id => {
+    dispatch(getPlayer({ id }));
   }
 });
 
@@ -41,14 +40,13 @@ class Main extends Component {
 
   componentDidMount () {
 
-    const { playerId, handleChange } = this.props;
+    const { playerId, getPlayerById } = this.props;
     const leagueId = localStorage.getItem('league_id');
     const league = leagues[leagueId];
 
-    console.log("HANDLE CHANGE", this.props);
+    getPlayerById(playerId);
 
-    handleChange(playerId);
-
+    // TODO kill this in favor of saga
     if (league) { // league_id is loaded from local storage
       const url = `http://${league.address}/boid/${playerId}?noatts=true`;
 
@@ -66,6 +64,7 @@ class Main extends Component {
 
   componentDidUpdate () {
 
+    // const { playerMap } = this.props;
     const leagueId = localStorage.getItem('league_id');
     const league = leagues[leagueId]
     const id = this.state.player.id;
@@ -111,7 +110,6 @@ class Main extends Component {
                   technical_rating={player.technical_rating}
                   mental_rating={player.mental_rating}
                   physical_rating={player.physical_rating}
-                  physical_rating={player.physical_rating}
                   attributes={attributes} />
               </div>
             </div>
@@ -138,18 +136,16 @@ class Main extends Component {
   }
 }
 
-const PlayerDetail = ({ match, handleChange }) => {
+const PlayerDetail = ({ match, getPlayerById, playerMap }) => {
 
   return (
     <div className="container-fluid no-breadcrumbs page-dashboard">
       <QueueAnim type="bottom" className="ui-animate">
-        <Main playerId={match.params.playerId} handleChange={handleChange} />
+        <Main playerId={match.params.playerId} getPlayerById={getPlayerById} playerMap={playerMap} />
       </QueueAnim>
     </div>
   );
 };
-
-// export default withRouter(PlayerDetail);
 
 export default connect(
   mapStateToProps,

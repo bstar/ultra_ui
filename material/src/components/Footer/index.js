@@ -1,5 +1,4 @@
 import React from 'react';
-import APPCONFIG from 'constants/Config';
 
 const styles = {
   borderTop: '1px solid rgb(46, 110, 115)',

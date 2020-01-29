@@ -45,7 +45,6 @@ const Statboxes = ({ player }) => {
       marginTop: '10px',
     },
     headingText: {
-      border: 'none',
       fontSize: '12px',
       color: 'rgba(255, 255, 255, 0.7)',
       border: '1px solid rgb(46, 110, 115)',

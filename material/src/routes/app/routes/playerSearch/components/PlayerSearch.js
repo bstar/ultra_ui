@@ -4,7 +4,7 @@ import Slider from 'material-ui/Slider';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import { leagues } from '../../../../../config/index.json';
+import { leagues } from 'config/index.json';
 
 
 const styles = {
@@ -79,7 +79,7 @@ class Main extends Component {
     this.clearHandler = this.clearHandler.bind(this);
   }
 
-  componentWillMount () {
+  componentDidMount () {
 
     const searchString = localStorage.getItem('player_search');
 
@@ -275,7 +275,7 @@ class Main extends Component {
             </div>
 
             <div className="col-xl-2">
-              <a style={{ fontSize: '12px', fontFamily: 'arial' }} href="#" onClick={this.clearHandler}>Clear</a>
+              <a style={{ fontSize: '12px', fontFamily: 'arial' }} href="/" onClick={this.clearHandler}>Clear</a>
             </div>
           </div>
         </div>
@@ -302,7 +302,7 @@ class Main extends Component {
 
               <tbody style={{ flex: 1, width: '100%' }} className="player-list">
                 { players && players.map(player =>
-                  <tr>
+                  <tr key={player.id}>
                     <td><a href={`#/app/playerdetail/${player.id}`}><b>{player.name}</b></a></td>
                     <td className="numeric">{player.combined_rating}</td>
                     <td className="numeric">{player.technical_rating}</td>

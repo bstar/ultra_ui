@@ -1,4 +1,5 @@
 import * as types from '../constants/ActionTypes';
+import { universalActionCreator } from 'utils';
 
 export function toggleBoxedLayout(isLayoutBoxed) {
   return { type: types.TOGGLE_BOXED_LAYOUT, isLayoutBoxed };
@@ -22,8 +23,5 @@ export function changeTheme(themeOption) {
   return { type: types.CHANGE_THEME, theme: themeOption };
 }
 
-export function getPlayer(id) {
-
-  console.log("GET PLAYER ID ACTION", id);
-  return { type: types.GET_PLAYER, id };
-}
+export const getPlayer = (id, meta) => (universalActionCreator(types.GET_PLAYER, { id }, meta));
+export const getPlayerSuccess = (json, meta) => (universalActionCreator(types.GET_PLAYER_SUCCESS, json, meta));

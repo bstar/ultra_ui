@@ -19,9 +19,9 @@ class NavRightList extends React.Component {
   handleChange = (e, index, value) => {
 
     const { history } = this.props;
-    console.log("VALUE", value)
     localStorage.setItem('league_id', value);
-    history.push('/')
+
+    history.push('/');
   }
 
   render () {
@@ -41,10 +41,10 @@ class NavRightList extends React.Component {
               onChange={this.handleChange}
             >
               { leagues && Object.keys(leagues).map(league => {
-                
-                if (league === 'LOCAL' && !isDevelopment){return};
+                const name = leagues[league].name; 
+                if (league === 'LOCAL' && !isDevelopment){ return (<span></span>) };
 
-                return (<MenuItem value={league} primaryText={leagues[league].name} />);
+                return (<MenuItem key={name} value={league} primaryText={name} />);
               })}
             </SelectField>
             </div>

@@ -7,3 +7,7 @@ export const CHANGE_COLOR_OPTION = 'CHANGE_COLOR_OPTION';
 export const CHANGE_THEME = 'CHANGE_THEME';
 
 export const GET_PLAYER = 'GET_PLAYER';
+export const GET_PLAYER_SUCCESS = 'GET_PLAYER_SUCCESS';
+export const GET_PLAYER_FAILURE = 'GET_PLAYER_FAILURE';
+
+export const HELLO = 'HELLO';

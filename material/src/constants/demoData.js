@@ -1,8 +1,6 @@
 const DEMO = {
-  link: 'javascript:;', // javascript:;
   home: '#/app/dashboard',
   home2: '/app/dashboard',
-  productLink: 'javascript:;',
   user: 'Lisa',
   login: '#/user/login',
 }
