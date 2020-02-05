@@ -1,0 +1,24 @@
+.personal-portrait img {
+    position: absolute;
+    // margin-left: -100px;
+}
+
+// @media (max-width: 1895px) {
+//     .personal-portrait {
+//         display: none;
+//     }
+//   }
+
+.snapshot-selector {
+    margin-top: -60px;
+}
+
+@media (max-width: 985px) {
+    .snapshot-selector {
+        margin-top: 0px;
+    }
+}
+
+.app-footer {
+    z-index: 9999;
+}

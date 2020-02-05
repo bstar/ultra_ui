@@ -162,7 +162,7 @@ class Attributes extends React.Component {
 
           </div>
         </div>
-        <div className="row" style={{ float: 'right', marginTop: '-60px' }}>
+        <div className="row snapshot-selector" style={{ display: 'flex', flex: 'auto', flexFlow: 'row-reverse' }}>
           <SnapshotSelectField style={{ width: 300 }} attributes={attributes} cursor={currentCursor} handleChange={this.handleChange} />
         </div>
       </div>

@@ -23,6 +23,7 @@ const store = createStore(
 );
 
 sagaMW.run(SagaRoot);
+localStorage.setItem('league_id', "ESL");
 
 render(
   <Provider store={store}>

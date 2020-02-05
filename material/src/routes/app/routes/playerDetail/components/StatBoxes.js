@@ -39,9 +39,9 @@ const Statboxes = ({ player }) => {
   const styles = {
     statText: {
       textShadow: '1px 1px 3px rgba(0, 0, 0,.4)',
-      fontSize: '22px',
+      fontSize: '28px',
       fontWeight: 400,
-      lineHeight: '26px',
+      lineHeight: '30px',
       marginTop: '10px',
     },
     headingText: {
@@ -68,15 +68,15 @@ const Statboxes = ({ player }) => {
           <div className="box-top" style={styles.boxtop}>
             { player.id &&
               <div style={ styles.statText } className="row">
-                <div className="col-xl-4">
+                <div className="col-xl-12">
                   <div className={`${getRatingColor(player.combined_off_weighted)}`}>
-                    {player.combined_off_weighted.toFixed(2)}
+                    {player.combined_off_weighted.toFixed(0)}
                   </div>
                   <div style={{...styles.ratingsLabel}}>
-                    Offensive
+                    Offensive Combined
                   </div>
                 </div>
-                <div className="col-xl-4">
+                {/* <div className="col-xl-4">
                   <div className={`${getRatingColor(player.combined_def_weighted)}`}>
                     {player.combined_def_weighted.toFixed(2)}
                   </div>
@@ -91,7 +91,7 @@ const Statboxes = ({ player }) => {
                   <div style={{...styles.ratingsLabel}}>
                     Two Way
                   </div>
-                </div>
+                </div> */}
               </div>
             }
           </div>
@@ -105,15 +105,15 @@ const Statboxes = ({ player }) => {
           <div className="box-top" style={styles.boxtop}>
             { player.id &&
               <div style={ styles.statText } className="row">
-                <div className="col-xl-4">
+                <div className="col-xl-12">
                   <div className={`${getRatingColor(player.technical_off_weighted)}`}>
-                    {player.technical_off_weighted.toFixed(2)}
+                    {player.technical_off_weighted.toFixed(0)}
                   </div>
                   <div style={{...styles.ratingsLabel}}>
-                    Offensive
+                    Offensive Technical
                   </div>
                 </div>
-                <div className="col-xl-4">
+                {/* <div className="col-xl-4">
                   <div className={`${getRatingColor(player.technical_def_weighted)}`}>
                     {player.technical_def_weighted.toFixed(2)}
                   </div>
@@ -128,7 +128,7 @@ const Statboxes = ({ player }) => {
                   <div style={{...styles.ratingsLabel}}>
                     Two Way
                   </div>
-                </div>
+                </div> */}
               </div>
             }
           </div>
@@ -143,15 +143,15 @@ const Statboxes = ({ player }) => {
           <div className="box-top" style={styles.boxtop}>
             { player.id &&
               <div style={ styles.statText } className="row">
-                <div className="col-xl-4">
+                <div className="col-xl-12">
                   <div className={`${getMentalRatingColor(player.mental_off_weighted)}`}>
-                    {player.mental_off_weighted.toFixed(2)}
+                    {player.mental_off_weighted.toFixed(0)}
                   </div>
                   <div style={{...styles.ratingsLabel}}>
-                    Offensive
+                    Offensive Mental
                   </div>
                 </div>
-                <div className="col-xl-4">
+                {/* <div className="col-xl-4">
                   <div className={`${getMentalRatingColor(player.mental_def_weighted)}`}>
                     {player.mental_def_weighted.toFixed(2)}
                   </div>
@@ -166,7 +166,7 @@ const Statboxes = ({ player }) => {
                   <div style={{...styles.ratingsLabel}}>
                     Two Way
                   </div>
-                </div>
+                </div> */}
               </div>
             }
           </div>
@@ -180,15 +180,15 @@ const Statboxes = ({ player }) => {
           <div className="box-top" style={styles.boxtop}>
             { player.id &&
               <div style={ styles.statText } className="row">
-                <div className="col-xl-4">
+                <div className="col-xl-12">
                   <div className={`${getRatingColor(player.physical_off_weighted)}`}>
-                    {player.physical_off_weighted.toFixed(2)}
+                    {player.physical_off_weighted.toFixed(0)}
                   </div>
                   <div style={{...styles.ratingsLabel}}>
-                    Offensive
+                    Offensive Physical
                   </div>
                 </div>
-                <div className="col-xl-4">
+                {/* <div className="col-xl-4">
                   <div className={`${getRatingColor(player.physical_def_weighted)}`}>
                     {player.physical_def_weighted.toFixed(2)}
                   </div>
@@ -203,7 +203,7 @@ const Statboxes = ({ player }) => {
                   <div style={{...styles.ratingsLabel}}>
                     Two Way
                   </div>
-                </div>
+                </div> */}
               </div>
             }
           </div>

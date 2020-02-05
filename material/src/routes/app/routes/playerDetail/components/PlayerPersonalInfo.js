@@ -7,7 +7,7 @@ import {
   getTechnicalColor,
   getMentalColor,
   getPhysicalColor,
-} from '../../../../../utils';
+} from 'utils';
 
 
 const styles = {
@@ -43,8 +43,7 @@ const styles = {
     height: 'auto',
     borderRadius: '50%',
     padding: '18px 0px 10px 0px',
-    opacity: 0.5,
-    margin: '0px',
+    opacity: 0.2,
     transform: 'scale(1.2, 1.2)',
   },
   personal: {
@@ -65,17 +64,23 @@ const styles = {
   },
   team: {
     fontSize: '22px',
-  }
+  },
 };
 
 const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, handedness, player_roles, combined_rating, technical_rating, mental_rating, physical_rating, attributes }) => (
   <div>
     <div className="row" style={{ minHeight: '250px' }}>
-      <div className="col-xl-5">
-        <img src={`assets/img/portraits/${getPortrait(positions_short)}.png`} alt="Responsive Layout" style={styles.portrait} />
+
+      <div className="col-xl-2">
+
+        <div className="personal-portrait">
+          <img src={`assets/img/portraits/${getPortrait(positions_short)}.png`} alt="Responsive Layout" style={styles.portrait} />
+        </div>
       </div>
-      <div className="col-xl-7">
-        <PlayerRadarChart position={positions_short} attributes={attributes} />
+      <div className="col-xl-10">
+        <div>
+          <PlayerRadarChart position={positions_short} attributes={attributes} />
+        </div>
       </div>
     </div>
     <div className="row">
@@ -116,14 +121,7 @@ const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, han
         <span style={styles.listTitle}>Ratings:</span>
       </div>
       <div className="col-xl-10">
-        { combined_rating && 
-          <span style={styles.listItem}>
-            <span title="200-300-350" className={`${getCombinedColor(combined_rating)}`}>{combined_rating}</span>&nbsp;com /&nbsp;
-            <span title="70-130-185" className={`${getTechnicalColor(technical_rating)}`}>{technical_rating}</span>&nbsp;tec /&nbsp;
-            <span title="70-110-140" className={`${getMentalColor(mental_rating)}`}>{mental_rating}</span>&nbsp;men /&nbsp;
-            <span title="60-80-94" className={`${getPhysicalColor(physical_rating)}`}>{physical_rating}</span>&nbsp;phy
-          </span>
-        }
+      <span style={styles.listItem}>{combined_rating} com / {(combined_rating/age).toFixed(1)} ao</span>
       </div>
     </div>
   </div>

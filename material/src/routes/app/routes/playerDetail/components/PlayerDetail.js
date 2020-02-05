@@ -62,7 +62,7 @@ class Main extends Component {
         </div>
         <div className="row">
           <div className="col-xl-4">
-            <div className="box box-default">
+            <div className="box box-default" style={{ overflow: 'hidden' }}>
               <div className="box-body">
                 <PlayerPersonalInfo
                   dob={player.dob}
@@ -75,6 +75,7 @@ class Main extends Component {
                   technical_rating={player.technical_rating}
                   mental_rating={player.mental_rating}
                   physical_rating={player.physical_rating}
+                  positions_short={player.positions_short}
                   attributes={attributes} />
               </div>
             </div>
