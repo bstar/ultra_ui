@@ -105,6 +105,7 @@ class Main extends Component {
     const noatts = '&noatts=true';
     const limit = '&limit=100'
     const playerName = search.name ? `|name:${search.name}` : '';
+    const nation = search.nation ? `|nation:${search.nation}` : '';
     const team = search.club_contracted ? `|club_contracted:${search.club_contracted}` : '';
     const age = `age_between:${search.ageMin},${search.ageMax}`;
     const position = search.positions_short ?  `|positions_short:${search.positions_short}` : '';
@@ -112,7 +113,7 @@ class Main extends Component {
     localStorage.setItem('player_search', JSON.stringify(search));
 
     if (league) { // league_id is loaded from local storage
-      const url = league && `http://${league.address}/boids?where=${age}${playerName}${position}${team}${noatts}${newOrder}${limit}`;
+      const url = league && `http://${league.address}/boids?where=${age}${playerName}${nation}${position}${team}${noatts}${newOrder}${limit}`;
 
       fetch(url, {
         method: 'GET',
@@ -212,78 +213,92 @@ class Main extends Component {
     return (
       <div style={ styles.body }>
 
-        <div>
-          <div className="row" style={{ border: '0px 0px 40px 0px', borderBottom: '1px solid rgb(46, 110, 115)', paddingBottom: '20px', boxShadow: '0px 13px 56px -13px rgba(0,0,0,0.35)' }}>
+        <div style={{ marginTop: '15px'}}>
+          <div className="row" style={{ border: '0px 0px 40px 0px', borderBottom: '1px solid rgb(46, 110, 115)', paddingBottom: '20px', boxShadow: '0px 13px 56px -13px rgba(0,0,0,0.35)', margin: "0px -25px 0px -25px" }}>
 
-            <div className="search-pod">
-              <SelectFieldExampleSimple onChange={this.onChangeOrderBy} order={search.order} />
-            </div>
+            <div className="search-pod-container">
+              <div className="search-pod">
+                <SelectFieldExampleSimple onChange={this.onChangeOrderBy} order={search.order} />
+              </div>
 
-            <div className="search-pod">
-              <RadioButtonGroup name="playerType" defaultSelected={playerType} onChange={this.onChangeRadio}>
-                <RadioButton
-                  style={{maxWidth: 250}}
-                  value="players"
-                  label="Players"
+              <div className="search-pod">
+                <RadioButtonGroup name="playerType" defaultSelected={playerType} onChange={this.onChangeRadio}>
+                  <RadioButton
+                    style={{maxWidth: 250}}
+                    value="players"
+                    label="Players"
+                  />
+                  <RadioButton
+                    style={{maxWidth: 250}}
+                    value="goalies"
+                    label="Goalies"
+                  />
+                </RadioButtonGroup>
+              </div>
+
+              <div className="search-pod">
+                {this.ageSlider()}
+              </div>
+
+              <div className="search-pod"> 
+                <TextField
+                  onChange={this.onChangeText}
+                  name="name"
+                  autoFocus
+                  value={search.name}
+                  hintText="Player Name"
+                  style={{ marginRight: 20, width: '200px' }}
                 />
-                <RadioButton
-                  style={{maxWidth: 250}}
-                  value="goalies"
-                  label="Goalies"
+              </div>
+
+              <div className="search-pod">
+                <TextField
+                  onChange={this.onChangeText}
+                  name="club_contracted"
+                  value={search.club_contracted}
+                  hintText="Team Name"
+                  style={{ width: '200px' }}
                 />
-              </RadioButtonGroup>
+              </div>
+
+              <div className="search-pod">
+                <TextField
+                  floatingLabelText="Position"
+                  onChange={this.onChangeText}
+                  name="positions_short"
+                  value={search.positions_short}
+                  style={{ marginTop: '-23px', width: '200px' }}
+                  hintText="Use: c, lw, rw, ld, rd, g"
+                />
+              </div>
+
+              <div className="search-pod"> 
+                <TextField
+                  onChange={this.onChangeText}
+                  name="nation"
+                  autoFocus
+                  value={search.nation}
+                  hintText="Nation"
+                  style={{ marginRight: 20, width: '200px' }}
+                />
+              </div>
+
             </div>
 
 
-            <div className="search-pod">
-              {this.ageSlider()}
-            </div>
-
-            <div className="search-pod"> 
-              <TextField
-                onChange={this.onChangeText}
-                name="name"
-                autoFocus
-                value={search.name}
-                hintText="Player Name"
-                style={{ marginRight: 20, width: '200px' }}
-              />
-            </div>
-
-            <div className="search-pod">
-              <TextField
-                onChange={this.onChangeText}
-                name="club_contracted"
-                value={search.club_contracted}
-                hintText="Team Name"
-                style={{ width: '200px' }}
-              />
-            </div>
-
-            <div className="search-pod">
-              <TextField
-                floatingLabelText="Position"
-                onChange={this.onChangeText}
-                name="positions_short"
-                value={search.positions_short}
-                style={{ marginTop: '-23px', width: '200px' }}
-                hintText="Use: c, lw, rw, ld, rd, g"
-              />
-            </div>
-
-            <div style={{ float: 'right', margin: '40px 0px 0px 15px' }}>
+            <div style={{ float: 'right', margin: '10px 0px 0px 15px' }}>
               <a style={{ fontSize: '12px', fontFamily: 'arial' }} href="/" onClick={this.clearHandler}>Clear Search</a>
             </div>
           </div>
         </div>
 
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ minWidth: '1400px', maxWidth: '100%', margin: '20px 0px 0px 0px' }}>
-              <thead style={{ fontSize: '16px', color: '#A3C3C6' }}>
+        <div className="player-table-container" style={{ overflowX: 'auto' }}>
+          <table className="player-search-table" style={{ minWidth: '1400px', maxWidth: '100%', margin: '20px 0px 20px 0px' }}>
+              <thead style={{ fontSize: '14px', color: '#A3C3C6' }}>
                 { players &&
                   <tr >
-                    <th>Name</th>
-                    <th className="numeric">Combined</th>
+                    <th />
+                    <th style={{ paddingLeft: '210px' }} className="numeric">Combined</th>
                     <th className="numeric">Technical</th>
                     <th className="numeric">Mental</th>
                     <th className="numeric">Physical</th>
@@ -300,8 +315,8 @@ class Main extends Component {
               <tbody style={{ flex: 1 }} className="player-list">
                 { players && players.map(player =>
                   <tr key={player.id}>
-                    <td><a href={`#/app/playerdetail/${player.id}`}><b>{player.name}</b></a></td>
-                    <td className="numeric">{player.combined_rating}</td>
+                    <td style={{ borderRight: '1px solid rgb(32, 80, 83)', borderLeft: '1px solid rgb(32, 80, 83)', width: '200px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', margin: '0px 15px 0px 0px', paddingRight: '5px', paddingLeft: '10px', position: 'absolute', background: '#1C3949' }}><a href={`#/app/playerdetail/${player.id}`}><b>{player.name}</b></a></td>
+                    <td style={{ paddingLeft: '210px' }} className="numeric">{player.combined_rating}</td>
                     <td className="numeric">{player.technical_rating}</td>
                     <td className="numeric">{player.mental_rating}</td>
                     <td className="numeric">{player.physical_rating}</td>
@@ -322,7 +337,7 @@ class Main extends Component {
 };
 
 const PlayerSearch = () => (
-  <section className="container-fluid">
+  <section className="player-search-container container-fluid">
       <div key="2">
         <Main />
       </div>

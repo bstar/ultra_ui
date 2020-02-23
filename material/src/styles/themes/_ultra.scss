@@ -1,14 +1,26 @@
 .player-list tr:nth-child(odd) {
     background-color:rgba(0, 0, 0, 0.1)
-  }
+}
+
+.player-list td:first-child {
+    border-top: 1px solid rgb(32, 80, 83);
+}
+
+// .player-list tr:last-child {
+//     border-bottom: 1px solid rgb(46, 110, 115);
+// }
+
+// .player-list tr {
+//     border-right: 1px solid rgb(46, 110, 115);
+// }
   
-  .player-list td {
-      padding: 8px;
-  }
-  
-  .player-list td {
-      padding: 8px;
-  }
+.player-list td {
+    padding: 8px;
+}
+
+.player-list td {
+    padding: 4px;
+}
   
   
   body::-webkit-scrollbar {
@@ -60,7 +72,7 @@
 }
 
 .app-footer {
-    z-index: 9999;
+    z-index: 999;
 }
 
 .player-search {
@@ -76,8 +88,24 @@
 }
 
 .search-pod {
+    height: 100px;
     width: 300px;
     padding: 15px;
+    background-color: rgba(5,5,5, .15);
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid rgb(46, 110, 115);
+
+    div[name=order] {
+        margin-top: -10px;
+    }
+}
+
+.search-pod-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
 }
 
 .custom-slider {
@@ -85,5 +113,21 @@
 
     div {
         margin-bottom: 0px !important;
+    }
+}
+
+.player-search-table th {
+    padding-bottom: 8px;
+}
+
+
+@media (max-width: 800px) {
+    .player-search-table {
+        margin-left: -20px !important;
+        margin-right: 20px !important;
+    }
+
+    .player-table-container {
+        margin-right: -18px;
     }
 }
