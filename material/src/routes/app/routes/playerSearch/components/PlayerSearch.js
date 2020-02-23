@@ -87,10 +87,10 @@ class Main extends Component {
     return (
       <div>
         <div className="custom-slider">
-          ageMin: {search.ageMin} <Slider style={{ width: '100px', marginBottom: '0px' }} name="min" min={12} max={48} step={1} value={search.ageMin} onChange={this.onChangeAgeMin} />
+          Age Min: {search.ageMin} <Slider style={{ width: '134px', marginBottom: '0px' }} name="min" min={12} max={48} step={1} value={search.ageMin} onChange={this.onChangeAgeMin} />
         </div>
         <div className="custom-slider">
-          ageMax: {search.ageMax} <Slider style={{ width: '100px', marginBottom: '0px' }} name="max" min={12} max={48} step={1} value={search.ageMax} onChange={this.onChangeAgeMax} />
+          Age Max: {search.ageMax} <Slider style={{ width: '134px', marginBottom: '0px' }} name="max" min={12} max={48} step={1} value={search.ageMax} onChange={this.onChangeAgeMax} />
         </div>
       </div>
     );
@@ -212,15 +212,12 @@ class Main extends Component {
 
     return (
       <div style={ styles.body }>
-
         <div style={{ marginTop: '15px'}}>
           <div className="row" style={{ border: '0px 0px 40px 0px', borderBottom: '1px solid rgb(46, 110, 115)', paddingBottom: '20px', boxShadow: '0px 13px 56px -13px rgba(0,0,0,0.35)', margin: "0px -25px 0px -25px" }}>
-
             <div className="search-pod-container">
               <div className="search-pod">
                 <SelectFieldExampleSimple onChange={this.onChangeOrderBy} order={search.order} />
               </div>
-
               <div className="search-pod">
                 <RadioButtonGroup name="playerType" defaultSelected={playerType} onChange={this.onChangeRadio}>
                   <RadioButton
@@ -235,32 +232,28 @@ class Main extends Component {
                   />
                 </RadioButtonGroup>
               </div>
-
               <div className="search-pod">
                 {this.ageSlider()}
               </div>
-
               <div className="search-pod"> 
                 <TextField
                   onChange={this.onChangeText}
                   name="name"
                   autoFocus
                   value={search.name}
-                  hintText="Player Name"
+                  hintText="Name"
                   style={{ marginRight: 20, width: '200px' }}
                 />
               </div>
-
               <div className="search-pod">
                 <TextField
                   onChange={this.onChangeText}
                   name="club_contracted"
                   value={search.club_contracted}
-                  hintText="Team Name"
+                  hintText="Team"
                   style={{ width: '200px' }}
                 />
               </div>
-
               <div className="search-pod">
                 <TextField
                   floatingLabelText="Position"
@@ -271,7 +264,6 @@ class Main extends Component {
                   hintText="Use: c, lw, rw, ld, rd, g"
                 />
               </div>
-
               <div className="search-pod"> 
                 <TextField
                   onChange={this.onChangeText}
@@ -282,10 +274,7 @@ class Main extends Component {
                   style={{ marginRight: 20, width: '200px' }}
                 />
               </div>
-
             </div>
-
-
             <div style={{ float: 'right', margin: '10px 0px 0px 15px' }}>
               <a style={{ fontSize: '12px', fontFamily: 'arial' }} href="/" onClick={this.clearHandler}>Clear Search</a>
             </div>
