@@ -17,14 +17,6 @@ const styles = {
   body: {
     width: '100%',
     fontFamily: 'Courier, Monaco, monospace',
-  },
-  search: {
-    background: 'url(assets/images/6.png)',
-    position: 'fixed',
-    width: '100%',
-    backgroundSize: 'cover',
-    backgroundAttachment: 'fixed',
-    paddingTop: '20px',
   }
 };
 
@@ -41,8 +33,8 @@ class SelectFieldExampleSimple extends React.Component {
             <SelectField
               name="order"
               autoWidth={false}
-              style={{ width: '285px'}}
               floatingLabelText="Sort by..."
+              style={{ width: '200px' }}
               value={order}
               onChange={onChange}
             >
@@ -93,12 +85,12 @@ class Main extends Component {
     const { search } = this.state;
 
     return (
-      <div className="row">
-        <div className="col-lg-5">
-          Min Age: {search.ageMin} <Slider style={{ width: '200px' }} name="min" min={12} max={48} step={1} value={search.ageMin} onChange={this.onChangeAgeMin} />
+      <div>
+        <div className="custom-slider">
+          ageMin: {search.ageMin} <Slider style={{ width: '100px', marginBottom: '0px' }} name="min" min={12} max={48} step={1} value={search.ageMin} onChange={this.onChangeAgeMin} />
         </div>
-        <div className="col-lg-4">
-          Max Age: {search.ageMax} <Slider style={{ width: '200px' }} name="max" min={12} max={48} step={1} value={search.ageMax} onChange={this.onChangeAgeMax} />
+        <div className="custom-slider">
+          ageMax: {search.ageMax} <Slider style={{ width: '100px', marginBottom: '0px' }} name="max" min={12} max={48} step={1} value={search.ageMax} onChange={this.onChangeAgeMax} />
         </div>
       </div>
     );
@@ -220,14 +212,14 @@ class Main extends Component {
     return (
       <div style={ styles.body }>
 
-        <div style={styles.search}>
+        <div>
           <div className="row" style={{ border: '0px 0px 40px 0px', borderBottom: '1px solid rgb(46, 110, 115)', paddingBottom: '20px', boxShadow: '0px 13px 56px -13px rgba(0,0,0,0.35)' }}>
-            <div className="col-xl-3">
 
-              <div style={{ marginBottom: '15px' }}>
-                <SelectFieldExampleSimple onChange={this.onChangeOrderBy} order={search.order} />
-              </div>
+            <div className="search-pod">
+              <SelectFieldExampleSimple onChange={this.onChangeOrderBy} order={search.order} />
+            </div>
 
+            <div className="search-pod">
               <RadioButtonGroup name="playerType" defaultSelected={playerType} onChange={this.onChangeRadio}>
                 <RadioButton
                   style={{maxWidth: 250}}
@@ -242,47 +234,52 @@ class Main extends Component {
               </RadioButtonGroup>
             </div>
 
-            <div className="col-xl-4">
 
+            <div className="search-pod">
               {this.ageSlider()}
+            </div>
 
+            <div className="search-pod"> 
               <TextField
                 onChange={this.onChangeText}
                 name="name"
                 autoFocus
                 value={search.name}
-                hintText="Enter Player Name"
+                hintText="Player Name"
                 style={{ marginRight: 20, width: '200px' }}
               />
+            </div>
 
+            <div className="search-pod">
               <TextField
                 onChange={this.onChangeText}
                 name="club_contracted"
                 value={search.club_contracted}
-                hintText="Enter Team Name"
+                hintText="Team Name"
                 style={{ width: '200px' }}
               />
             </div>
 
-            <div className="col-xl-4">
+            <div className="search-pod">
               <TextField
-                floatingLabelText="Filter by Position"
+                floatingLabelText="Position"
                 onChange={this.onChangeText}
                 name="positions_short"
                 value={search.positions_short}
+                style={{ marginTop: '-23px', width: '200px' }}
                 hintText="Use: c, lw, rw, ld, rd, g"
               />
             </div>
 
-            <div className="col-xl-2">
-              <a style={{ fontSize: '12px', fontFamily: 'arial' }} href="/" onClick={this.clearHandler}>Clear</a>
+            <div style={{ float: 'right', margin: '40px 0px 0px 15px' }}>
+              <a style={{ fontSize: '12px', fontFamily: 'arial' }} href="/" onClick={this.clearHandler}>Clear Search</a>
             </div>
           </div>
         </div>
 
-        <div style={{ paddingTop: '220px'}}>
-          <table id ="someDiv" style={{ width: '100%', margin: '20px 0px 20px 0px' }}>
-              <thead style={{ width: '100%', fontSize: '16px', color: '#A3C3C6' }}>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ minWidth: '1400px', maxWidth: '100%', margin: '20px 0px 0px 0px' }}>
+              <thead style={{ fontSize: '16px', color: '#A3C3C6' }}>
                 { players &&
                   <tr >
                     <th>Name</th>
@@ -300,7 +297,7 @@ class Main extends Component {
                 }
               </thead>
 
-              <tbody style={{ flex: 1, width: '100%' }} className="player-list">
+              <tbody style={{ flex: 1 }} className="player-list">
                 { players && players.map(player =>
                   <tr key={player.id}>
                     <td><a href={`#/app/playerdetail/${player.id}`}><b>{player.name}</b></a></td>

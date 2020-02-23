@@ -1,13 +1,53 @@
+.player-list tr:nth-child(odd) {
+    background-color:rgba(0, 0, 0, 0.1)
+  }
+  
+  .player-list td {
+      padding: 8px;
+  }
+  
+  .player-list td {
+      padding: 8px;
+  }
+  
+  
+  body::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: rgb(36, 38, 39);
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background-color: rgb(46, 110, 115);
+    outline: 1px solid rgb(73, 110, 110);
+  }
+  
+  div::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  div::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: rgb(36, 38, 39);
+  }
+  
+  div::-webkit-scrollbar-thumb {
+    background-color: rgb(46, 110, 115);
+    outline: 1px solid rgb(73, 110, 110);
+  }
+  
 .personal-portrait img {
     position: absolute;
-    // margin-left: -100px;
-}
 
-// @media (max-width: 1895px) {
-//     .personal-portrait {
-//         display: none;
-//     }
-//   }
+    @media (max-width: 800px) {
+        display: none;
+    }
+}
 
 .snapshot-selector {
     margin-top: -60px;
@@ -21,4 +61,29 @@
 
 .app-footer {
     z-index: 9999;
+}
+
+.player-search {
+    width: 100%;
+    padding-top: 0px;
+}
+
+@media (max-width: 276px) {
+    .player-search {
+        position: inherit;
+        padding-top: 0px;
+    }
+}
+
+.search-pod {
+    width: 300px;
+    padding: 15px;
+}
+
+.custom-slider {
+    float: left;
+
+    div {
+        margin-bottom: 0px !important;
+    }
 }
