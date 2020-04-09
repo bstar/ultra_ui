@@ -304,7 +304,7 @@ class Main extends Component {
               <tbody style={{ flex: 1 }} className="player-list">
                 { players && players.map(player =>
                   <tr key={player.id}>
-                    <td style={{ borderRight: '1px solid rgb(32, 80, 83)', borderLeft: '1px solid rgb(32, 80, 83)', width: '200px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', margin: '0px 15px 0px 0px', paddingRight: '5px', paddingLeft: '10px', position: 'absolute', background: '#1C3949' }}><a href={`#/app/playerdetail/${player.id}`}><b>{player.name}</b></a></td>
+                    <td style={{ borderRight: '1px solid rgb(32, 80, 83)', borderLeft: '1px solid rgb(32, 80, 83)', width: '200px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', margin: '0px 15px 0px 0px', paddingRight: '5px', paddingLeft: '10px', position: 'absolute', background: 'rgba(28, 57, 73, 1)' }}><a href={`#/app/playerdetail/${player.id}`}><b>{player.name}</b></a></td>
                     <td style={{ paddingLeft: '210px' }} className="numeric">{player.combined_rating}</td>
                     <td className="numeric">{player.technical_rating}</td>
                     <td className="numeric">{player.mental_rating}</td>

@@ -16,6 +16,8 @@ const history = createHistory();
 const sagaMW = createSagaMiddleware();
 const routerMW = routerMiddleware(history);
 
+localStorage.setItem('league_id', "ESL");
+
 const store = createStore(
   reducers,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
@@ -23,7 +25,6 @@ const store = createStore(
 );
 
 sagaMW.run(SagaRoot);
-localStorage.setItem('league_id', "ESL");
 
 render(
   <Provider store={store}>

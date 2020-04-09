@@ -1,9 +1,11 @@
 import { leagues } from 'config/index.json';
 import { parseJson } from 'utils';
+import get from 'lodash.get';
 
 const leagueId = localStorage.getItem('league_id');
 const league = leagues[leagueId];
-const baseUri = `http://${league.address}`;
+const address = get(league, 'address', 'localhost:5151');
+const baseUri = `http://${address}`;
 
 
 export const fetchPlayer = (payload, uriRoot = baseUri) => {
