@@ -4,6 +4,25 @@ import QueueAnim from 'rc-queue-anim';
 
 const posts = [
   {
+    title: '0.4.0 Release: Web Only Going Forward',
+    date: '2020-04-09',
+    avatar: 'assets/images-demo/avatars/1.jpg',
+    author: 'Bob',
+    category: 'Release',
+    content: "This is the web-only update, no more application builds to download.  The app will no longer work so you can trash it.  We now have mobile support and all future updates will happen transparently.  These changes are a precursor to supporting player tagging, player list and ultimately a live draft.  Enjoy.",
+    issues: [
+      "Reworked Player Detail state management to use redux and redux sagas.  All accessed players will get cached now, so loading them a second time will be instantaneous.",
+      "Node server now caches all player requests.  The longer the server is up, the faster accessing players will be.",
+      "Removed a bunch of the computed scores... we only care about COM scores and offensive scores.",
+      "Introduced AO scores (Age Over).  It simply a players COM score divided by their age.",
+      "Responsive design... you can now view all pages in the tool at any aspect ratio or resolution.",
+      "Support for mobile devices.",
+      "Revamped search page, now supporting responsive design principles.",
+      "Can now filter by Nation.",
+      "Player search results now support a left to right pan-able table.",
+    ]
+  },
+  {
     title: '0.3.0 Release: UI Overhaul',
     date: '2019-04-26',
     avatar: 'assets/images-demo/avatars/1.jpg',
