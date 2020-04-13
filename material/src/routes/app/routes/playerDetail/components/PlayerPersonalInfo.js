@@ -14,13 +14,14 @@ const styles = {
   listItem: {
     fontFamily: 'Roboto, sans-serif',
     padding: '5px 10px 5px 15px',
-    fontSize: '18px',
+    fontSize: '16px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'left',
     textShadow: '1px 1px 3px rgba(0, 0, 0,.4)',
   },
   listTitle: {
+    width: '80px',
     fontFamily: 'Roboto, sans-serif',
     padding: '5px 10px 5px 15px',
     fontSize: '18px',
@@ -84,45 +85,19 @@ const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, han
       </div>
     </div>
     <div className="row">
-      <div className="col-xl-2">
-        <span style={styles.listTitle}>Born:</span>
-      </div>
-      <div className="col-xl-10">
-        <span style={styles.listItem}>{dob && `${dob} (${age})`}</span>
-      </div>
+      <span style={styles.listTitle}>Born:</span><span style={styles.listItem}>{dob && `${dob} (${age})`}</span>
     </div>
     <div className="row">
-      <div className="col-xl-2">
-        <span style={styles.listTitle}>Home:</span>
-      </div>
-      <div className="col-xl-10">
-        {/* <img style={styles.countryImg} src={`assets/img/flags/32/${get(player, 'nation', '').replace(' ', '-')}.png`} alt="Responsive Layout" /> */}
-        <span style={styles.listItem}>{nation && `${birth_town}, ${nation}`}</span>
-      </div>
+      <span style={styles.listTitle}>Home:</span><span style={styles.listItem}>{nation && `${birth_town}, ${nation}`}</span>
     </div>
     <div className="row">
-      <div className="col-xl-2">
-        <span style={styles.listTitle}>Shoots:</span>
-      </div>
-      <div className="col-xl-10">
-        <span style={styles.listItem}>{handedness}</span>
-      </div>
+      <span style={styles.listTitle}>Shoots:</span><span style={styles.listItem}>{handedness}</span>
     </div>
     <div className="row">
-      <div className="col-xl-2">
-        <span style={styles.listTitle}>Role:</span>
-      </div>
-      <div className="col-xl-10">
-        <span style={styles.listItem}>{player_roles}</span>
-      </div>
+      <span style={styles.listTitle}>Role:</span><span style={styles.listItem}>{player_roles}</span>
     </div>
     <div className="row">
-      <div className="col-xl-2">
-        <span style={styles.listTitle}>Ratings:</span>
-      </div>
-      <div className="col-xl-10">
-      <span style={styles.listItem}>{combined_rating} com / {(combined_rating/age).toFixed(1)} ao</span>
-      </div>
+      <span style={styles.listTitle}>Ratings:</span><span style={styles.listItem}>{combined_rating} com / {(combined_rating/age).toFixed(1)} ao</span>
     </div>
   </div>
 );

@@ -98,7 +98,7 @@ class Main extends Component {
 
   getPlayersByFilter () {
 
-    const leagueId = localStorage.getItem('league_id');
+    const leagueId = 'ESL'; //localStorage.getItem('league_id');
     const league = leagues[leagueId];
     const { search } = this.state;
     const newOrder = search.order ? `&order=${search.order}` : '';

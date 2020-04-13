@@ -16,7 +16,7 @@ const history = createHistory();
 const sagaMW = createSagaMiddleware();
 const routerMW = routerMiddleware(history);
 
-localStorage.setItem('league_id', "ESL");
+// localStorage.setItem('league_id', "ESL");
 
 const store = createStore(
   reducers,

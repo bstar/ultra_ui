@@ -4,6 +4,18 @@ import QueueAnim from 'rc-queue-anim';
 
 const posts = [
   {
+    title: '0.4.1 Release: Minor Fixes',
+    date: '2020-04-12',
+    avatar: 'assets/images-demo/avatars/1.jpg',
+    author: 'Bob',
+    category: 'Release',
+    content: "Bug fixes",
+    issues: [
+      "Fixes Player Detail blank page issue.",
+      "Fixes some minor UI issues.",
+    ]
+  },
+  {
     title: '0.4.0 Release: Web Only Going Forward',
     date: '2020-04-09',
     avatar: 'assets/images-demo/avatars/1.jpg',
