@@ -13,7 +13,7 @@ import {
 const styles = {
   listItem: {
     fontFamily: 'Roboto, sans-serif',
-    padding: '5px 10px 5px 15px',
+    padding: '3px 10px 5px 15px',
     fontSize: '16px',
     display: 'flex',
     alignItems: 'center',
@@ -23,7 +23,7 @@ const styles = {
   listTitle: {
     width: '80px',
     fontFamily: 'Roboto, sans-serif',
-    padding: '5px 10px 5px 15px',
+    padding: '3px 10px 5px 15px',
     fontSize: '18px',
     display: 'flex',
     alignItems: 'center',
@@ -45,7 +45,7 @@ const styles = {
     borderRadius: '50%',
     padding: '18px 0px 10px 0px',
     opacity: 0.2,
-    transform: 'scale(1.2, 1.2)',
+    transform: 'scale(1, 1)',
   },
   personal: {
     margin: '20px 10px 10px 0px',
@@ -68,9 +68,9 @@ const styles = {
   },
 };
 
-const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, handedness, player_roles, combined_rating, technical_rating, mental_rating, physical_rating, attributes }) => (
+const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, handedness, player_roles, combined_rating, stanley_cups_won, attributes }) => (
   <div>
-    <div className="row" style={{ minHeight: '250px' }}>
+    <div className="row" style={{ maxHeight: '222px' }}>
 
       <div className="col-xl-2">
 
@@ -84,7 +84,7 @@ const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, han
         </div>
       </div>
     </div>
-    <div className="row">
+    <div className="row" style={{ marginTop: '15px' }}>
       <span style={styles.listTitle}>Born:</span><span style={styles.listItem}>{dob && `${dob} (${age})`}</span>
     </div>
     <div className="row">
@@ -98,6 +98,9 @@ const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, han
     </div>
     <div className="row">
       <span style={styles.listTitle}>Ratings:</span><span style={styles.listItem}>{combined_rating} com / {(combined_rating/age).toFixed(1)} ao</span>
+    </div>
+    <div className="row">
+      <span style={styles.listTitle}>Cups:</span><span style={styles.listItem}>{stanley_cups_won}</span>
     </div>
   </div>
 );

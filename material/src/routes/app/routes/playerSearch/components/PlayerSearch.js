@@ -4,7 +4,7 @@ import Slider from 'material-ui/Slider';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import { leagues } from 'config/index.json';
+import { leagues } from 'config/index';
 
 
 const styles = {
@@ -43,6 +43,7 @@ class SelectFieldExampleSimple extends React.Component {
               <MenuItem value="mental_rating" primaryText="Mental Rating" />
               <MenuItem value="physical_rating" primaryText="Physical Rating" />
               <MenuItem value="att_growth" primaryText="Attributes growth" />
+              <MenuItem value="age_over" primaryText="Age / Over" />
             </SelectField>
           </div>
     );
@@ -282,7 +283,7 @@ class Main extends Component {
         </div>
 
         <div className="player-table-container" style={{ overflowX: 'auto' }}>
-          <table className="player-search-table" style={{ minWidth: '1400px', maxWidth: '100%', margin: '20px 0px 20px 0px' }}>
+          <table className="player-search-table" style={{ minWidth: '1700px', maxWidth: '100%', margin: '20px 0px 20px 0px' }}>
               <thead style={{ fontSize: '14px', color: '#A3C3C6' }}>
                 { players &&
                   <tr >
@@ -294,6 +295,7 @@ class Main extends Component {
                     <th className="numeric">Role</th>
                     <th className="numeric">Growth</th>
                     <th className="numeric">Age</th>
+                    <th className="numeric">Age / Over</th>
                     <th className="numeric">Nation</th>
                     <th className="numeric">Contracted</th>
                     <th className="numeric">Positions</th>
@@ -304,7 +306,7 @@ class Main extends Component {
               <tbody style={{ flex: 1 }} className="player-list">
                 { players && players.map(player =>
                   <tr key={player.id}>
-                    <td style={{ borderRight: '1px solid rgb(32, 80, 83)', borderLeft: '1px solid rgb(32, 80, 83)', width: '200px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', margin: '0px 15px 0px 0px', paddingRight: '5px', paddingLeft: '10px', position: 'absolute', background: 'rgba(28, 57, 73, 1)' }}><a href={`#/app/playerdetail/${player.id}`}><b>{player.name}</b></a></td>
+                    <td style={{ borderRight: '1px solid rgb(32, 80, 83)', borderLeft: '1px solid rgb(32, 80, 83)', width: '205px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', margin: '0px 15px 0px 0px', paddingRight: '5px', paddingLeft: '10px', position: 'absolute', background: 'rgba(28, 57, 73, 1)' }}><a href={`#/app/playerdetail/${player.id}`}><b>{player.name}</b></a></td>
                     <td style={{ paddingLeft: '210px' }} className="numeric">{player.combined_rating}</td>
                     <td className="numeric">{player.technical_rating}</td>
                     <td className="numeric">{player.mental_rating}</td>
@@ -312,6 +314,7 @@ class Main extends Component {
                     <td className="numeric">{player.player_roles}</td>
                     <td className="numeric">{player.att_growth}</td>
                     <td className="numeric">{player.age}</td>
+                    <td className="numeric">{player.age_over && player.age_over.toFixed(2)}</td>
                     <td className="numeric">{player.nation}</td>
                     <td className="numeric">{player.club_contracted}</td>
                     <td className="numeric">{player.positions_short}</td>

@@ -1,4 +1,4 @@
-import { leagues } from 'config/index.json';
+import { leagues } from 'config';
 import { parseJson } from 'utils';
 import get from 'lodash.get';
 

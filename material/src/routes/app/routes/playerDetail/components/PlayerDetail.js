@@ -76,6 +76,7 @@ class Main extends Component {
                   mental_rating={player.mental_rating}
                   physical_rating={player.physical_rating}
                   positions_short={player.positions_short}
+                  stanley_cups_won={player.stanley_cups_won}
                   attributes={attributes} />
               </div>
             </div>
