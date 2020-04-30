@@ -4,37 +4,22 @@ const Statboxes = ({ player }) => {
 
   const getRatingColor = rating => {
 
-    if (rating < 30) {
+    const convertedRating = rating.toFixed(0);
+
+    if (convertedRating < 30) {
       return 'red';
     }
 
-    if (rating < 70) {
+    if (convertedRating < 60) {
       return 'orange';
     }
 
-    if (rating < 80) {
+    if (convertedRating < 85) {
       return 'green';
     }
 
     return 'blue';
-  }
-
-  const getMentalRatingColor = rating => {
-
-    if (rating < 30) {
-      return 'red';
-    }
-
-    if (rating < 50) {
-      return 'orange';
-    }
-
-    if (rating < 75) {
-      return 'green';
-    }
-
-    return 'blue';
-  }
+  };
 
   const styles = {
     statText: {
@@ -57,9 +42,9 @@ const Statboxes = ({ player }) => {
       padding: '15px 10px 0px 10px',
     },
     colShadow: {
-      boxShadow: '1px 1px 18px rgba(1, 1, 1, .35)'
+      boxShadow: '1px 1px 18px rgba(1, 1, 1, .35)',
     }
-  }
+  };
 
   return (
     <div className="row">
@@ -70,28 +55,12 @@ const Statboxes = ({ player }) => {
               <div style={ styles.statText } className="row">
                 <div className="col-xl-12">
                   <div className={`${getRatingColor(player.combined_off_weighted)}`}>
-                    {player.combined_off_weighted.toFixed(0)}
+                    {((player.combined_off_weighted * .01)*20).toFixed(1)}
                   </div>
                   <div style={{...styles.ratingsLabel}}>
                     Offensive Combined
                   </div>
                 </div>
-                {/* <div className="col-xl-4">
-                  <div className={`${getRatingColor(player.combined_def_weighted)}`}>
-                    {player.combined_def_weighted.toFixed(2)}
-                  </div>
-                  <div style={{...styles.ratingsLabel}}>
-                    Defensive
-                  </div>
-                </div>
-                <div className="col-xl-4">
-                  <div className={`${getRatingColor(player.combined_two_weighted)}`}>
-                    {player.combined_two_weighted.toFixed(2)}
-                  </div>
-                  <div style={{...styles.ratingsLabel}}>
-                    Two Way
-                  </div>
-                </div> */}
               </div>
             }
           </div>
@@ -107,28 +76,12 @@ const Statboxes = ({ player }) => {
               <div style={ styles.statText } className="row">
                 <div className="col-xl-12">
                   <div className={`${getRatingColor(player.technical_off_weighted)}`}>
-                    {player.technical_off_weighted.toFixed(0)}
+                    {((player.technical_off_weighted * .01)*20).toFixed(1)}
                   </div>
                   <div style={{...styles.ratingsLabel}}>
                     Offensive Technical
                   </div>
                 </div>
-                {/* <div className="col-xl-4">
-                  <div className={`${getRatingColor(player.technical_def_weighted)}`}>
-                    {player.technical_def_weighted.toFixed(2)}
-                  </div>
-                  <div style={{...styles.ratingsLabel}}>
-                    Defensive
-                  </div>
-                </div>
-                <div className="col-xl-4">
-                  <div className={`${getRatingColor(player.technical_two_weighted)}`}>
-                    {player.technical_two_weighted.toFixed(2)}
-                  </div>
-                  <div style={{...styles.ratingsLabel}}>
-                    Two Way
-                  </div>
-                </div> */}
               </div>
             }
           </div>
@@ -144,29 +97,13 @@ const Statboxes = ({ player }) => {
             { player.id &&
               <div style={ styles.statText } className="row">
                 <div className="col-xl-12">
-                  <div className={`${getMentalRatingColor(player.mental_off_weighted)}`}>
-                    {player.mental_off_weighted.toFixed(0)}
+                  <div className={`${getRatingColor(player.mental_off_weighted)}`}>
+                    {((player.mental_off_weighted * .01)*20).toFixed(1)}
                   </div>
                   <div style={{...styles.ratingsLabel}}>
                     Offensive Mental
                   </div>
                 </div>
-                {/* <div className="col-xl-4">
-                  <div className={`${getMentalRatingColor(player.mental_def_weighted)}`}>
-                    {player.mental_def_weighted.toFixed(2)}
-                  </div>
-                  <div style={{...styles.ratingsLabel}}>
-                    Defensive
-                  </div>
-                </div>
-                <div className="col-xl-4">
-                  <div className={`${getMentalRatingColor(player.mental_two_weighted)}`}>
-                    {player.mental_two_weighted.toFixed(2)}
-                  </div>
-                  <div style={{...styles.ratingsLabel}}>
-                    Two Way
-                  </div>
-                </div> */}
               </div>
             }
           </div>
@@ -182,28 +119,12 @@ const Statboxes = ({ player }) => {
               <div style={ styles.statText } className="row">
                 <div className="col-xl-12">
                   <div className={`${getRatingColor(player.physical_off_weighted)}`}>
-                    {player.physical_off_weighted.toFixed(0)}
+                    {((player.physical_off_weighted * .01)*20).toFixed(1)}
                   </div>
                   <div style={{...styles.ratingsLabel}}>
                     Offensive Physical
                   </div>
                 </div>
-                {/* <div className="col-xl-4">
-                  <div className={`${getRatingColor(player.physical_def_weighted)}`}>
-                    {player.physical_def_weighted.toFixed(2)}
-                  </div>
-                  <div style={{...styles.ratingsLabel}}>
-                    Defensive
-                  </div>
-                </div>
-                <div className="col-xl-4">
-                  <div className={`${getRatingColor(player.physical_two_weighted)}`}>
-                    {player.physical_two_weighted.toFixed(2)}
-                  </div>
-                  <div style={{...styles.ratingsLabel}}>
-                    Two Way
-                  </div>
-                </div> */}
               </div>
             }
           </div>

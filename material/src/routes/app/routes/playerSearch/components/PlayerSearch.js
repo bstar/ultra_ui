@@ -4,7 +4,7 @@ import Slider from 'material-ui/Slider';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import { leagues } from 'config/index';
+import { leagues } from 'config';
 
 
 const styles = {

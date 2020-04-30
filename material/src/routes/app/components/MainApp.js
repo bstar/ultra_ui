@@ -22,7 +22,7 @@ class MainApp extends React.Component {
 
           <div className="app-content-wrapper" style={{ background: 'url(assets/images/6.png)', backgroundSize: 'cover', backgroundAttachment: 'fixed' }}>
             <div className="app-content">
-              <div className="full-height">
+              <div className="full-height" style={{ maxWidth: '1800px' }}>
                   <Route path={`${match.url}/releasenotes`} component={ChangeLog} />
                   <Route path={`${match.url}/playersearch`} component={PlayerSearch} />
                   <Route path={`${match.url}/playerdetail/:playerId`} component={PlayerDetail} />

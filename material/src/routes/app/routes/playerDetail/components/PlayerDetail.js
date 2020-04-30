@@ -92,9 +92,11 @@ class Main extends Component {
         <StatBoxes player={player} />
         <div className="row">
           <div className="col-xl-6 col-lg-6">
+            Combined Growth
             <CombinedPlayerLineChart attributes={attributes} />
           </div>
           <div className="col-xl-6 col-lg-6">
+            Technical / Mental / Physical Growth
             <PlayerLineChart attributes={attributes} />
           </div>
         </div>

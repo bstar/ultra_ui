@@ -1,4 +1,4 @@
-const address = process.env.address || 'localhost:5151';
+const address = process.env.NODE_ENV === 'development' ? 'localhost:5151' : '71.12.154.75:5151';
 
 module.exports = {
     leagues:  {
@@ -6,7 +6,6 @@ module.exports = {
             id: 'esl',
             name: 'Elite: Sim League (E:SL)',
             address,
-            // address: '71.12.154.75:5151',
         },
         LOCAL: {
             id: 'local',
