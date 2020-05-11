@@ -41,7 +41,7 @@ class Lists extends Component {
                 <div style={{ width: '20px' }} /> 
                 <div className="col-xl-8">
                     { activeList &&
-                      <Boids />
+                      <Boids listName={activeList.name} />
                     }
                 </div>
             </div>

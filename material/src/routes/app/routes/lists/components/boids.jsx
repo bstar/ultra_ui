@@ -111,14 +111,13 @@ class Boids extends Component {
 
     render () {
 
+        const { listName } = this.props;
         const { boids, changed } = this.state;
-
-        console.log("BOIDS", boids)
 
         return (
             <div className="list-boids-container">
                 <div className="content-header">
-                    <h5 style={{ marginLeft: '10px' }}>Players in list ({boids.length}) { changed && (<span><button style={styles.button} onClick={this.applyOrder}>Apply Updated Ranks</button><button style={styles.button}>Cancel</button></span>) }</h5>
+                    <h5 style={{ marginLeft: '10px' }}>{listName} - {boids.length} total players { changed && (<span><button style={styles.button} onClick={this.applyOrder}>Apply Updated Ranks</button><button style={styles.button}>Cancel</button></span>) }</h5>
                 </div>
 
                 { boids.length > 0 ?

@@ -46,7 +46,7 @@ const PlayerHeading = ({ player, fallbackImage }) => (
           { player.name } <span style={styles.smallHead}>({player.positions_short})</span>
         </h3>
         <h4 style={{ ...styles.teamText }}>
-          {player.club_contracted} <span style={styles.smallHead}> #{player.ehm_id}</span>
+          {player.club_contracted} <span style={styles.smallHead}> #{player.ehm_id} #{player.id}</span>
         </h4>
       </div>
     }
