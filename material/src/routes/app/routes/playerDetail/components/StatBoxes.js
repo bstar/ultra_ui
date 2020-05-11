@@ -65,7 +65,7 @@ const Statboxes = ({ player }) => {
             }
           </div>
           <div className="box-info" style={{ top: '0%' }}>
-            <span style={ styles.headingText }>Combined Weighted Ratings</span>
+            <span style={ styles.headingText }>Combined Weighted Rating</span>
           </div>
         </div>
       </div>
@@ -86,7 +86,7 @@ const Statboxes = ({ player }) => {
             }
           </div>
           <div className="box-info" style={{ top: '0%' }}>
-            <span style={ styles.headingText }>Technical Weighted Ratings</span>
+            <span style={ styles.headingText }>Technical Weighted Rating</span>
           </div>
 
         </div>
@@ -108,7 +108,7 @@ const Statboxes = ({ player }) => {
             }
           </div>
           <div className="box-info" style={{ top: '0%' }}>
-            <span style={ styles.headingText }>Mental Weighted Ratings</span>
+            <span style={ styles.headingText }>Mental Weighted Rating</span>
           </div>
         </div>
       </div>
@@ -129,7 +129,7 @@ const Statboxes = ({ player }) => {
             }
           </div>
           <div className="box-info" style={{ top: '0%' }}>
-            <span style={ styles.headingText }>Physical Weighted Ratings</span>
+            <span style={ styles.headingText }>Physical Weighted Rating</span>
           </div>
         </div>
       </div>

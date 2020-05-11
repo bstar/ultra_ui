@@ -4,9 +4,10 @@ import Header from 'components/Header';
 import Sidenav from 'components/Sidenav';
 import Footer from 'components/Footer';
 
-import PlayerDetail from '../routes/playerDetail/'
-import PlayerSearch from '../routes/playerSearch/'
-import ChangeLog from '../routes/changeLog/'
+import PlayerDetail from '../routes/playerDetail/';
+import PlayerSearch from '../routes/playerSearch/';
+import ChangeLog from '../routes/changeLog/';
+import Lists from '../routes/lists';
 
 
 class MainApp extends React.Component {
@@ -26,6 +27,7 @@ class MainApp extends React.Component {
                   <Route path={`${match.url}/releasenotes`} component={ChangeLog} />
                   <Route path={`${match.url}/playersearch`} component={PlayerSearch} />
                   <Route path={`${match.url}/playerdetail/:playerId`} component={PlayerDetail} />
+                  <Route path={`${match.url}/lists`} component={Lists} />
               </div>
             </div>
             <Footer />
