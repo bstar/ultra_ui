@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { sortableHandle } from 'react-sortable-hoc';
-import { get } from 'lodash';
 
 
 const getBorder = (rank, pos) => {
@@ -22,7 +21,7 @@ const handleKeyPress = (e, pos, sortByNumber) => {
             e.target.value = '';
             e.target.blur();
         } else {
-            console.log("Invalid position.")
+            console.log("Invalid position.");
         }
     }
 };
@@ -34,12 +33,12 @@ const BoidCard = ({ boid, pos, sortByNumber }) => {
     if (boid) {
         return (
             <div className="boid-card-container" style={getBorder(boid.listdata.rank, pos)}>
-                <div style={{ display: 'flex', alignSelf: 'center', alignItems: 'center', flexDirection: 'column', width: '100px', fontSize: '22px', padding: '0px 18px 0px 10px', textShadow: '1px 1px 2px black' }}>
+                <div style={{ display: 'flex', userSelect: 'none', alignSelf: 'center', alignItems: 'center', flexDirection: 'column', width: '100px', fontSize: '22px', padding: '0px 18px 0px 10px', textShadow: '1px 1px 2px black' }}>
                     <div>{pos}</div>
                     <div><DragHandle /></div>
                     <div><input onKeyPress={e => handleKeyPress(e, pos, sortByNumber)} style={{ textAlign: 'center', outline: 'none', marginLeft: '2px', border: '1px solid #2e6e73', width: '30px', height: '20px', padding: '2px', fontSize: '12px', background: 'none', color: '#eee' }}></input></div>
                 </div>
-                <div style={{ flexDirection: 'row', display: 'flex', overflow: 'auto' }}>
+                <div style={{ cursor: 'auto', userSelect: 'none', flexDirection: 'row', display: 'flex', overflow: 'auto' }}>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <div style={{ padding: '0px 10px 0px 10px', width: '300px' }}>
                             <div style={{ fontSize: '18px' }}>
