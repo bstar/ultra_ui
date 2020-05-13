@@ -117,7 +117,7 @@ class Boids extends Component {
         return (
             <div className="list-boids-container">
                 <div className="content-header">
-                    <h5 style={{ marginLeft: '10px' }}>{listName} - {boids.length} total players { changed && (<span><button style={styles.button} onClick={this.applyOrder}>Apply Updated Ranks</button><button style={styles.button}>Cancel</button></span>) }</h5>
+                    <h5 style={{ margin: '10px 10px 10px 10px', paddingBottom: '10px' }}>{listName} - {boids.length} total players { changed && (<span><button style={styles.button} onClick={this.applyOrder}>Apply Updated Ranks</button><button style={styles.button}>Cancel</button></span>) }</h5>
                 </div>
 
                 { boids.length > 0 ?

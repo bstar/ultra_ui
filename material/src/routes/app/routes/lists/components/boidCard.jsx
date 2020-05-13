@@ -36,14 +36,14 @@ const BoidCard = ({ boid, pos, sortByNumber }) => {
                 <div style={{ display: 'flex', userSelect: 'none', alignSelf: 'center', alignItems: 'center', flexDirection: 'column', width: '100px', fontSize: '22px', padding: '0px 18px 0px 10px', textShadow: '1px 1px 2px black' }}>
                     <div>{pos}</div>
                     <div><DragHandle /></div>
-                    <div><input onKeyPress={e => handleKeyPress(e, pos, sortByNumber)} style={{ textAlign: 'center', outline: 'none', marginLeft: '2px', border: '1px solid #2e6e73', width: '30px', height: '20px', padding: '2px', fontSize: '12px', background: 'none', color: '#eee' }}></input></div>
+                    <div><input onKeyPress={e => handleKeyPress(e, pos, sortByNumber)} style={{ textAlign: 'center', outline: 'none', border: '1px solid #2e6e73', width: '28px', height: '20px', padding: '2px', fontSize: '12px', background: 'none', color: '#eee' }}></input></div>
                 </div>
                 <div style={{ cursor: 'auto', userSelect: 'none', flexDirection: 'row', display: 'flex', overflow: 'auto' }}>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <div style={{ padding: '0px 10px 0px 10px', width: '300px' }}>
                             <div style={{ fontSize: '18px' }}>
                                 <a style={{ paddingRight: '5px' }} href={`#/app/playerdetail/${boid.id}`}>{boid.name}</a> 
-                                <span style={{ fontSize: '12px' }}>{boid.positions_short}</span>
+                                <span style={{ fontSize: '11px' }}><b>{boid.positions_short}</b></span>
                             </div>
                             <div>{boid.dob} ({boid.age})</div>
                             <div><b>Nation: </b>{boid.nation}</div>

@@ -68,12 +68,11 @@ const styles = {
   },
 };
 
-const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, handedness, player_roles, combined_rating, stanley_cups_won, attributes }) => (
+const PlayerPersonalInfo = ({ lists, dob, age, positions_short, birth_town, nation, handedness, player_roles, combined_rating, stanley_cups_won, attributes }) => (
   <div>
     <div className="row" style={{ maxHeight: '222px' }}>
 
       <div className="col-xl-2">
-
         <div className="personal-portrait">
           <img src={`assets/img/portraits/${getPortrait(positions_short)}.png`} alt="Responsive Layout" style={styles.portrait} />
         </div>
@@ -84,28 +83,44 @@ const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, han
         </div>
       </div>
     </div>
-    <div className="row" style={{ marginTop: '15px' }}>
-      <span style={styles.listTitle}>Born:</span><span style={styles.listItem}>{dob && `${dob} (${age})`}</span>
+
+    <div style={{ display: 'flex', flexDirection: 'row', paddingRight: '10px', marginTop: '10px' }}>
+      <div style={{ paddingRight: '10px', width: '60%' }}>
+        <div className="row" style={{ marginTop: '15px' }}>
+          <span style={styles.listTitle}>Born:</span><span style={styles.listItem}>{dob && `${dob} (${age})`}</span>
+        </div>
+        <div className="row">
+          <span style={styles.listTitle}>Home:</span><span style={styles.listItem}>{nation && `${birth_town}, ${nation}`}</span>
+        </div>
+        <div className="row">
+          <span style={styles.listTitle}>Shoots:</span><span style={styles.listItem}>{handedness}</span>
+        </div>
+        <div className="row">
+          <span style={styles.listTitle}>Role:</span><span style={styles.listItem}>{player_roles}</span>
+        </div>
+        <div className="row">
+          <span style={styles.listTitle}>Ratings:</span><span style={styles.listItem}>{combined_rating} com / {(combined_rating/age).toFixed(1)} ao</span>
+        </div>
+        <div className="row">
+          <span style={styles.listTitle}>Cups:</span><span style={styles.listItem}>{stanley_cups_won}</span>
+        </div>
+      </div>
+
+      <div style={{ margin: '15px 0px 0px 0px', width: '40%', overflowY: 'auto', position: 'relative', height: '155px' }}>
+        <div style={{ marginBottom: '7px', color: 'rgb(159, 207, 223)', fontWeight: 500, textShadow: 'rgba(0, 0, 0, 0.4) 1px 1px 3px', fontSize: '18px' }}>Lists:</div>
+
+        { lists.map(list => {
+          return <div><a href={`#/app/lists`}>{list.name} ({list.listdata.rank})</a></div>
+        })}
+
+      </div>
     </div>
-    <div className="row">
-      <span style={styles.listTitle}>Home:</span><span style={styles.listItem}>{nation && `${birth_town}, ${nation}`}</span>
-    </div>
-    <div className="row">
-      <span style={styles.listTitle}>Shoots:</span><span style={styles.listItem}>{handedness}</span>
-    </div>
-    <div className="row">
-      <span style={styles.listTitle}>Role:</span><span style={styles.listItem}>{player_roles}</span>
-    </div>
-    <div className="row">
-      <span style={styles.listTitle}>Ratings:</span><span style={styles.listItem}>{combined_rating} com / {(combined_rating/age).toFixed(1)} ao</span>
-    </div>
-    <div className="row">
-      <span style={styles.listTitle}>Cups:</span><span style={styles.listItem}>{stanley_cups_won}</span>
-    </div>
+
   </div>
 );
 
 PlayerPersonalInfo.defaultProps = {
+  lists: [],
   dob: '',
   age: '',
   birth_town: '',

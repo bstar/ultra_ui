@@ -53,6 +53,8 @@ class Main extends Component {
 
     if (!player) return (<span></span>);
 
+    console.log("PLAYER", player.lists)
+
     return (
       <div>
         <div className="row>">
@@ -65,6 +67,7 @@ class Main extends Component {
             <div className="box box-default" style={{ overflow: 'hidden' }}>
               <div className="box-body">
                 <PlayerPersonalInfo
+                  lists={player.lists}
                   dob={player.dob}
                   age={player.age}
                   birth_town={player.birth_town}

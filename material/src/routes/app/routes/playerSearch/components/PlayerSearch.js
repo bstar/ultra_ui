@@ -1,14 +1,28 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getPlayers } from 'actions';
 import TextField from 'material-ui/TextField';
 import Slider from 'material-ui/Slider';
 import Dialog from 'material-ui/Dialog';
-import RaisedButton from 'material-ui/RaisedButton';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import FlatButton from 'material-ui/FlatButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import { leagues } from 'config';
 
+
+const mapStateToProps = state => {
+
+  return ({
+    players: state.player.search,
+  });
+};
+
+const mapDispatchToProps = dispatch => ({
+  getPlayers: query => {
+    dispatch(getPlayers(query));
+  }
+});
 
 const styles = {
   block: {
@@ -60,7 +74,6 @@ class Main extends Component {
     super(props)
 
     this.state = {
-      players: null,
       search: defaultSearch,
       lists: [],
       height: 0,
@@ -94,10 +107,10 @@ class Main extends Component {
       method: 'GET',
       headers: { Accept: 'application/json' }
     })
-      .then(response => response.json())
-      .then((response) => {
-        this.setState({ lists: response });
-      })
+    .then(response => response.json())
+    .then((response) => {
+      this.setState({ lists: response });
+    });
   }
 
   ageSlider () {
@@ -118,33 +131,22 @@ class Main extends Component {
 
   getPlayersByFilter () {
 
-    const leagueId = 'ESL'; //localStorage.getItem('league_id');
-    const league = leagues[leagueId];
+    const { getPlayers } = this.props;
     const { search } = this.state;
-    const newOrder = search.order ? `&order=${search.order}` : '';
-    const noatts = '&noatts=true';
-    const limit = '&limit=100'
     const playerName = search.name ? `|name:${search.name}` : '';
     const role = search.role ? `|player_roles:${search.role}` : '';
     const nation = search.nation ? `|nation:${search.nation}` : '';
     const team = search.club_contracted ? `|club_contracted:${search.club_contracted}` : '';
     const age = `age_between:${search.ageMin},${search.ageMax}`;
     const position = search.positions_short ?  `|positions_short:${search.positions_short}` : '';
+    const newOrder = search.order ? `&order=${search.order}` : '';
+    const noatts = '&noatts=true';
+    const limit = '&limit=100'
+    const params = `where=${age}${playerName}${nation}${position}${team}${role}${noatts}${newOrder}${limit}`;
 
     localStorage.setItem('player_search', JSON.stringify(search));
 
-    if (league) { // league_id is loaded from local storage
-      const url = league && `http://${league.address}/boids?where=${age}${playerName}${nation}${position}${team}${role}${noatts}${newOrder}${limit}`;
-
-      fetch(url, {
-        method: 'GET',
-        headers: { Accept: 'application/json' }
-      })
-        .then(response => response.json())
-        .then((response) => {
-          this.setState({ players: response });
-        })
-    }
+    getPlayers(params);
   }
 
   onChangeText (event) {
@@ -329,17 +331,17 @@ class Main extends Component {
       body: ids,
       headers: { 'Content-Type': 'application/json' }
     })
-      .then(response => response.json())
-      .then(response => {
-        this.setState({ openAddPlayerModal: false });
-      })
+    .then(response => response.json())
+    .then(() => {
+      this.setState({ openAddPlayerModal: false });
+    });
   }
 
   render () {
 
-    const { players, search, openAddPlayerModal, openCreateListFromSearchModal, lists } = this.state;
+    const { search, openAddPlayerModal, openCreateListFromSearchModal, lists } = this.state;
+    const { players } = this.props;
     const playerType = search.positions_short === 'G' ? 'goalies' : 'players';
-
 
     return (
       <div style={ styles.body }>
@@ -348,7 +350,7 @@ class Main extends Component {
         { this.createListFromSearchModalWrapper({ title: 'Create List From Search', open: openCreateListFromSearchModal, body: <div>body content</div> }) }
 
         <div style={{ marginTop: '15px'}}>
-          <div className="row" style={{ border: '0px 0px 40px 0px', borderBottom: '1px solid rgb(46, 110, 115)', paddingBottom: '0px', boxShadow: '0px 13px 56px -13px rgba(0,0,0,0.35)', margin: "0px -25px 0px -25px" }}>
+          <div className="row" style={{ border: '0px 0px 40px 0px', borderRight: '1px solid rgb(46, 110, 115)', borderBottom: '1px solid rgb(46, 110, 115)', paddingBottom: '0px', boxShadow: '0px 13px 56px -13px rgba(0,0,0,0.35)', margin: "0px -25px 0px -25px" }}>
             <div className="search-pod-container">
               <div className="search-pod">
                 <SelectFieldExampleSimple onChange={this.onChangeOrderBy} order={search.order} />
@@ -436,21 +438,21 @@ class Main extends Component {
           </div>
         </div>
 
-        <div className="player-table-container" style={{ overflowX: 'auto' }}>
+        <div className="player-table-container" style={{ overflowX: 'auto', marginLeft: '20px' }}>
           { players ?
             <table className="player-search-table" style={{ minWidth: '1700px', maxWidth: '100%', margin: '20px 0px 20px 0px' }}>
                 <thead style={{ fontSize: '14px', color: '#A3C3C6' }}>
                   { players &&
                     <tr >
                       <th />
-                      <th style={{ paddingLeft: '210px' }} className="numeric">Combined</th>
-                      <th className="numeric">Technical</th>
-                      <th className="numeric">Mental</th>
-                      <th className="numeric">Physical</th>
-                      <th className="numeric">Role</th>
-                      <th className="numeric">Growth</th>
-                      <th className="numeric">Age</th>
+                      <th style={{ paddingLeft: '210px' }} className="numeric">COM</th>
                       <th className="numeric">A/O</th>
+                      <th className="numeric">GROW</th>
+                      <th className="numeric">TECH</th>
+                      <th className="numeric">MEN</th>
+                      <th className="numeric">PHY</th>
+                      <th className="numeric">Role</th>
+                      <th className="numeric">Age</th>
                       <th className="numeric">Nation</th>
                       <th className="numeric">Contracted</th>
                       <th className="numeric">Positions</th>
@@ -473,14 +475,14 @@ class Main extends Component {
                           </a>
                         </div>
                       </td>
-                      <td style={{ paddingLeft: '210px' }} className="numeric">{player.combined_rating}</td>
+                      <td style={{ paddingLeft: '210px', width: '270px' }} className="numeric">{player.combined_rating}</td>
+                      <td className="numeric">{player.age_over && player.age_over.toFixed(2)}</td>
+                      <td className="numeric">{player.att_growth}</td>
                       <td className="numeric">{player.technical_rating}</td>
                       <td className="numeric">{player.mental_rating}</td>
                       <td className="numeric">{player.physical_rating}</td>
                       <td className="numeric">{player.player_roles}</td>
-                      <td className="numeric">{player.att_growth}</td>
                       <td className="numeric">{player.age}</td>
-                      <td className="numeric">{player.age_over && player.age_over.toFixed(2)}</td>
                       <td className="numeric">{player.nation}</td>
                       <td className="numeric">{player.club_contracted}</td>
                       <td className="numeric">{player.positions_short}</td>
@@ -505,4 +507,7 @@ const PlayerSearch = () => (
   </section>
 );
 
-export default PlayerSearch;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Main);

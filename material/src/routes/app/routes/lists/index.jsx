@@ -35,11 +35,10 @@ class Lists extends Component {
     return (
         <div className="container-fluid no-breadcrumbs page-dashboard">
             <div className="row">
-                <div className="col-xl-3">
+                <div className="col-xl-3" style={{ padding: '30px', margin: '-20px 10px -20px -20px' }}>
                     <ListItems lists={lists} />
                 </div>
-                <div style={{ width: '20px' }} /> 
-                <div className="col-xl-8">
+                <div className="col-xl-9">
                     { activeList &&
                       <Boids listName={activeList.name} />
                     }

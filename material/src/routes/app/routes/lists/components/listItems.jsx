@@ -15,7 +15,7 @@ const ListItems = ({ lists }) => {
                 { Object.keys(grouped).map(key => (
                     <div>
                         <div className="content-header">
-                            <h5 style={{ marginLeft: '10px' }}>{key}:</h5>
+                            <h5 style={{ margin: '0px 0px 0px 20px' }}>{key}:</h5>
                         </div>
                         { orderBy(grouped[key], ['name'], ['desc']).map(list => <ListCard key={list.id} list={list} />) }
                     </div>
