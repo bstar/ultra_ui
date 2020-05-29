@@ -9,7 +9,8 @@ import Boids from './components/boids';
 
 
 const mapStateToProps = state => ({
-  lists: state.list.lists,
+  userToken: get(state, 'user.data.token'),
+  lists: get(state, 'list.lists'),
   activeList: get(state, 'list.activeList'),
 });
 
@@ -30,20 +31,24 @@ class Lists extends Component {
 
   render () {
 
-    const { lists, activeList } = this.props;
+    const { lists, activeList, userToken } = this.props;
 
     return (
         <div className="container-fluid no-breadcrumbs page-dashboard">
-            <div className="row">
-                <div className="col-xl-3" style={{ padding: '30px', margin: '-20px 10px -20px -20px' }}>
-                    <ListItems lists={lists} />
-                </div>
-                <div className="col-xl-9">
-                    { activeList &&
-                      <Boids listName={activeList.name} />
-                    }
-                </div>
-            </div>
+            { userToken ? 
+              <div className="row">
+                  <div className="col-xl-3" style={{ padding: '30px', margin: '-20px 10px -20px -20px' }}>
+                      <ListItems lists={lists} />
+                  </div>
+                  <div className="col-xl-9">
+                      { activeList &&
+                        <Boids listName={activeList.name} />
+                      }
+                  </div>
+              </div>
+            :
+              <div>Not Authorized</div>
+            }
         </div>
     );
   }

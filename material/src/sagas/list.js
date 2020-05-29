@@ -1,5 +1,5 @@
-// import { takeLatest, take, put, fork, call, race, all } from 'redux-saga/effects';
-import { takeLatest, takeEvery, put, call, all } from 'redux-saga/effects';
+import { takeLatest, takeEvery, put, call, all, select } from 'redux-saga/effects';
+import { get } from 'lodash';
 import * as types from 'constants/ActionTypes';
 import { fetchLists, fetchList, putPlayerRank } from '../api/list';
 
@@ -12,14 +12,18 @@ import {
 
 function* getListsSaga (action) {
 
-    const { json, response } = yield call(fetchLists, action.payload.id, action.payload.query);
+    const state = yield select();
+    const token = get(state, 'user.data.token') || localStorage.getItem('token');
+    const { json, response } = yield call(fetchLists, token, action.payload.query);
 
     yield put(getListsSuccess(json, { response }));
 }
 
 function* getListSaga (action) {
 
-    const { json, response } = yield call(fetchList, action.payload.id, action.payload.query);
+    const state = yield select();
+    const token = get(state, 'user.data.token');
+    const { json, response } = yield call(fetchList, action.payload.id, token, action.payload.query);
 
     yield put(getListSuccess(json, { response }));
 }

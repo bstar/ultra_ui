@@ -7,7 +7,7 @@ import { leagueConversionMap } from '../../../../../constants';
 
 const styles = {
   smallHead: {
-    fontSize: '18px',
+    fontSize: '12px',
   },
   logo: {
     maxWidth: '100%',

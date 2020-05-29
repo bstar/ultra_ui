@@ -8,6 +8,7 @@ import PlayerDetail from '../routes/playerDetail/';
 import PlayerSearch from '../routes/playerSearch/';
 import ChangeLog from '../routes/changeLog/';
 import Lists from '../routes/lists';
+import { Login, Register, Profile } from '../routes/user';
 
 
 class MainApp extends React.Component {
@@ -28,6 +29,9 @@ class MainApp extends React.Component {
                   <Route path={`${match.url}/playersearch`} component={PlayerSearch} />
                   <Route path={`${match.url}/playerdetail/:playerId`} component={PlayerDetail} />
                   <Route path={`${match.url}/lists`} component={Lists} />
+                  <Route path={`${match.url}/login`} component={Login} />
+                  <Route path={`${match.url}/registration`} component={Register} />
+                  <Route path={`${match.url}/profile`} component={Profile} />
               </div>
             </div>
             <Footer />

@@ -1,57 +1,105 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { leagues } from '../../config';
+import { connect } from 'react-redux';
+import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
-import SelectField from 'material-ui/SelectField';
+import IconButton from 'material-ui/IconButton/IconButton';
+import { withRouter } from 'react-router-dom';
+import { invalidateJWTUser } from 'actions';
 
 
-const isDevelopment = process.env.NODE_ENV === 'development';
+const mapStateToProps = state => ({
+  user: state.user.jwt,
+});
 
-const styles = {
-  title: {
-    fontSize: '24px',
-    padding: '20px',
+const mapDispatchToProps = dispatch => ({
+  logout: () => {
+    dispatch(invalidateJWTUser());
   }
-}
+});
+
+const listItemStyle = {
+  paddingLeft: '50px' // 36 + 16, algin with sub list
+};
 
 class NavRightList extends React.Component {
 
-  handleChange = (e, index, value) => {
+  handleChange = (event, value) => {
 
-    const { history } = this.props;
-    localStorage.setItem('league_id', value);
+    this.props.history.push(value);
+  }
 
-    history.push('/');
+  handleLogout = () => {
+
+    const { logout } = this.props;
+
+    logout();
   }
 
   render () {
 
-    const leagueId = localStorage.getItem('league_id');
+    const { user } = this.props;
 
     return (
-      <ul className="list-unstyled" >
-        <li style={ styles.title }>
-          <div>
-            <SelectField
-              name="league"
-              autoWidth={true}
-              value={leagueId}
-              hintText="Choose League"
-              style={{ marginTop: '-10px' }}
-              onChange={this.handleChange}
-            >
-              { leagues && Object.keys(leagues).map(league => {
-                const name = leagues[league].name; 
-                if (league === 'LOCAL' && !isDevelopment){ return (<span></span>) };
+      <ul className="list-unstyled float-right">
 
-                return (<MenuItem key={name} value={league} primaryText={name} />);
-              })}
-            </SelectField>
-            </div>
-        </li>
+        { user && user.id ?
+          <li style={{ marginRight: '20px' }}>
+            <span>{user.id}</span>
+            <IconMenu
+              iconButtonElement={<IconButton style={{ marginRight: '10px' }}><img src="assets/images-demo/player3.png" alt="" className="rounded-circle img40_40" /></IconButton>}
+              listStyle={{ border: '1px solid rgb(46, 110, 115)', borderRadius: '5px' }}
+              onChange={this.handleChange}
+              anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+              targetOrigin={{horizontal: 'right', vertical: 'top'}}
+              menuStyle={{minWidth: '150px'}}
+                      >
+              <MenuItem
+                value="/app/profile"
+                primaryText="Profile"
+                innerDivStyle={listItemStyle}
+                style={{fontSize: '14px', lineHeight: '48px' }}
+                leftIcon={<i className="material-icons">person_outline</i>}
+                          />
+              <MenuItem
+                value="/app/login"
+                onClick={this.handleLogout}
+                primaryText="Log Out"
+                innerDivStyle={listItemStyle}
+                style={{fontSize: '14px', lineHeight: '48px'}}
+                leftIcon={<i className="material-icons">forward</i>}
+                          />
+            </IconMenu>
+          </li>        
+        :
+          <li style={{ marginRight: '20px' }}>
+            <IconMenu
+              iconButtonElement={<IconButton style={{ filter: 'invert(1)', marginRight: '10px' }}><img src="assets/images-demo/player2.png" alt="" className="rounded-circle img40_40" /></IconButton>}
+              listStyle={{ border: '1px solid rgb(46, 110, 115)', borderRadius: '5px' }}
+              onChange={this.handleChange}
+              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+              targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+              menuStyle={{ minWidth: '150px' }}
+            >
+              <MenuItem
+                value="/app/login"
+                primaryText="Login"
+                innerDivStyle={listItemStyle}
+                style={{fontSize: '14px', lineHeight: '48px' }}
+                leftIcon={<i className="material-icons">person_outline</i>}
+              />
+              <MenuItem
+                value="/register"
+                primaryText="Register"
+                innerDivStyle={listItemStyle}
+                style={{fontSize: '14px', lineHeight: '48px'}}
+                leftIcon={<i className="material-icons">forward</i>}
+              />
+            </IconMenu>
+          </li>
+        }
       </ul>
     );
   }
 }
 
-export default withRouter(NavRightList);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavRightList));

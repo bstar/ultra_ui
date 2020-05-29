@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getPlayers } from 'actions';
+import { get } from 'lodash';
+import { getPlayers, getLists } from 'actions';
 import TextField from 'material-ui/TextField';
 import Slider from 'material-ui/Slider';
 import Dialog from 'material-ui/Dialog';
@@ -15,13 +16,13 @@ const mapStateToProps = state => {
 
   return ({
     players: state.player.search,
+    lists: get(state, 'list.lists'),
   });
 };
 
 const mapDispatchToProps = dispatch => ({
-  getPlayers: query => {
-    dispatch(getPlayers(query));
-  }
+  getPlayers: query => dispatch(getPlayers(query)),
+  getLists: () => dispatch(getLists()),
 });
 
 const styles = {
@@ -93,24 +94,13 @@ class Main extends Component {
 
   componentDidMount () {
 
-    const leagueId = 'ESL';
-    const league = leagues[leagueId];
     const searchString = localStorage.getItem('player_search');
 
     if (searchString) {
       this.setState({ search: JSON.parse(searchString) }, () => this.getPlayersByFilter());
     }
 
-    const getListsUrl = league && `http://${league.address}/lists`;
-
-    fetch(getListsUrl, {
-      method: 'GET',
-      headers: { Accept: 'application/json' }
-    })
-    .then(response => response.json())
-    .then((response) => {
-      this.setState({ lists: response });
-    });
+    this.props.getLists();
   }
 
   ageSlider () {
@@ -266,14 +256,15 @@ class Main extends Component {
 
   addPlayerBody () {
 
-    const { lists, stagedPlayers } = this.state;
+    const { stagedPlayers } = this.state;
+    const { lists } = this.props;
     const player = stagedPlayers && stagedPlayers[0];
     
     return (
       <div>
-        <div>{player && player.name} ({player && player.id})</div>
+        <h4>{player && player.name} ({player && player.id})</h4>
         <div>
-          { lists.map(list => {
+          { lists && lists.map(list => {
 
             const buttonClass = (list.id == this.state.stagedList) ? 'selectedListButton' : 'listButton';
 
@@ -324,8 +315,10 @@ class Main extends Component {
     const leagueId = 'ESL';
     const league = leagues[leagueId];
     const url = league && `http://${league.address}/list/${listId}/boids/add`;
-
     const ids = JSON.stringify({ boidIds: [boidIds[0].id] });
+
+    console.log("IDS", ids)
+
     fetch(url, {
       method: 'POST',
       body: ids,
@@ -349,9 +342,9 @@ class Main extends Component {
         { lists && this.addPlayerModalWrapper({ title: 'Select list to add player', open: openAddPlayerModal, body: this.addPlayerBody() }) }
         { this.createListFromSearchModalWrapper({ title: 'Create List From Search', open: openCreateListFromSearchModal, body: <div>body content</div> }) }
 
-        <div style={{ marginTop: '15px'}}>
+        <div>
           <div className="row" style={{ border: '0px 0px 40px 0px', borderRight: '1px solid rgb(46, 110, 115)', borderBottom: '1px solid rgb(46, 110, 115)', paddingBottom: '0px', boxShadow: '0px 13px 56px -13px rgba(0,0,0,0.35)', margin: "0px -25px 0px -25px" }}>
-            <div className="search-pod-container">
+            <div className="search-pod-container" style={{ paddingTop: '12px' }}>
               <div className="search-pod">
                 <SelectFieldExampleSimple onChange={this.onChangeOrderBy} order={search.order} />
               </div>
@@ -463,9 +456,9 @@ class Main extends Component {
                 <tbody style={{ flex: 1 }} className="player-list">
                   { players && players.map(player =>
                     <tr key={player.id}>
-                      <td style={{ display: 'flex', borderRight: '1px solid rgb(32, 80, 83)', borderLeft: '1px solid rgb(32, 80, 83)', width: '205px', margin: '0px 15px 0px 0px', paddingRight: '5px', paddingLeft: '5px', position: 'absolute', background: 'rgba(28, 57, 73, 1)' }}>
+                      <td style={{ height: '28px', display: 'flex', borderRight: '1px solid rgb(32, 80, 83)', borderLeft: '1px solid rgb(32, 80, 83)', width: '205px', margin: '0px 15px 0px 0px', paddingRight: '5px', paddingLeft: '5px', position: 'absolute', background: 'rgba(28, 57, 73, 1)' }}>
 
-                        <FlatButton onClick={e => { this.setModal({ openAddPlayerModal: true, stagedPlayers: [{ id: player.id, name: player.name }] }) }} style={{ minWidth: '30px', marginRight: '5px' }}>
+                        <FlatButton onClick={e => { this.setModal({ openAddPlayerModal: true, stagedPlayers: [{ id: player.id, name: player.name }] }) }} style={{ minWidth: '30px', marginRight: '5px', height: '24px' }}>
                           <i className="nav-icon material-icons" style={{ color: '#1ecbce' }}>playlist_add</i>
                         </FlatButton>
 

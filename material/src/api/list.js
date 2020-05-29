@@ -7,16 +7,22 @@ const address = get(league, 'address', 'localhost:5151');
 const baseUri = `http://${address}`;
 
 
-export const fetchLists = (uriRoot = baseUri) => {
+export const fetchLists = (token, uriRoot = baseUri) => {
 
     const url = `${uriRoot}/lists`;
 
-    return fetch(url)
+    return fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': `JWT ${token}`, 
+            },
+        })
         .then(parseJson)
         .then(({ json, response }) => ({ json, response }));
 };
 
-export const fetchList = (id, uriRoot = baseUri) => {
+export const fetchList = (id, token, uriRoot = baseUri) => {
 
     const url = `${uriRoot}/list/${id}`;
 

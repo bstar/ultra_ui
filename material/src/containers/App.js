@@ -1,50 +1,64 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { get } from 'lodash';
 import classnames from 'classnames';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Route, Redirect } from 'react-router-dom';
+import { setJWTUser } from 'actions';
 
 import MainApp from 'routes/app/'
 import Page404 from 'routes/404/'
 import Page500 from 'routes/500/'
 
-
-// = styles =
-// 3rd
 import 'styles/bootstrap.scss';
-// custom
 import 'styles/layout.scss';
 import 'styles/theme.scss';
 import 'styles/ui.scss';
 import 'styles/app.scss';
 
-import lightTheme from './themes/lightTheme';
 import darkTheme from './themes/darkTheme';
-import grayTheme from './themes/grayTheme';
 
 
+const mapStateToProps = (state, ownProps) => ({
+  layoutBoxed: state.settings.layoutBoxed,
+  navCollapsed: state.settings.navCollapsed,
+  navBehind: state.settings.navBehind,
+  fixedHeader: state.settings.fixedHeader,
+  sidebarWidth: state.settings.sidebarWidth,
+  theme: state.settings.theme,
+  user: state.user,
+});
+
+const mapDispatchToProps = dispatch => ({
+  setUser: token => {
+    dispatch(setJWTUser(token));
+  }
+});
 
 class App extends Component {
-  componentDidMount() {}
+
+  componentDidMount () {
+
+    const { user, setUser } = this.props;
+    const reduxToken = get(user, 'data.token');
+    const localToken = localStorage.getItem('token');
+
+    if (!reduxToken) {
+
+      if (localToken) {
+        setUser(localToken);
+      }
+    }
+  }
 
   render() {
     const { match, location, layoutBoxed, navCollapsed, navBehind, fixedHeader, sidebarWidth, theme } = this.props;
-    let materialUITheme;
-    switch (theme) {
-      case 'gray':
-        materialUITheme = grayTheme;
-        break;
-      case 'dark':
-        materialUITheme = darkTheme;
-        break;
-      default:
-        materialUITheme = lightTheme;
-    }
-
+    const materialUITheme = darkTheme;
     const isRoot = location.pathname === '/' ? true : false;
+
     if (isRoot) {
-      return ( <Redirect to={'/app/playersearch'}/> );
+      return <Redirect to={'/app/playersearch'} />;
     }
 
     return (
@@ -72,15 +86,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  layoutBoxed: state.settings.layoutBoxed,
-  navCollapsed: state.settings.navCollapsed,
-  navBehind: state.settings.navBehind,
-  fixedHeader: state.settings.fixedHeader,
-  sidebarWidth: state.settings.sidebarWidth,
-  theme: state.settings.theme,
-});
-
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps,
 )(App);

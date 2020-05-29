@@ -43,7 +43,7 @@ const styles = {
   portrait: {
     height: 'auto',
     borderRadius: '50%',
-    padding: '18px 0px 10px 0px',
+    padding: '10px 0px 10px 0px',
     opacity: 0.2,
     transform: 'scale(1, 1)',
   },
@@ -70,23 +70,19 @@ const styles = {
 
 const PlayerPersonalInfo = ({ lists, dob, age, positions_short, birth_town, nation, handedness, player_roles, combined_rating, stanley_cups_won, attributes }) => (
   <div>
-    <div className="row" style={{ maxHeight: '222px' }}>
+    <div className="row" style={{ maxHeight: '222px', display: 'flex', flexDirection: 'column' }}>
 
-      <div className="col-xl-2">
-        <div className="personal-portrait">
-          <img src={`assets/img/portraits/${getPortrait(positions_short)}.png`} alt="Responsive Layout" style={styles.portrait} />
-        </div>
+      <div style={{ width: '50%', marginLeft: '20px' }}>
+        <PlayerRadarChart position={positions_short} attributes={attributes} />
       </div>
-      <div className="col-xl-10">
-        <div>
-          <PlayerRadarChart position={positions_short} attributes={attributes} />
-        </div>
+      <div className="personal-portrait" style={{ marginRight: '150px' }}>
+        <img src={`assets/img/portraits/${getPortrait(positions_short)}.png`} alt="Responsive Layout" style={styles.portrait} />
       </div>
     </div>
 
     <div style={{ display: 'flex', flexDirection: 'row', paddingRight: '10px', marginTop: '10px' }}>
-      <div style={{ paddingRight: '10px', width: '60%' }}>
-        <div className="row" style={{ marginTop: '15px' }}>
+      <div style={{ paddingRight: '10px', minWidth: '280px' }}>
+        <div className="row" style={{ marginTop: '8px' }}>
           <span style={styles.listTitle}>Born:</span><span style={styles.listItem}>{dob && `${dob} (${age})`}</span>
         </div>
         <div className="row">
@@ -106,7 +102,7 @@ const PlayerPersonalInfo = ({ lists, dob, age, positions_short, birth_town, nati
         </div>
       </div>
 
-      <div style={{ margin: '15px 0px 0px 0px', width: '40%', overflowY: 'auto', position: 'relative', height: '155px' }}>
+      <div style={{ margin: '15px 0px 0px 0px', width: '100%', overflowY: 'auto', position: 'relative', height: '155px' }}>
         <div style={{ marginBottom: '7px', color: 'rgb(159, 207, 223)', fontWeight: 500, textShadow: 'rgba(0, 0, 0, 0.4) 1px 1px 3px', fontSize: '18px' }}>Lists:</div>
 
         { lists.map(list => {

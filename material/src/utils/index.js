@@ -30,6 +30,7 @@ const parseJson = response => {
 };
 
 const getCombinedColor = rating => {
+
     if (rating < 200) {
         return 'red';
     }
@@ -46,6 +47,7 @@ const getCombinedColor = rating => {
 };
   
 const getTechnicalColor = rating => {
+
     if (rating < 70) {
       return 'red';
     }
@@ -62,6 +64,7 @@ const getTechnicalColor = rating => {
 };
   
 const getMentalColor = rating => {
+
     if (rating < 70) {
       return 'red';
     }
@@ -78,6 +81,7 @@ const getMentalColor = rating => {
 };
   
 const getPhysicalColor = rating => {
+
     if (rating < 60) {
       return 'red';
     }

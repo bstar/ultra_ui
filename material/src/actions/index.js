@@ -21,3 +21,10 @@ export const setActiveList = (id, meta) => (universalActionCreator(types.SET_ACT
 
 export const setPlayerRank = (player, meta) => (universalActionCreator(types.SET_PLAYER_RANK, { player }, meta));
 export const setPlayerRankSuccess = (json, meta) => (universalActionCreator(types.SET_PLAYER_RANK_SUCCESS, json, meta));
+
+export const getJWT = (username, password, meta) => (universalActionCreator(types.GET_JWT, { username, password }, meta));
+export const getJWTSuccess = (json, meta) => (universalActionCreator(types.GET_JWT_SUCCESS, json, meta));
+
+export const setJWTUser = (token, meta) => (universalActionCreator(types.SET_JWT_USER, { token }, meta));
+export const invalidateJWTUser = () => (universalActionCreator(types.INVALIDATE_JWT_USER, {}));
+export const invalidateJWTUserSuccess = (json, meta) => (universalActionCreator(types.INVALIDATE_JWT_USER_SUCCESS, json, meta));

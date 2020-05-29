@@ -107,7 +107,7 @@ radar.options = ({ position, attsArray }) => {
 };
 
 const PlayerRadarChart = ({ position, attributes }) => (
-  <ReactEcharts style={{ height: '210px', marginTop: '20px', position: 'unset' }} option={radar.options({ position, attsArray: attributes })} showLoading={false} />
+  <ReactEcharts style={{ height: '210px', width: '280px', marginTop: '15px', position: 'unset' }} option={radar.options({ position, attsArray: attributes })} showLoading={false} />
 );
 
 export default PlayerRadarChart;

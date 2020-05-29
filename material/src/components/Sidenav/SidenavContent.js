@@ -110,11 +110,20 @@ class SidebarContent extends React.Component {
           <li>
             <FlatButton href="#/app/releasenotes">
               <i className="nav-icon material-icons">notes</i>
-              <span className="nav-text" style={ styles.textItem }>Notes</span>
+              <span className="nav-text" style={ styles.textItem }>Releases</span>
             </FlatButton>
           </li>
           <li>
             <FlatButton href="#/app/playersearch"><i className="nav-icon material-icons">search</i><span className="nav-text" style={ styles.textItem }>Search</span></FlatButton>
+          </li>
+          <li>
+            <FlatButton href="#/app/lists"><i className="nav-icon material-icons">account_circle</i><span className="nav-text" style={ styles.textItem }>GMs</span></FlatButton>
+          </li>
+          <li>
+            <FlatButton href="#/app/lists"><i className="nav-icon material-icons">store</i><span className="nav-text" style={ styles.textItem }>Teams</span></FlatButton>
+          </li>
+          <li>
+            <FlatButton href="#/app/lists"><i className="nav-icon material-icons">language</i><span className="nav-text" style={ styles.textItem }>Rankings</span></FlatButton>
           </li>
           <li>
             <FlatButton href="#/app/lists"><i className="nav-icon material-icons">list</i><span className="nav-text" style={ styles.textItem }>Lists</span></FlatButton>
