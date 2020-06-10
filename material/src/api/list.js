@@ -44,3 +44,20 @@ export const putPlayerRank = (item, uriRoot = baseUri) => {
         .then(parseJson)
         .then(({ json, response }) => ({ json, response }));
 };
+
+export const createList = (list, token, uriRoot = baseUri) => {
+
+    const url = `${uriRoot}/lists`;
+
+    return fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(list),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${token}`,
+            },
+        })
+        .then(parseJson)
+        .then(({ json, response }) => ({ json, response }));
+};

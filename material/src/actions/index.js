@@ -17,6 +17,9 @@ export const getListsSuccess = (json, meta) => (universalActionCreator(types.GET
 export const getList = (id, meta) => (universalActionCreator(types.GET_LIST, { id }, meta));
 export const getListSuccess = (json, meta) => (universalActionCreator(types.GET_LIST_SUCCESS, json, meta));
 
+export const createList = (list, meta) => (universalActionCreator(types.CREATE_LIST, list, meta));
+export const createListSuccess = (json, meta) => (universalActionCreator(types.CREATE_LIST_SUCCESS, json, meta));
+
 export const setActiveList = (id, meta) => (universalActionCreator(types.SET_ACTIVE_LIST, { id }, meta));
 
 export const setPlayerRank = (player, meta) => (universalActionCreator(types.SET_PLAYER_RANK, { player }, meta));
@@ -28,3 +31,10 @@ export const getJWTSuccess = (json, meta) => (universalActionCreator(types.GET_J
 export const setJWTUser = (token, meta) => (universalActionCreator(types.SET_JWT_USER, { token }, meta));
 export const invalidateJWTUser = () => (universalActionCreator(types.INVALIDATE_JWT_USER, {}));
 export const invalidateJWTUserSuccess = (json, meta) => (universalActionCreator(types.INVALIDATE_JWT_USER_SUCCESS, json, meta));
+export const registerUser = (user, meta) =>(universalActionCreator(types.REGISTER_USER, { user }, meta));
+export const registerUserSuccess = (json, meta) => (universalActionCreator(types.REGISTER_USER_SUCCESS, json, meta));
+
+export const loadMessage = (text, meta) => (universalActionCreator(types.LOAD_MESSAGE, { text }, meta));
+export const loadMessageSuccess = (json, meta) => (universalActionCreator(types.LOAD_MESSAGE_SUCCESS, json, meta));
+export const closeMessage = () => (universalActionCreator(types.CLOSE_MESSAGE, {}));
+export const closeMessageSuccess = (json, meta) => (universalActionCreator(types.CLOSE_MESSAGE_SUCCESS, json, meta));

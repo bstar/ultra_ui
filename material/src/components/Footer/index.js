@@ -12,7 +12,8 @@ class Footer extends React.Component {
     return (
       <section className="app-footer" style={styles}>
         <div className="container-fluid">
-          <span className="float-left">
+          <span className="float-left" style={{ color: '#ccc' }}>
+            <b style={{ color: 'rgb(159, 207, 223)'}}>Latest Snapshot:</b> 037-2029-10-02-start
           </span>
           <span className="float-right">
             <span>EHM League Companion</span>

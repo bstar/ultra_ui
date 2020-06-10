@@ -1,8 +1,8 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import * as types from 'constants/ActionTypes';
-import { fetchJWT } from '../api/user';
-import { getJWTSuccess, invalidateJWTUserSuccess } from '../actions';
+import { fetchJWT, postUser } from '../api/user';
+import { getJWTSuccess, invalidateJWTUserSuccess, registerUserSuccess } from '../actions';
 
 
 function* getJWTSaga (action) {
@@ -29,10 +29,20 @@ function* invalidateJWTUserSaga () {
     yield put(invalidateJWTUserSuccess());
 };
 
-export default function* allPlayersSagas () {
+function* regsterUserSaga (action) {
+
+    const { name, password, email } = action.payload.user;
+    const { json, response } = yield call(postUser, { name, email, password }, action.payload.query);
+
+    yield put(registerUserSuccess(json, { response }));
+    yield put(push('/app/activate'));
+};
+
+export default function* allUsersSagas () {
     yield all([
         takeLatest(types.GET_JWT, getJWTSaga),
         takeLatest(types.SET_JWT_USER, setJWTUserSaga),
         takeLatest(types.INVALIDATE_JWT_USER, invalidateJWTUserSaga),
+        takeLatest(types.REGISTER_USER, regsterUserSaga),
     ]);
 };

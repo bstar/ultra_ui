@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
-import { getPlayers, getLists } from 'actions';
+import { getPlayers, getLists, loadMessage } from 'actions';
 import TextField from 'material-ui/TextField';
 import Slider from 'material-ui/Slider';
 import Dialog from 'material-ui/Dialog';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import FlatButton from 'material-ui/FlatButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -23,6 +23,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   getPlayers: query => dispatch(getPlayers(query)),
   getLists: () => dispatch(getLists()),
+  showMessage: message => {
+    dispatch(loadMessage(message));
+  },
 });
 
 const styles = {
@@ -259,7 +262,7 @@ class Main extends Component {
     const { stagedPlayers } = this.state;
     const { lists } = this.props;
     const player = stagedPlayers && stagedPlayers[0];
-    
+
     return (
       <div>
         <h4>{player && player.name} ({player && player.id})</h4>
@@ -270,7 +273,7 @@ class Main extends Component {
 
             return (
               <div className={buttonClass}>
-                <button onClick={ () => this.setState({ stagedList: list.id })}>{list.name} ({list.id})</button>
+                <button onClick={() => this.setState({ stagedList: list.id })}>{list.name} ({list.id})</button>
               </div>
             )
           })}
@@ -279,6 +282,7 @@ class Main extends Component {
     )
   }
 
+  // TODO implement feature
   createListFromSearchModalWrapper ({ title, open, body }) {
 
     const actions = [
@@ -290,9 +294,7 @@ class Main extends Component {
       <FlatButton
         label="Submit"
         primary={true}
-        onClick={() => {
-          this.setModal({ openCreateListFromSearchModal: true })}
-        }
+        onClick={() => this.setModal({ openCreateListFromSearchModal: true })}
       />,
     ];
 
@@ -312,12 +314,11 @@ class Main extends Component {
 
   addPlayerToList ({ boidIds, listId }) {
 
+    const { showMessage } = this.props;
     const leagueId = 'ESL';
     const league = leagues[leagueId];
     const url = league && `http://${league.address}/list/${listId}/boids/add`;
     const ids = JSON.stringify({ boidIds: [boidIds[0].id] });
-
-    console.log("IDS", ids)
 
     fetch(url, {
       method: 'POST',
@@ -326,6 +327,8 @@ class Main extends Component {
     })
     .then(response => response.json())
     .then(() => {
+
+      showMessage({ open: true, text: <b>Player added to list</b> });
       this.setState({ openAddPlayerModal: false });
     });
   }

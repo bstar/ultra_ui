@@ -9,6 +9,11 @@ const styles = {
   smallHead: {
     fontSize: '12px',
   },
+  mediumHead: {
+    fontSize: '20px',
+    textShadow: '1px 1px 3px rgba(0,0,0,.4)',
+    margin: '3px 0px 3px 0px',
+  },
   logo: {
     maxWidth: '100%',
     maxHeight: '100px',
@@ -22,32 +27,32 @@ const styles = {
   },
   nameText: {
     textShadow: '1px 1px 3px rgba(52, 163, 203,.4)',
-    margin: '10px 0px 0px 10px',
+    margin: '10px 0px 2px 0px',
+    fontSize: '28px',
   },
   teamText: {
     textShadow: '1px 1px 3px rgba(0,0,0,.4)',
-    margin: '0px 0px 10px 10px',
+    padding: '0px 0px 0px 0px',
   }
 };
 
 const PlayerHeading = ({ player, fallbackImage }) => (
 
-  <div className="row" style={{ minHeight: '100px', marginTop: '-10px' }}>
+  <div className="row" style={{ minHeight: '100px', marginTop: '-8px' }}>
     <div>
       <ReactImageFallback
-        src={`assets/img/clubs/huge/${leagueConversionMap[player.division_playing] || player.division_playing}/${get(player, 'club_playing', '').toLowerCase()}.png`}
+        src={`assets/img/clubs/large/${leagueConversionMap[player.division_playing] || player.division_playing}/${get(player, 'club_playing', '').toLowerCase()}.png`}
         fallbackImage={fallbackImage}
         style={ styles.logo } />
     </div>
 
     { player.ehm_id &&
-      <div>
-        <h3 style={{ ...styles.nameText }}>
-          { player.name } <span style={styles.smallHead}>({player.positions_short})</span>
-        </h3>
-        <h4 style={{ ...styles.teamText }}>
-          {player.club_contracted} <span style={styles.smallHead}> #{player.ehm_id} #{player.id}</span>
-        </h4>
+      <div style={{ marginLeft: '10px' }}>
+        <div style={styles.nameText}>
+          { player.name } <span style={styles.smallHead}> {player.positions_short}</span>
+        </div>
+        <div style={styles.mediumHead}>{player.division_playing} / {player.club_contracted}</div>
+        <div style={styles.smallHead}> #{player.ehm_id} #{player.id}</div>
       </div>
     }
   </div>

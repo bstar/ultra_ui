@@ -5,6 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton/IconButton';
 import { withRouter } from 'react-router-dom';
 import { invalidateJWTUser } from 'actions';
+import { leagueConversionMap } from '../../constants';
 
 
 const mapStateToProps = state => ({
@@ -46,7 +47,7 @@ class NavRightList extends React.Component {
           <li style={{ marginRight: '20px' }}>
             <span>{user.id}</span>
             <IconMenu
-              iconButtonElement={<IconButton style={{ marginRight: '10px' }}><img src="assets/images-demo/player3.png" alt="" className="rounded-circle img40_40" /></IconButton>}
+              iconButtonElement={<IconButton style={{ marginRight: '10px' }}><img src={`assets/img/clubs/huge/${leagueConversionMap['NHL']}/New Jersey Devils.png`} alt="" className=" img40_40" /></IconButton>}
               listStyle={{ border: '1px solid rgb(46, 110, 115)', borderRadius: '5px' }}
               onChange={this.handleChange}
               anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
@@ -88,7 +89,7 @@ class NavRightList extends React.Component {
                 leftIcon={<i className="material-icons">person_outline</i>}
               />
               <MenuItem
-                value="/register"
+                value="/app/register"
                 primaryText="Register"
                 innerDivStyle={listItemStyle}
                 style={{fontSize: '14px', lineHeight: '48px'}}

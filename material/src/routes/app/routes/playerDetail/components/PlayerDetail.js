@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { get } from 'lodash';
+import PlayerRadarChart from './PlayerRadarChart';
 import QueueAnim from 'rc-queue-anim';
 import { getPlayer } from 'actions';
 import PlayerAttributes from './PlayerAttributes';
 import StatBoxes from './StatBoxes';
 import PlayerLineChart from './PlayerLineChart';
+import PlayerLists from './PlayerLists'
 import CombinedPlayerLineChart from './CombinedPlayerLineChart';
 import PlayerPersonalInfo from './PlayerPersonalInfo';
 import PlayerHeading from './PlayerHeading';
@@ -15,6 +18,7 @@ const mapStateToProps = state => {
   return ({
     playerMap: state.player,
     attributesMap: state.attribute,
+    lists: get(state, 'list.lists'),
   });
 };
 
@@ -46,14 +50,12 @@ class Main extends Component {
 
   render () {
 
-    const { playerMap, attributesMap, playerId } = this.props;
-
+    const { playerMap, attributesMap, playerId, lists } = this.props;
     const player = playerMap[playerId];
     const attributes = attributesMap[playerId];
 
-    if (!player) return (<span></span>);
 
-    console.log("PLAYER", player.lists)
+    if (!player) return (<span></span>);
 
     return (
       <div>
@@ -64,7 +66,7 @@ class Main extends Component {
         </div>
         <div className="row">
           <div className="col-xl-4">
-            <div className="box box-default" style={{ overflow: 'hidden' }}>
+            <div className="box box-default" style={{ overflow: 'hidden', marginBottom: '15px' }}>
               <div className="box-body">
                 <PlayerPersonalInfo
                   lists={player.lists}
@@ -83,6 +85,13 @@ class Main extends Component {
                   attributes={attributes} />
               </div>
             </div>
+            <div>
+              <div className="box box-default" style={{ overflow: 'hidden' }}>
+                <div className="box-body">
+                  <PlayerLists lists={player.lists} />
+                </div>
+              </div>
+            </div>
           </div>
           <div className="col-xl-8">
             <div className="box box-default">
@@ -94,11 +103,16 @@ class Main extends Component {
         </div>
         <StatBoxes player={player} />
         <div className="row">
-          <div className="col-xl-6 col-lg-6">
+          <div className="col-xl-2 col-lg-2" style={{ minWidth: '296px'}}>
+            <div style={{ height: '100%' }}>
+                <PlayerRadarChart position={player.positions_short} attributes={attributes} />
+            </div>
+          </div>
+          <div className="col-xl-5 col-lg-5">
             Combined Growth
             <CombinedPlayerLineChart attributes={attributes} />
           </div>
-          <div className="col-xl-6 col-lg-6">
+          <div className="col-xl-5 col-lg-5">
             Technical / Mental / Physical Growth
             <PlayerLineChart attributes={attributes} />
           </div>
@@ -106,14 +120,15 @@ class Main extends Component {
       </div>
     )
   }
-}
+};
 
-const PlayerDetail = ({ match, getPlayerById, playerMap, attributesMap }) => {
+const PlayerDetail = ({ match, getPlayerById, playerMap, attributesMap, lists }) => {
 
+  console.log("LISTSSSS", lists)
   return (
     <div className="container-fluid no-breadcrumbs page-dashboard">
       <QueueAnim type="bottom" className="ui-animate">
-        <Main playerId={match.params.playerId} getPlayerById={getPlayerById} playerMap={playerMap} attributesMap={attributesMap} />
+        <Main playerId={match.params.playerId} getPlayerById={getPlayerById} playerMap={playerMap} attributesMap={attributesMap} lists={lists} />
       </QueueAnim>
     </div>
   );

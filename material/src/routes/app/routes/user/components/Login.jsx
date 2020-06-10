@@ -65,7 +65,7 @@ class Login extends Component {
                         </div>
                     </div>
                     <div className="additional-info">
-                        <a href="#/sign-up">Register</a>
+                        <a href="#/app/register">Register</a>
                         <span className="divider-h" style={{ padding: '10px' }}> | </span>
                         <a href="#/forgot-password">Password Reset</a>
                     </div>

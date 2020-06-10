@@ -87,7 +87,6 @@ class Boids extends Component {
 
         const { boids } = this.state;
 
-        // this.setState(({ boids }) => ({ boids: arrayMove(boids, oldIndex, newIndex) }));
         this.setState({ boids: arrayMove(boids, oldIndex, newIndex) });
         this.setState({ changed: true });
     }

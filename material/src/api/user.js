@@ -22,3 +22,28 @@ export const fetchJWT = (username, password, uriRoot = baseUri) => {
         .then(parseJson)
         .then(({ json, response }) => ({ json, response }));
 };
+
+export const checkUserName = (name, uriRoot = baseUri) => {
+
+    const url = `${uriRoot}/user/${name}/exists`;
+
+    return fetch(url)
+        .then(parseJson)
+        .then(({ json, response }) => ({ json, response }));
+};
+
+export const postUser = ({ name, email, password }, uriRoot = baseUri) => {
+
+    const url = `${uriRoot}/register`;
+
+    return fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({ name, email, password }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(parseJson)
+        .then(({ json, response }) => ({ json, response }));
+};
