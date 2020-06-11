@@ -122,7 +122,7 @@ class Boids extends Component {
                 { boids.length > 0 ?
                     <SortableList useDragHandle lockAxis="y" boids={boids} onSortEnd={this.onSortEnd} sortByNumber={this.onSortEnd} />
                :
-                    <div className="warning">This list has no players.</div>
+                    <div className="warning" style={{ paddingLeft: '10px' }}>This list has no players.</div>
                 }
             </div>
         );

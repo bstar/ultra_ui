@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import get from 'lodash.get';
-import { getLists, createList, loadMessage } from 'actions';
+import { getLists, createList, loadMessage, openModal, closeModal } from 'actions';
 
 import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
@@ -16,6 +16,7 @@ const mapStateToProps = state => ({
   userToken: get(state, 'user.data.token'),
   lists: get(state, 'list.lists'),
   activeList: get(state, 'list.activeList'),
+  createListModalStatus: get(state, 'modal.createListModal'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -27,6 +28,12 @@ const mapDispatchToProps = dispatch => ({
   },
   showMessage: message => {
     dispatch(loadMessage(message));
+  },
+  showModal: id => {
+    dispatch(openModal(id));
+  },
+  hideModal: id => {
+    dispatch(closeModal(id));
   },
 });
 
@@ -49,9 +56,11 @@ class Lists extends Component {
     getLists();
   }
 
-  setModal (type) {
+  setModal (id) {
 
-    this.setState({ ...type });
+    const { showModal } = this.props;
+
+    showModal(id);
   }
 
   setParam = (e, isInputChecked) => {
@@ -117,11 +126,12 @@ class Lists extends Component {
 
   createListModalWrapper ({ title, open, body }) {
 
+    const { hideModal } = this.props;
     const actions = [
       <FlatButton
         label="Cancel"
         primary={true}
-        onClick={() => this.setModal({ openCreateListModal: false })}
+        onClick={() => hideModal('createListModal') }
       />,
       <FlatButton
         label="Submit"
@@ -150,26 +160,21 @@ class Lists extends Component {
   createList = () => {
 
     const { formListData } = this.state;
-    const { showMessage, createPlayerList } = this.props;
+    const { createPlayerList, createListModalStatus } = this.props;
 
     createPlayerList(formListData);
-
-    // TODO needs to key off of redux modal state
-    this.setState({ openCreateListModal: false });
-    showMessage({ open: true, text: <b>New list created!</b> });
   }
 
   render () {
 
-    const { openCreateListModal } = this.state;
-    const { lists, activeList, userToken } = this.props;
+    const { lists, activeList, userToken, createListModalStatus } = this.props;
 
     return (
         <div>
-          { this.createListModalWrapper({ title: <div>Create a New <b>Personal</b> List:</div>, open: openCreateListModal, body: this.createListBody() }) }
+          { this.createListModalWrapper({ title: <div>Create a New <b>Personal</b> List:</div>, open: createListModalStatus, body: this.createListBody() }) }
 
           <div style={{ cursor: 'pointer', display: 'flex', backgroundColor: 'rgba(0, 0, 0, 0.35)', width: '100%', padding: '5px 5px 5px 10px', borderBottom: '1px solid rgb(46, 110, 115)', borderRight: '1px solid rgb(46, 110, 115)', alignItems: 'center' }}>
-            <FlatButton onClick={ () => (this.setModal({ openCreateListModal: true }))} style={{ minWidth: '30px', paddingRight: '5px' }}>
+            <FlatButton onClick={ () => (this.setModal('createListModal'))} style={{ minWidth: '30px', paddingRight: '5px' }}>
               <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                 <i className="nav-icon material-icons" style={{ color: '#1ecbce', padding: '0px 5px 0px 10px' }}>add</i><span style={{ paddingRight: '10px' }}>Create Personal List</span>
               </div>

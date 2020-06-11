@@ -6,6 +6,7 @@ import attribute from './attribute';
 import list from './list';
 import user from './user';
 import message from './message';
+import modal from './modal';
 
 const reducers = {
   routing: routerReducer,
@@ -15,6 +16,7 @@ const reducers = {
   list,
   user,
   message,
+  modal,
 };
 
 export default combineReducers(reducers);

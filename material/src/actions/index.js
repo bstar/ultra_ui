@@ -38,3 +38,8 @@ export const loadMessage = (text, meta) => (universalActionCreator(types.LOAD_ME
 export const loadMessageSuccess = (json, meta) => (universalActionCreator(types.LOAD_MESSAGE_SUCCESS, json, meta));
 export const closeMessage = () => (universalActionCreator(types.CLOSE_MESSAGE, {}));
 export const closeMessageSuccess = (json, meta) => (universalActionCreator(types.CLOSE_MESSAGE_SUCCESS, json, meta));
+
+export const openModal = (id, meta) => (universalActionCreator(types.OPEN_MODAL, { id }, meta));
+export const openModalSuccess = (json, meta) => (universalActionCreator(types.OPEN_MODAL_SUCCESS, json, meta));
+export const closeModal = (id, meta) => (universalActionCreator(types.CLOSE_MODAL, { id }, meta));
+export const closeModalSuccess = (json, meta) => (universalActionCreator(types.CLOSE_MODAL_SUCCESS, json, meta));

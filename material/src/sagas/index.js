@@ -5,6 +5,7 @@ import Att from './attribute';
 import List from './list';
 import User from './user';
 import Message from './message';
+import Modal from './modal';
 
 
 export default function* root () {
@@ -14,5 +15,6 @@ export default function* root () {
         fork(List),
         fork(User),
         fork(Message),
+        fork(Modal),
     ]);
 };
