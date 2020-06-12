@@ -24,3 +24,18 @@ export const fetchPlayers = (query, uriRoot = baseUri) => {
         .then(parseJson)
         .then(({ json, response }) => ({ json, response }));
 };
+
+export const postPlayersToList = ({ listId, boidIds }, uriRoot = baseUri) => {
+
+    const url = `${uriRoot}/list/${listId}/boids/add`;
+
+    return fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({ boidIds }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+};

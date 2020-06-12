@@ -160,7 +160,7 @@ class Lists extends Component {
   createList = () => {
 
     const { formListData } = this.state;
-    const { createPlayerList, createListModalStatus } = this.props;
+    const { createPlayerList } = this.props;
 
     createPlayerList(formListData);
   }

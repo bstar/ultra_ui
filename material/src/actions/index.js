@@ -43,3 +43,6 @@ export const openModal = (id, meta) => (universalActionCreator(types.OPEN_MODAL,
 export const openModalSuccess = (json, meta) => (universalActionCreator(types.OPEN_MODAL_SUCCESS, json, meta));
 export const closeModal = (id, meta) => (universalActionCreator(types.CLOSE_MODAL, { id }, meta));
 export const closeModalSuccess = (json, meta) => (universalActionCreator(types.CLOSE_MODAL_SUCCESS, json, meta));
+
+export const addPlayersToList = ({ listId, ids }, meta) => (universalActionCreator(types.ADD_PLAYERS_TO_LIST, { listId, ids }, meta));
+export const addPlayersToListSuccess = (json, meta) => (universalActionCreator(types.ADD_PLAYERS_TO_LIST_SUCCESS, json, meta));

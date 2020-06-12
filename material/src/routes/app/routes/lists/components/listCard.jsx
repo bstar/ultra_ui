@@ -31,8 +31,6 @@ const ListCard = ({ list, setList, activeListName }) => {
         <button className="list-card-container" style={containerBorderStyle} onClick={() => listHandler(list.id)}>
             <div style={{ fontSize: '18px' }}>{list.name}</div>
             <div>{list.description}</div>
-            <div><b>Type:</b> {list.type}</div>
-            <div><b>Key:</b> {list.key}</div>
         </button>
     );
 };

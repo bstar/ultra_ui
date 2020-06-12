@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
-import { getPlayers, getLists, loadMessage } from 'actions';
+import { getPlayers, getLists, loadMessage, addPlayersToList, openModal, closeModal } from 'actions';
 import TextField from 'material-ui/TextField';
 import Slider from 'material-ui/Slider';
 import Dialog from 'material-ui/Dialog';
@@ -17,6 +17,7 @@ const mapStateToProps = state => {
   return ({
     players: state.player.search,
     lists: get(state, 'list.lists'),
+    addPlayerToListStatus: get(state, 'modal.addPlayersToList')
   });
 };
 
@@ -25,6 +26,15 @@ const mapDispatchToProps = dispatch => ({
   getLists: () => dispatch(getLists()),
   showMessage: message => {
     dispatch(loadMessage(message));
+  },
+  addPlayer: data => {
+    dispatch(addPlayersToList(data));
+  },
+  showModal: id => {
+    dispatch(openModal(id));
+  },
+  hideModal: id => {
+    dispatch(closeModal(id));
   },
 });
 
@@ -221,24 +231,30 @@ class Main extends Component {
     })
   }
 
-  setModal (type) {
+  setModal (id, data) {
 
-    this.setState({ ...type });
+    const { showModal } = this.props;
+
+    this.setState({ ...data });
+    showModal(id);
   }
 
   addPlayerModalWrapper ({ title, open, body }) {
+
+    const { stagedPlayers, stagedList } = this.state; 
+    const { addPlayerToListStatus, hideModal } = this.props;
 
     const actions = [
       <FlatButton
         label="Cancel"
         primary={true}
-        onClick={() => this.setModal({ openAddPlayerModal: false })}
+        onClick={() => hideModal('addPlayersToList')}
       />,
       <FlatButton
         label="Submit"
         primary={true}
         disabled={false}
-        onClick={() => this.addPlayerToList({ boidIds: this.state.stagedPlayers, listId: this.state.stagedList})}
+        onClick={() => this.addPlayerToList({ boidIds: stagedPlayers, listId: stagedList})}
       />,
     ];
 
@@ -248,8 +264,10 @@ class Main extends Component {
             title={title}
             actions={actions}
             modal={true}
-            contentStyle={{ borderRadius: '5px' }}
-            open={open}
+            contentStyle={{ borderRaduis: '20px', border: '1px solid rgb(46, 110, 115)' }}
+            actionsContainerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.35)', borderTop: '1px solid rgb(46, 110, 115)' }}
+            titleStyle={{ color: 'rgb(159, 207, 223)', paddingBottom: '10px' }}
+            open={addPlayerToListStatus}
           >
             {body}
         </Dialog>
@@ -261,11 +279,12 @@ class Main extends Component {
 
     const { stagedPlayers } = this.state;
     const { lists } = this.props;
+
     const player = stagedPlayers && stagedPlayers[0];
 
     return (
       <div>
-        <h4>{player && player.name} ({player && player.id})</h4>
+        <h4 style={{ textShadow: 'rgba(52, 163, 203, 0.4) 1px 1px 3px' }}>{player && player.name}</h4>
         <div>
           { lists && lists.map(list => {
 
@@ -273,7 +292,7 @@ class Main extends Component {
 
             return (
               <div className={buttonClass}>
-                <button onClick={() => this.setState({ stagedList: list.id })}>{list.name} ({list.id})</button>
+                <button onClick={() => this.setState({ stagedList: list.id })}>{list.name}</button>
               </div>
             )
           })}
@@ -314,23 +333,9 @@ class Main extends Component {
 
   addPlayerToList ({ boidIds, listId }) {
 
-    const { showMessage } = this.props;
-    const leagueId = 'ESL';
-    const league = leagues[leagueId];
-    const url = league && `http://${league.address}/list/${listId}/boids/add`;
-    const ids = JSON.stringify({ boidIds: [boidIds[0].id] });
+    const { addPlayer } = this.props;
 
-    fetch(url, {
-      method: 'POST',
-      body: ids,
-      headers: { 'Content-Type': 'application/json' }
-    })
-    .then(response => response.json())
-    .then(() => {
-
-      showMessage({ open: true, text: <b>Player added to list</b> });
-      this.setState({ openAddPlayerModal: false });
-    });
+    addPlayer({ listId, ids: [boidIds[0].id] })
   }
 
   render () {
@@ -342,7 +347,7 @@ class Main extends Component {
     return (
       <div style={ styles.body }>
 
-        { lists && this.addPlayerModalWrapper({ title: 'Select list to add player', open: openAddPlayerModal, body: this.addPlayerBody() }) }
+        { lists && this.addPlayerModalWrapper({ title: 'Select a list to add player', open: openAddPlayerModal, body: this.addPlayerBody() }) }
         { this.createListFromSearchModalWrapper({ title: 'Create List From Search', open: openCreateListFromSearchModal, body: <div>body content</div> }) }
 
         <div>
@@ -461,7 +466,7 @@ class Main extends Component {
                     <tr key={player.id}>
                       <td style={{ height: '28px', display: 'flex', borderRight: '1px solid rgb(32, 80, 83)', borderLeft: '1px solid rgb(32, 80, 83)', width: '205px', margin: '0px 15px 0px 0px', paddingRight: '5px', paddingLeft: '5px', position: 'absolute', background: 'rgba(28, 57, 73, 1)' }}>
 
-                        <FlatButton onClick={e => { this.setModal({ openAddPlayerModal: true, stagedPlayers: [{ id: player.id, name: player.name }] }) }} style={{ minWidth: '30px', marginRight: '5px', height: '24px' }}>
+                        <FlatButton onClick={e => { this.setModal('addPlayersToList', { stagedPlayers: [{ id: player.id, name: player.name }] }) }} style={{ minWidth: '30px', marginRight: '5px', height: '24px' }}>
                           <i className="nav-icon material-icons" style={{ color: '#1ecbce' }}>playlist_add</i>
                         </FlatButton>
 

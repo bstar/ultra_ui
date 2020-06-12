@@ -45,7 +45,7 @@ class NavRightList extends React.Component {
 
         { user && user.id ?
           <li style={{ marginRight: '20px' }}>
-            <span>{user.id}</span>
+            <div style={{ float: 'left', marginTop: '17px' }}>{user.id}</div>
             <IconMenu
               iconButtonElement={<IconButton style={{ marginRight: '10px' }}><img src={`assets/img/clubs/huge/${leagueConversionMap['NHL']}/New Jersey Devils.png`} alt="" className=" img40_40" /></IconButton>}
               listStyle={{ border: '1px solid rgb(46, 110, 115)', borderRadius: '5px' }}

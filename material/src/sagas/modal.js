@@ -7,8 +7,6 @@ function* openModalSaga (action) {
 
     const { id } = action.payload;
 
-    console.log("SAGA", action.payload);
-
     yield put(openModalSuccess({ id }, {}));
 };
 
