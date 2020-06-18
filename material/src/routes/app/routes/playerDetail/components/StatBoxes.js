@@ -1,25 +1,7 @@
 import React from 'react';
+import { convertWeighted, getRatingColor } from 'utils';
 
 const Statboxes = ({ player }) => {
-
-  const getRatingColor = rating => {
-
-    const convertedRating = rating.toFixed(0);
-
-    if (convertedRating < 30) {
-      return 'red';
-    }
-
-    if (convertedRating < 60) {
-      return 'orange';
-    }
-
-    if (convertedRating < 85) {
-      return 'green';
-    }
-
-    return 'blue';
-  };
 
   const styles = {
     statText: {
@@ -46,6 +28,11 @@ const Statboxes = ({ player }) => {
     }
   };
 
+  const combinedRating = convertWeighted(player.combined_off_weighted);
+  const technicalRating = convertWeighted(player.technical_off_weighted, 'technical');
+  const mentalRating = convertWeighted(player.mental_off_weighted, 'mental');
+  const physicalRating = convertWeighted(player.physical_off_weighted, 'physical');
+
   return (
     <div className="row">
       <div className="col-xl-3 col-sm-6">
@@ -54,8 +41,8 @@ const Statboxes = ({ player }) => {
             { player.id &&
               <div style={ styles.statText } className="row">
                 <div className="col-xl-12">
-                  <div className={`${getRatingColor(player.combined_off_weighted)}`}>
-                    {((player.combined_off_weighted * .01)*20).toFixed(1)}
+                  <div className={`${getRatingColor(combinedRating)}`}>
+                    {combinedRating}
                   </div>
                   <div style={{...styles.ratingsLabel}}>
                     Offensive Combined
@@ -75,8 +62,8 @@ const Statboxes = ({ player }) => {
             { player.id &&
               <div style={ styles.statText } className="row">
                 <div className="col-xl-12">
-                  <div className={`${getRatingColor(player.technical_off_weighted)}`}>
-                    {((player.technical_off_weighted * .01)*20).toFixed(1)}
+                  <div className={`${getRatingColor(technicalRating)}`}>
+                    {technicalRating}
                   </div>
                   <div style={{...styles.ratingsLabel}}>
                     Offensive Technical
@@ -97,8 +84,8 @@ const Statboxes = ({ player }) => {
             { player.id &&
               <div style={ styles.statText } className="row">
                 <div className="col-xl-12">
-                  <div className={`${getRatingColor(player.mental_off_weighted)}`}>
-                    {((player.mental_off_weighted * .01)*20).toFixed(1)}
+                  <div className={`${getRatingColor(mentalRating)}`}>
+                    {mentalRating}
                   </div>
                   <div style={{...styles.ratingsLabel}}>
                     Offensive Mental
@@ -118,8 +105,8 @@ const Statboxes = ({ player }) => {
             { player.id &&
               <div style={ styles.statText } className="row">
                 <div className="col-xl-12">
-                  <div className={`${getRatingColor(player.physical_off_weighted)}`}>
-                    {((player.physical_off_weighted * .01)*20).toFixed(1)}
+                  <div className={`${getRatingColor(physicalRating)}`}>
+                    {physicalRating}
                   </div>
                   <div style={{...styles.ratingsLabel}}>
                     Offensive Physical

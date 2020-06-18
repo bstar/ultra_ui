@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
 import get from 'lodash.get';
 import { setActiveList } from 'actions';
 
@@ -25,10 +23,10 @@ const ListCard = ({ list, setList, activeListName }) => {
         setList(id);
     };
 
-    const containerBorderStyle = activeListName === list.name ? { border: '1px solid #23a8aa', outline: 0 } : {};
+    const containerBorderStyle = activeListName === list.name ? { border: '1px solid #219799', outline: 0, borderRight: '3px solid #219799' } : {};
 
     return (
-        <button className="list-card-container" style={containerBorderStyle} onClick={() => listHandler(list.id)}>
+        <button className="list-card-container" style={{ ...containerBorderStyle, margin: '10px 20px 10px 20px' }} onClick={() => listHandler(list.id)}>
             <div style={{ fontSize: '18px' }}>{list.name}</div>
             <div>{list.description}</div>
         </button>

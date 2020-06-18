@@ -29,6 +29,59 @@ const parseJson = response => {
       .then(json => ({ json, response }))
 };
 
+const getGrowthColor = growth => {
+
+  if (growth < 0) {
+      return 'red';
+  }
+  if (growth === 0) {
+      return 'white';
+  }
+  if (growth < 10) {
+      return 'green';
+  }
+  if (growth < 25) {
+      return 'blue';
+  }
+  return 'iridium';
+};
+
+const getAOColor = ao => {
+
+  if (ao < 12) {
+      return 'red';
+  }
+  if (ao < 14) {
+      return 'orange';
+  }
+  if (ao < 15) {
+      return 'green';
+  }
+  if (ao < 20) {
+      return 'blue';
+  }
+
+  return 'iridium';
+};
+
+const getCOMColor = com => {
+
+  if (com < 250) {
+      return 'red';
+  }
+  if (com < 300) {
+      return 'orange';
+  }
+  if (com < 380) {
+      return 'green';
+  }
+  if (com < 430) {
+      return 'blue';
+  }
+
+  return 'iridium';
+};
+
 const getCombinedColor = rating => {
 
     if (rating < 200) {
@@ -246,6 +299,40 @@ const physicalAtts = [
     'strength'
 ];
 
+const getRatingColor = rating => {
+
+  if (rating < 9) {
+    return 'red';
+  }
+
+  if (rating < 12) {
+    return 'orange';
+  }
+
+  if (rating < 16) {
+    return 'green';
+  }
+
+  if (rating < 20) {
+    return 'blue';
+  }
+
+  return 'iridium';
+};
+
+const convertCombined = (val, type) => {
+
+  const map = {
+    technical: 10,
+    mental: 13.5,
+    physical: 19.5,
+  };
+
+  return ((val * .01) * map[type]).toFixed(1);
+};
+
+const convertWeighted = val => ((val * .01) * 20).toFixed(1);
+
 export {
   getCombinedColor,
   getTechnicalColor,
@@ -263,4 +350,10 @@ export {
   physicalAtts,
   universalActionCreator,
   parseJson,
+  getCOMColor,
+  getAOColor,
+  getGrowthColor,
+  convertCombined,
+  convertWeighted,
+  getRatingColor,
 };

@@ -25,6 +25,12 @@ export const setActiveList = (id, meta) => (universalActionCreator(types.SET_ACT
 export const setPlayerRank = (player, meta) => (universalActionCreator(types.SET_PLAYER_RANK, { player }, meta));
 export const setPlayerRankSuccess = (json, meta) => (universalActionCreator(types.SET_PLAYER_RANK_SUCCESS, json, meta));
 
+export const batchPlayerRanks = (listId, players, meta) => (universalActionCreator(types.BATCH_PLAYER_RANKS, { listId, players }, meta));
+export const batchPlayerRanksSuccess = (json, meta) => (universalActionCreator(types.BATCH_PLAYER_RANKS_SUCCESS, json, meta));
+
+export const setPlayerData = (data, meta) => (universalActionCreator(types.SET_PLAYER_DATA, { data }, meta));
+export const setPlayerDataSuccess = (json, meta) => (universalActionCreator(types.SET_PLAYER_DATA_SUCCESS, json, meta));
+
 export const getJWT = (username, password, meta) => (universalActionCreator(types.GET_JWT, { username, password }, meta));
 export const getJWTSuccess = (json, meta) => (universalActionCreator(types.GET_JWT_SUCCESS, json, meta));
 
@@ -44,5 +50,5 @@ export const openModalSuccess = (json, meta) => (universalActionCreator(types.OP
 export const closeModal = (id, meta) => (universalActionCreator(types.CLOSE_MODAL, { id }, meta));
 export const closeModalSuccess = (json, meta) => (universalActionCreator(types.CLOSE_MODAL_SUCCESS, json, meta));
 
-export const addPlayersToList = ({ listId, ids }, meta) => (universalActionCreator(types.ADD_PLAYERS_TO_LIST, { listId, ids }, meta));
+export const addPlayersToList = ({ listId, ids, selections }, meta) => (universalActionCreator(types.ADD_PLAYERS_TO_LIST, { listId, ids, selections }, meta));
 export const addPlayersToListSuccess = (json, meta) => (universalActionCreator(types.ADD_PLAYERS_TO_LIST_SUCCESS, json, meta));

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
+import { getCOMColor, getAOColor, getGrowthColor, convertWeighted, convertCombined, getRatingColor } from 'utils';
 import { getPlayers, getLists, loadMessage, addPlayersToList, openModal, closeModal } from 'actions';
+import { nhlTeams, tempGMList, grades } from '../../../../../constants';
 import TextField from 'material-ui/TextField';
 import Slider from 'material-ui/Slider';
 import Dialog from 'material-ui/Dialog';
@@ -9,7 +11,6 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import FlatButton from 'material-ui/FlatButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import { leagues } from 'config';
 
 
 const mapStateToProps = state => {
@@ -241,7 +242,7 @@ class Main extends Component {
 
   addPlayerModalWrapper ({ title, open, body }) {
 
-    const { stagedPlayers, stagedList } = this.state; 
+    const { stagedPlayers, stagedList, teamSelection, gmSelection, gradeSelection } = this.state; 
     const { addPlayerToListStatus, hideModal } = this.props;
 
     const actions = [
@@ -254,7 +255,7 @@ class Main extends Component {
         label="Submit"
         primary={true}
         disabled={false}
-        onClick={() => this.addPlayerToList({ boidIds: stagedPlayers, listId: stagedList})}
+        onClick={() => this.addPlayerToList({ boidIds: stagedPlayers, listId: stagedList.id, selections: { teamSelection, gmSelection, gradeSelection } })}
       />,
     ];
 
@@ -277,9 +278,8 @@ class Main extends Component {
 
   addPlayerBody () {
 
-    const { stagedPlayers } = this.state;
+    const { stagedPlayers, teamSelection, gmSelection, gradeSelection, stagedList } = this.state;
     const { lists } = this.props;
-
     const player = stagedPlayers && stagedPlayers[0];
 
     return (
@@ -288,14 +288,68 @@ class Main extends Component {
         <div>
           { lists && lists.map(list => {
 
-            const buttonClass = (list.id == this.state.stagedList) ? 'selectedListButton' : 'listButton';
+            const buttonClass = (stagedList && (list.id === stagedList.id)) ? 'selectedListButton' : 'listButton';
 
             return (
               <div className={buttonClass}>
-                <button onClick={() => this.setState({ stagedList: list.id })}>{list.name}</button>
+                <button onClick={() => this.setState({ stagedList: list })}>{list.name}</button>
               </div>
             )
           })}
+
+          <div style={{ marginTop: '10px' }}>
+            { get(stagedList, 'captureTeam') &&
+              <div>
+                <SelectField
+                  name="team"
+                  autoWidth={false}
+                  floatingLabelText="Team Association"
+                  floatingLabelFixed={true}
+                  hintText={`Choose team to associate ${player.name}`}
+                  style={{ width: '400px' }}
+                  value={teamSelection}
+                  onChange={(e, i, teamSelection) => this.setState({ teamSelection })} 
+                >
+                  <MenuItem value={null} primaryText="" />
+                  { nhlTeams.map(team => <MenuItem value={team.short} primaryText={`${team.region} ${team.name}`} /> )}
+                </SelectField>
+              </div>
+            }
+            { get(stagedList, 'captureGM') &&
+              <div>
+                <SelectField
+                  name="gm"
+                  autoWidth={false}
+                  floatingLabelText="GM Association"
+                  hintText={`Select GM to associate ${player.name}`}
+                  floatingLabelFixed={true}
+                  style={{ width: '400px' }}
+                  value={gmSelection}
+                  onChange={(e, i, gmSelection) => this.setState({ gmSelection })} 
+                >
+                  <MenuItem value={null} primaryText="" />
+                  { tempGMList.map(gm => <MenuItem value={gm} primaryText={gm} /> )}
+                </SelectField>
+              </div>
+            }
+            { get(stagedList, 'captureGrade') &&
+              <div>
+                <SelectField
+                  name="grade"
+                  autoWidth={false}
+                  floatingLabelText="Grade Association"
+                  floatingLabelFixed={true}
+                  hintText={`Grade ${player.name}`}
+                  style={{ width: '220px' }}
+                  value={gradeSelection}
+                  onChange={(e, i, gradeSelection) => this.setState({ gradeSelection })} 
+                >
+                  <MenuItem value={null} primaryText="" />
+                  { grades.map(grade => <MenuItem value={grade} primaryText={grade} /> )}
+                </SelectField>
+              </div>
+            }
+          </div>
         </div>
       </div>
     )
@@ -324,6 +378,7 @@ class Main extends Component {
             actions={actions}
             modal={true}
             open={open}
+            style={{ overflowY: 'scroll' }}
           >
             {body}
         </Dialog>
@@ -331,11 +386,11 @@ class Main extends Component {
     )
   }
 
-  addPlayerToList ({ boidIds, listId }) {
+  addPlayerToList ({ boidIds, listId, selections }) {
 
     const { addPlayer } = this.props;
 
-    addPlayer({ listId, ids: [boidIds[0].id] })
+    addPlayer({ listId, ids: [boidIds[0].id], selections });
   }
 
   render () {
@@ -462,32 +517,40 @@ class Main extends Component {
                 </thead>
 
                 <tbody style={{ flex: 1 }} className="player-list">
-                  { players && players.map(player =>
-                    <tr key={player.id}>
-                      <td style={{ height: '28px', display: 'flex', borderRight: '1px solid rgb(32, 80, 83)', borderLeft: '1px solid rgb(32, 80, 83)', width: '205px', margin: '0px 15px 0px 0px', paddingRight: '5px', paddingLeft: '5px', position: 'absolute', background: 'rgba(28, 57, 73, 1)' }}>
+                  { players && players.map(player => {
 
-                        <FlatButton onClick={e => { this.setModal('addPlayersToList', { stagedPlayers: [{ id: player.id, name: player.name }] }) }} style={{ minWidth: '30px', marginRight: '5px', height: '24px' }}>
-                          <i className="nav-icon material-icons" style={{ color: '#1ecbce' }}>playlist_add</i>
-                        </FlatButton>
+                      const technicalRating = convertCombined(player.technical_rating, 'technical');
+                      const mentalRating = convertCombined(player.mental_rating, 'mental');
+                      const physicalRating = convertCombined(player.physical_rating, 'physical');
 
-                        <div style={{ width: '205px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
-                          <a href={`#/app/playerdetail/${player.id}`}>
-                            <b>{player.name}</b>
-                          </a>
-                        </div>
-                      </td>
-                      <td style={{ paddingLeft: '210px', width: '270px' }} className="numeric">{player.combined_rating}</td>
-                      <td className="numeric">{player.age_over && player.age_over.toFixed(2)}</td>
-                      <td className="numeric">{player.att_growth}</td>
-                      <td className="numeric">{player.technical_rating}</td>
-                      <td className="numeric">{player.mental_rating}</td>
-                      <td className="numeric">{player.physical_rating}</td>
-                      <td className="numeric">{player.player_roles}</td>
-                      <td className="numeric">{player.age}</td>
-                      <td className="numeric">{player.nation}</td>
-                      <td className="numeric">{player.club_contracted}</td>
-                      <td className="numeric">{player.positions_short}</td>
-                    </tr>
+                      return (
+                        <tr key={player.id}>
+                          <td style={{ height: '28px', display: 'flex', borderRight: '1px solid rgb(32, 80, 83)', borderLeft: '1px solid rgb(32, 80, 83)', width: '205px', margin: '0px 15px 0px 0px', paddingRight: '5px', paddingLeft: '5px', position: 'absolute', background: 'rgba(28, 57, 73, 1)' }}>
+
+                            <FlatButton onClick={e => { this.setModal('addPlayersToList', { stagedPlayers: [{ id: player.id, name: player.name }] }) }} style={{ minWidth: '30px', marginRight: '5px', height: '24px' }}>
+                              <i className="nav-icon material-icons" style={{ color: '#1ecbce' }}>playlist_add</i>
+                            </FlatButton>
+
+                            <div style={{ width: '205px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
+                              <a href={`#/app/playerdetail/${player.id}`}>
+                                <b>{player.name}</b>
+                              </a>
+                            </div>
+                          </td>
+                          <td style={{ paddingLeft: '210px', width: '270px' }} className={`numeric ${getCOMColor(player.combined_rating)}`}>{player.combined_rating}</td>
+                          <td className={`numeric ${getAOColor(player.age_over)}`}>{player.age_over && player.age_over.toFixed(2)}</td>
+                          <td className={`numeric ${getGrowthColor(player.att_growth)}`}>{player.att_growth}</td>
+                          <td className={`numeric ${getRatingColor(technicalRating)}`}>{technicalRating}</td>
+                          <td className={`numeric ${getRatingColor(mentalRating)}`}>{mentalRating}</td>
+                          <td className={`numeric ${getRatingColor(physicalRating)}`}>{physicalRating}</td>
+                          <td className="numeric">{player.player_roles}</td>
+                          <td className="numeric">{player.age}</td>
+                          <td className="numeric">{player.nation}</td>
+                          <td className="numeric">{player.club_contracted}</td>
+                          <td className="numeric">{player.positions_short}</td>
+                        </tr>
+                      )
+                    }
                 )}
                 </tbody>
             </table>

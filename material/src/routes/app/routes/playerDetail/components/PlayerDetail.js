@@ -124,7 +124,6 @@ class Main extends Component {
 
 const PlayerDetail = ({ match, getPlayerById, playerMap, attributesMap, lists }) => {
 
-  console.log("LISTSSSS", lists)
   return (
     <div className="container-fluid no-breadcrumbs page-dashboard">
       <QueueAnim type="bottom" className="ui-animate">

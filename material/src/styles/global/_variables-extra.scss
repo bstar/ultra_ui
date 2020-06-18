@@ -11,6 +11,7 @@ $grayscale-dark-light: 	#484848;
 $bright:                #fafafa !default;
 $gray-light:            #636c72 !default;
 $gray-light2:           #999 !default;
+$iridium:               #ff1cff !default;
 
 $page-bg:               #f5f5f5 !default; // background color of .app-page-container
 
@@ -20,7 +21,7 @@ $state-default-border:          darken(adjust-hue($state-default-bg, -10), 5%) !
 
 //== Typography
 $font-weight-thin:      300 !default;
-$font-family-condensed: "Roboto Condensed", "Roboto", "Helvetica Neue", Arial, sans-serif !default
+$font-family-condensed: "Roboto Condensed", "Roboto", "Helvetica Neue", Arial, sans-serif !default;
 
 
 // UI
@@ -57,4 +58,8 @@ $theme-dark-data-table-header-color: rgba(#fff, 0.54);
 }
 @mixin z-depth-5 {
   box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
+}
+
+.iridium {
+  color: $iridium;
 }

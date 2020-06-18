@@ -46,6 +46,7 @@ $yellow:  #ffc107 !default;
 $green:   #66BB6A !default; // Green 400
 $teal:    #20c997 !default;
 $cyan:    #00BCD4 !default; // Cyan 500
+$iridium: #ff1cff !default;
 
 $colors: () !default;
 $colors: map-merge((
@@ -60,6 +61,7 @@ $colors: map-merge((
   "teal":       $teal,
   "cyan":       $cyan,
   "white":      $white,
+  "iridium":    $iridium,
   "gray":       $gray-600,
   "gray-dark":  $gray-800
 ), $colors);

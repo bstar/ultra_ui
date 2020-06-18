@@ -109,14 +109,21 @@ class Lists extends Component {
         <div>
           <Checkbox
             name="captureTeam"
-            label="Team (draft list required)"
+            label="Team (Required draft data)"
             onCheck={this.setParam}
           />
         </div>
         <div>
           <Checkbox
             name="captureGM"
-            label="GM (draft list optional)"
+            label="GM (Optional draft data)"
+            onCheck={this.setParam}
+          />
+        </div>
+        <div>
+          <Checkbox
+            name="captureGrade"
+            label="Grade (A-F player grades, optional for rankings and personal lists)"
             onCheck={this.setParam}
           />
         </div>
@@ -188,7 +195,7 @@ class Lists extends Component {
                     </div>
                     <div className="col-xl-9">
                         { activeList &&
-                          <Boids listName={activeList.name} />
+                          <Boids listName={activeList.name} listId={activeList.id} />
                         }
                     </div>
                 </div>

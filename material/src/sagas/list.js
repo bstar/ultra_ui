@@ -6,12 +6,16 @@ import {
     fetchLists,
     fetchList,
     putPlayerRank,
+    putPlayerRanks,
+    putPlayerData,
     createList,
 } from '../api/list';
 import {
     getListsSuccess,
     getListSuccess,
     setPlayerRankSuccess,
+    batchPlayerRanksSuccess,
+    setPlayerDataSuccess,
     createListSuccess,
     closeModalSuccess,
     loadMessageSuccess,
@@ -43,6 +47,28 @@ function* setPlayerRankSaga (action) {
     yield put(setPlayerRankSuccess(json, { response }));
 }
 
+function* batchPlayerRanksSaga (action) {
+
+    const state = yield select();
+    const token = get(state, 'user.data.token');
+    const { json, response } = yield call(putPlayerRanks, action.payload.listId, action.payload.players, token, action.payload.query);
+
+    yield put(batchPlayerRanksSuccess(json, { response }));
+}
+
+function* setPlayerDataSaga (action) {
+
+    const { listId, boidId, selections } = action.payload;
+    const { teamSelection, gmSelection, gradeSelection } = selections;
+    const state = yield select();
+    const token = get(state, 'user.data.token');
+
+    // TODO selection names not matching is clunky
+    const { json, response } = yield call(putPlayerData, listId, { boidId, ...{ team: teamSelection, gm: gmSelection, grade: gradeSelection } }, token, action.payload.query);
+
+    yield put(setPlayerDataSuccess(json, { response }));
+}
+
 function* createListSaga (action) {
 
     const state = yield select();
@@ -65,6 +91,8 @@ export default function* allListsSagas () {
         takeLatest(types.GET_LIST, getListSaga),
         takeLatest(types.SET_ACTIVE_LIST, getListSaga),
         takeEvery(types.SET_PLAYER_RANK, setPlayerRankSaga),
+        takeEvery(types.BATCH_PLAYER_RANKS, batchPlayerRanksSaga),
+        takeEvery(types.ADD_PLAYERS_TO_LIST_SUCCESS, setPlayerDataSaga),
         takeEvery(types.CREATE_LIST, createListSaga),
         takeEvery(types.CREATE_LIST_SUCCESS, createListSuccessSaga),
     ]);

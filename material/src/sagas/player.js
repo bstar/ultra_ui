@@ -28,12 +28,14 @@ function* getPlayersSaga (action) {
 
 function* addPlayersToListSaga (action) {
 
-    const { listId, ids } = action.payload;
+    const { listId, ids, selections } = action.payload;
+    const { response } = yield call(postPlayersToList, { listId, boidIds: ids }, action.payload.query);
 
-    const { json, response } = yield call(postPlayersToList, { listId, boidIds: ids }, action.payload.query);
+    // TODO create new saga to handle singular players with selections, don't do this here
+    if (ids.length === 1) {
+        yield put(addPlayersToListSuccess({ selections, listId, boidId: ids[0] }, { response }));
+    }
 
-
-    yield put(addPlayersToListSuccess(json, { response }));
     yield put(closeModalSuccess({ id: 'addPlayersToList' }));
     yield put(loadMessageSuccess({ open: true, text: <b>Player added to list!</b> }));
 }

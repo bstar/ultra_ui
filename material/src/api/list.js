@@ -31,6 +31,7 @@ export const fetchList = (id, token, uriRoot = baseUri) => {
         .then(({ json, response }) => ({ json, response }));
 };
 
+// individual player rank update (deprecated)
 export const putPlayerRank = (item, uriRoot = baseUri) => {
 
     const url = `${uriRoot}/list/${item.listId}/boid/${item.boidId}/rank/${item.rank}`;
@@ -39,6 +40,41 @@ export const putPlayerRank = (item, uriRoot = baseUri) => {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
+            },
+        })
+        .then(parseJson)
+        .then(({ json, response }) => ({ json, response }));
+};
+
+// batch player rank updates
+export const putPlayerRanks = (listId, players, token, uriRoot = baseUri) => {
+
+    const url = `${uriRoot}/list/${listId}/rank_batch`;
+
+    return fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(players),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${token}`,
+            },
+        })
+        .then(parseJson)
+        .then(({ json, response }) => ({ json, response }));
+};
+
+export const putPlayerData = (listId, data, token, uriRoot = baseUri) => {
+
+    const url = `${uriRoot}/list/${listId}/add_data`;
+
+    return fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${token}`,
             },
         })
         .then(parseJson)

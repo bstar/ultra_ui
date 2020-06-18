@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { get, orderBy } from 'lodash';
-import { setPlayerRank } from 'actions';
+import { setPlayerRank, batchPlayerRanks } from 'actions';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 import BoidCard from './boidCard';
@@ -26,7 +26,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setPlayerRanksById: id => {
       dispatch(setPlayerRank(id));
-    }
+    },
+    batchPlayerRanksById: (listId, players) => {
+        dispatch(batchPlayerRanks(listId, players));
+    },
 });
 
 const SortableItem = SortableElement(({ boid, pos, sortByNumber }) => <BoidCard boid={boid} pos={pos} sortByNumber={sortByNumber} />);
@@ -93,19 +96,29 @@ class Boids extends Component {
 
     applyOrder = () => {
 
-        const { setPlayerRanksById } = this.props;
+        const { batchPlayerRanksById, listId } = this.props;
         const { boids } = this.state;
 
-        const ordered = orderBy(boids.map((boid, index) => {
+        const ranked = boids.reduce((acc, boid, i) => {
 
-            const rank = index + 1;
-            boid.listdata.rank = rank;
+            const rank = i + 1;
 
-            setPlayerRanksById({ boidId: boid.id, listId: boid.listdata.listId, rank });
-            return boid;
-        }), [ 'listdata.rank' ]);
+            if (boid.listdata && (boid.listdata.rank !== rank)) {
+                boid.listdata.rank = rank;
+                acc.push(boid);
+            };
 
-        this.setState({ changed: false, boids: ordered });
+            return acc;
+        }, []);
+
+        const ordered = orderBy(ranked, ['listdata.rank']);
+        const converted = ordered.reduce((acc, boid) => {
+            acc[boid.id] = boid.listdata.rank;
+            return acc;
+        }, {});
+
+        batchPlayerRanksById(listId, converted);
+        this.setState({ changed: false });
     }
 
     render () {
