@@ -1,7 +1,7 @@
 import React from 'react';
 import { takeLatest, put, call, all, throttle } from 'redux-saga/effects';
 import * as types from 'constants/ActionTypes';
-import { fetchPlayer, fetchPlayers, postPlayersToList } from '../api/player';
+import { fetchPlayer, fetchPlayers, postPlayersToList, deletePlayerFromList } from '../api/player';
 
 import {
     getPlayerSuccess,
@@ -40,10 +40,23 @@ function* addPlayersToListSaga (action) {
     yield put(loadMessageSuccess({ open: true, text: <b>Player added to list!</b> }));
 }
 
+function* removePlayerFromListSaga (action) {
+
+    const { listId, playerId, listName, boidName } = action.payload;
+    const { response } = yield call(deletePlayerFromList, { listId, boidId: playerId }, action.payload.query);
+
+    console.log("SAGA RESPONSE", response);
+    const text = <b><span style={{ color: '#eee' }}>{boidName}</span> removed from <span style={{ color: '#eee' }}>{listName} list</span></b>;
+
+    yield put(loadMessageSuccess({ open: true, text }));
+    yield put({ type: 'GET_LISTS' })
+}
+
 export default function* allPlayersSagas () {
     yield all([
         takeLatest(types.GET_PLAYER, getPlayerSaga),
         takeLatest(types.ADD_PLAYERS_TO_LIST, addPlayersToListSaga),
+        takeLatest(types.REMOVE_PLAYER_FROM_LIST, removePlayerFromListSaga),
         throttle(500, types.GET_PLAYERS, getPlayersSaga),
     ]);
 };

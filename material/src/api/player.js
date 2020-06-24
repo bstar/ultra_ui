@@ -39,3 +39,17 @@ export const postPlayersToList = ({ listId, boidIds }, uriRoot = baseUri) => {
         })
         .then(response => response.json())
 };
+
+export const deletePlayerFromList = ({ listId, boidId }, uriRoot = baseUri) => {
+
+    const url = `${uriRoot}/list/${listId}/boid/${boidId}`;
+
+    return fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+};

@@ -14,11 +14,20 @@ export const getAttributesSuccess = (json, meta) => (universalActionCreator(type
 export const getLists = (meta) => (universalActionCreator(types.GET_LISTS, {}, meta));
 export const getListsSuccess = (json, meta) => (universalActionCreator(types.GET_LISTS_SUCCESS, json, meta));
 
+export const invalidateLists = (meta) => (universalActionCreator(types.INVALIDATE_LISTS, {}, meta));
+export const invalidateListsSuccess = (json, meta) => (universalActionCreator(types.INVALIDATE_LISTS_SUCCESS, json, meta));
+
 export const getList = (id, meta) => (universalActionCreator(types.GET_LIST, { id }, meta));
 export const getListSuccess = (json, meta) => (universalActionCreator(types.GET_LIST_SUCCESS, json, meta));
 
 export const createList = (list, meta) => (universalActionCreator(types.CREATE_LIST, list, meta));
 export const createListSuccess = (json, meta) => (universalActionCreator(types.CREATE_LIST_SUCCESS, json, meta));
+
+export const deleteList = (id, meta) => (universalActionCreator(types.DELETE_LIST, { id }, meta));
+export const deleteListSuccess = (json, meta) => (universalActionCreator(types.DELETE_LIST_SUCCESS, json, meta));
+
+export const removePlayerFromList = (listId, playerId, listName, boidName, meta) => (universalActionCreator(types.REMOVE_PLAYER_FROM_LIST, { listId, playerId, listName, boidName }, meta));
+export const removePlayerFromListSuccess = (json, meta) => (universalActionCreator(types.REMOVE_PLAYER_FROM_LIST_SUCCESS, json, meta));
 
 export const setActiveList = (id, meta) => (universalActionCreator(types.SET_ACTIVE_LIST, { id }, meta));
 

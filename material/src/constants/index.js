@@ -14,7 +14,7 @@ const leagueConversionMap = {
 };
 
 const nhlTeams = [
-  { short: 'ana', region: 'Anahein', name: 'Ducks' },
+  { short: 'ana', region: 'Anaheim', name: 'Ducks' },
   { short: 'ari', region: 'Arizona', name: 'Coyotes' },
   { short: 'bos', region: 'Boston', name: 'Bruins' },
   { short: 'buf', region: 'Buffalo', name: 'Sabres' },

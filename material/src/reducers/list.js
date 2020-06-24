@@ -1,6 +1,7 @@
 import {
     GET_LISTS_SUCCESS,
     GET_LIST_SUCCESS,
+    INVALIDATE_LISTS,
   } from '../constants/ActionTypes';
   
   const initialSettings = {};
@@ -26,7 +27,13 @@ import {
           ...state,
           activeList,
         }
-  
+
+      case INVALIDATE_LISTS:
+        return {
+          ...state,
+          list: null,
+        } 
+
       default:
         return state;
     }
