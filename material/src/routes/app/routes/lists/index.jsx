@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import get from 'lodash.get';
+import { get, find } from 'lodash';
 import { getLists, createList, loadMessage, openModal, closeModal } from 'actions';
 
 import Checkbox from 'material-ui/Checkbox';
@@ -15,7 +15,7 @@ import Boids from './components/boids';
 const mapStateToProps = state => ({
   userToken: get(state, 'user.data.token'),
   lists: get(state, 'list.lists'),
-  activeList: get(state, 'list.activeList'),
+  activeListId: get(state, 'list.activeList'),
   createListModalStatus: get(state, 'modal.createListModal'),
 });
 
@@ -174,7 +174,8 @@ class Lists extends Component {
 
   render () {
 
-    const { lists, activeList, userToken, createListModalStatus } = this.props;
+    const { lists, activeListId, userToken, createListModalStatus } = this.props;
+    const activeList = find(lists, { 'id': activeListId });
 
     return (
         <div>

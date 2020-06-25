@@ -391,6 +391,7 @@ class Main extends Component {
     const { addPlayer } = this.props;
 
     addPlayer({ listId, ids: [boidIds[0].id], selections });
+    getLists();
   }
 
   render () {

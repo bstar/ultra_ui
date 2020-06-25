@@ -3,15 +3,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { get, find } from 'lodash';
 import { sortableHandle } from 'react-sortable-hoc';
-import { loadMessage, removePlayerFromList, openModal, closeModal } from 'actions';
+import { loadMessage, removePlayerFromList, openModal, closeModal, getLists } from 'actions';
 import { getCOMColor, getAOColor, getGrowthColor, getRatingColor, convertWeighted } from 'utils';
 import { nhlTeams } from '../../../../../constants'
 
 
-const mapStateToProps = state => ({
-    list: get(state, 'list.activeList'),
-    lists: get(state, 'list.lists'),
-});
+const mapStateToProps = state => {
+
+    const lists = get(state, 'list.lists');
+    const activeListId = get(state, 'list.activeList');
+    const list = find(lists, { 'id': activeListId });
+
+    return ({ list, lists });
+};
 
 const mapDispatchToProps = dispatch => ({
     showMessage: message => {
@@ -28,12 +32,6 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-const getBorder = (rank, pos) => {
-   
-    if (rank !== pos) {
-        return { border: '1px solid #b59d51' };
-    }
-};
 
 const handleKeyPress = (e, pos, sortByNumber) => {
 
@@ -103,10 +101,17 @@ class BoidCard extends Component {
         this.state = {};
     }
 
+    getBorder = (rank, pos) => {
+   
+        if (rank !== pos) {
+            return { border: '1px solid #c16ea4' };
+        }
+    }
+
+
     handleRemovePlayer = ({ listId, boidId, listName, boidName }) => {
 
         const { removePlayer } = this.props;
-        console.log("HANDLE REMOVE PLAYER", listId, boidId, listName, boidName);
 
         removePlayer(listId, boidId, listName, boidName);
     }
@@ -122,7 +127,7 @@ class BoidCard extends Component {
 
         if (boid) {
             return (
-                <div className="boid-card-container" style={{ cursor: 'default', width: 'fit-content', ...getBorder(boid.listdata.rank, pos) }}>
+                <div className="boid-card-container" style={{ cursor: 'default', width: 'fit-content', ...this.getBorder(boid.listdata.rank, pos) }}>
                     <div style={{ display: 'flex', userSelect: 'none', alignSelf: 'center', alignItems: 'center', flexDirection: 'column', width: '100px', fontSize: '22px', padding: '0px 18px 0px 10px', textShadow: '1px 1px 2px black' }}>
                         <div>{pos}</div>
                         <div className="handle"><DragHandle /></div>

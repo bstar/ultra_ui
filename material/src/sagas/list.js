@@ -11,6 +11,7 @@ import {
     createList,
 } from '../api/list';
 import {
+    getLists,
     getListsSuccess,
     getListSuccess,
     setPlayerRankSuccess,
@@ -54,6 +55,7 @@ function* batchPlayerRanksSaga (action) {
     const { json, response } = yield call(putPlayerRanks, action.payload.listId, action.payload.players, token, action.payload.query);
 
     yield put(batchPlayerRanksSuccess(json, { response }));
+    yield put(getLists());
 }
 
 function* setPlayerDataSaga (action) {

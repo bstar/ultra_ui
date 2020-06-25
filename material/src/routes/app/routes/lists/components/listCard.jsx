@@ -1,26 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import get from 'lodash.get';
-import { setActiveList } from 'actions';
+import { get, find } from 'lodash';
+import { setActiveList, getLists } from 'actions';
 
 
-const mapStateToProps = state => ({
-    activeListName: get(state, 'list.activeList.name'),
-    placeholder: "text",
-});
+const mapStateToProps = state => {
+
+    const lists = get(state, 'list.lists');
+    const activeListId = get(state, 'list.activeList');
+    const list = find(lists, { 'id': activeListId });
+
+    return ({ activeListName: get(list, 'name', '') });
+}
+
 
 const mapDispatchToProps = dispatch => ({
     setList: id => {
         dispatch(setActiveList(id));
     },
+    getLists: () => {
+        dispatch(getLists());
+    },
 });
 
-const ListCard = ({ list, setList, activeListName }) => {
+const ListCard = ({ list, setList, activeListName, getLists }) => {
 
     const listHandler = id => {
         window.scrollTo(0, 0);
         setList(id);
+        getLists();
     };
 
     const containerBorderStyle = activeListName === list.name ? { border: '1px solid #219799', outline: 0, borderRight: '3px solid #219799' } : {};

@@ -25,7 +25,7 @@ import {
   
         return {
           ...state,
-          activeList,
+          activeList: activeList.id,
         }
 
       case INVALIDATE_LISTS:
