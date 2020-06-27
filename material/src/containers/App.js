@@ -47,12 +47,13 @@ class App extends Component {
     if (!reduxToken) {
 
       if (localToken) {
+        console.log("TOKEN", localToken)
         setUser(localToken);
       }
     }
   }
 
-  render() {
+  render () {
     const { match, location, layoutBoxed, navCollapsed, navBehind, fixedHeader, sidebarWidth, theme } = this.props;
     const materialUITheme = darkTheme;
     const isRoot = location.pathname === '/' ? true : false;

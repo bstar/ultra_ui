@@ -397,8 +397,10 @@ class Main extends Component {
   render () {
 
     const { search, openAddPlayerModal, openCreateListFromSearchModal, lists } = this.state;
-    const { players } = this.props;
+    const { players, isAuthed } = this.props;
     const playerType = search.positions_short === 'G' ? 'goalies' : 'players';
+
+    if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px' }}>Not Authenticated</div> };
 
     return (
       <div style={ styles.body }>

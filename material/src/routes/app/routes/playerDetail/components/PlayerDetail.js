@@ -50,10 +50,9 @@ class Main extends Component {
 
   render () {
 
-    const { playerMap, attributesMap, playerId, lists } = this.props;
+    const { playerMap, attributesMap, playerId } = this.props;
     const player = playerMap[playerId];
     const attributes = attributesMap[playerId];
-
 
     if (!player) return (<span></span>);
 
@@ -122,12 +121,14 @@ class Main extends Component {
   }
 };
 
-const PlayerDetail = ({ match, getPlayerById, playerMap, attributesMap, lists }) => {
+const PlayerDetail = ({ match, getPlayerById, playerMap, attributesMap, lists, isAuthed }) => {
+
+  if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px' }}>Not Authenticated</div> };
 
   return (
     <div className="container-fluid no-breadcrumbs page-dashboard">
       <QueueAnim type="bottom" className="ui-animate">
-        <Main playerId={match.params.playerId} getPlayerById={getPlayerById} playerMap={playerMap} attributesMap={attributesMap} lists={lists} />
+        <Main isAuthed={isAuthed} playerId={match.params.playerId} getPlayerById={getPlayerById} playerMap={playerMap} attributesMap={attributesMap} lists={lists} />
       </QueueAnim>
     </div>
   );

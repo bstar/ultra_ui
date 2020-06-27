@@ -14,8 +14,6 @@ const user = (state = initialSettings, action) => {
         
             const user = action.payload;
 
-            console.log("USER", user)
-
             return {
                 ...state,
                 data: user,

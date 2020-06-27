@@ -174,8 +174,10 @@ class Lists extends Component {
 
   render () {
 
-    const { lists, activeListId, userToken, createListModalStatus } = this.props;
+    const { lists, activeListId, userToken, createListModalStatus, isAuthed } = this.props;
     const activeList = find(lists, { 'id': activeListId });
+
+    if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px' }}>Not Authenticated</div> };
 
     return (
         <div>

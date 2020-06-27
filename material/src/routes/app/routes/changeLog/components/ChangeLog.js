@@ -121,11 +121,14 @@ const posts = [
 ];
 
 class Blog extends React.Component {
-  state = {
-    posts,
-  };
 
-  render() {
+  state = { posts };
+
+  render () {
+
+    const { isAuthed } = this.props;
+    if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px' }}>Not Authenticated</div> };
+
     return (
       <section className="page-blog container-fluid no-breadcrumbs with-maxwidth-md chapter">
         <QueueAnim type="bottom" className="ui-animate">
