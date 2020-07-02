@@ -39,19 +39,19 @@ class SidebarContent extends React.Component {
             </NavLink>
           </li>
           <li>
-            <NavLink to={{ pathname: '/app/drafts' }} activeClassName="selected">
+            <NavLink to={{ pathname: '/app/lists/global/draft' }} activeClassName="selected">
               <i className="nav-icon material-icons">drafts</i><span className="nav-text" style={ styles.textItem }>Drafts</span>
             </NavLink>
           </li>
 
           <li>
-            <NavLink to={{ pathname: '/app/rankings' }} activeClassName="selected">
+            <NavLink to={{ pathname: '/app/lists/global/rankings' }} activeClassName="selected">
               <i className="nav-icon material-icons">language</i><span className="nav-text" style={ styles.textItem }>Rankings</span>
             </NavLink>
           </li>
 
           <li>
-            <NavLink to={{ pathname: '/app/personallists' }} activeClassName="selected">
+            <NavLink to={{ pathname: '/app/lists/personal' }} activeClassName="selected">
               <i className="nav-icon material-icons">list</i><span className="nav-text" style={ styles.textItem }>Personal Lists</span>
             </NavLink>
           </li>

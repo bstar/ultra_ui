@@ -2,8 +2,13 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { get, find } from 'lodash';
-import { getLists, createList, loadMessage, openModal, closeModal } from 'actions';
-
+import {
+  getListsByType,
+  createList,
+  loadMessage,
+  openModal,
+  closeModal,
+} from 'actions';
 import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
@@ -14,14 +19,15 @@ import Boids from './components/boids';
 
 const mapStateToProps = state => ({
   userToken: get(state, 'user.data.token'),
-  lists: get(state, 'list.lists'),
+  personalLists: get(state, 'list.personal'),
+  globalLists: get(state, 'list.global'),
   activeListId: get(state, 'list.activeList'),
   createListModalStatus: get(state, 'modal.createListModal'),
 });
 
 const mapDispatchToProps = dispatch => ({
-  getLists: () => {
-    dispatch(getLists());
+  getListsByType: type => {
+    dispatch(getListsByType(type));
   },
   createPlayerList: list => {
     dispatch(createList(list));
@@ -51,12 +57,28 @@ class Lists extends Component {
 
   componentDidMount () {
 
-    const { getLists } = this.props;
+    const { getListsByType, match } = this.props;
+    const { key, type } = match.params;
 
-    getLists();
+    this.setState({ key, type });
+
+    getListsByType(key);
   }
 
-  setModal (id) {
+  componentDidUpdate () {
+
+    const { getListsByType, match } = this.props;
+    const { key, type } = this.state;
+    const params = match.params
+
+    // looks for key and type change when navigating routes
+    if ((key !== params.key) || (type !== params.type)) {
+      this.setState({ key: params.key, type: params.type });
+      getListsByType(params.key);
+    }
+}
+
+  setModal = id => {
 
     const { showModal } = this.props;
 
@@ -103,7 +125,6 @@ class Lists extends Component {
                 floatingLabelFixed="true"
             />
         </div>
-
         <h5 style={{ color: 'rgb(159, 207, 223)', marginBottom: '10px' }}>Associative Data:</h5>
         <div style={{ paddingBottom: '15px', fontWeight: 300 }}><i>Associative data is additional data that is captured at the time a player is added to a list.  All lists support player "Rank" by default.</i></div>
         <div>
@@ -172,17 +193,29 @@ class Lists extends Component {
     createPlayerList(formListData);
   }
 
+  filteredLists = (lists, key, type) => {
+
+    if (key === 'personal') return lists; // personal lists are never filtered by type
+
+    return lists && lists.filter(list => list.type === type);
+  }
+
   render () {
 
-    const { lists, activeListId, userToken, createListModalStatus, isAuthed, type } = this.props;
-    const filteredLists = lists && lists.filter(list => list.type === type);
+    const { key, type } = this.state;
+    const { personalLists, globalLists, activeListId, userToken, createListModalStatus, isAuthed } = this.props;
+    const listGroups = { personal: personalLists, global: globalLists };
+    const lists = listGroups[key];
+    const filteredLists = this.filteredLists(lists, key, type);
     const activeList = find(filteredLists, { 'id': activeListId });
+
+    console.log("ACTIVE LIST", activeList)
 
     if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px' }}>Not Authenticated</div> };
 
     return (
         <div>
-          { this.createListModalWrapper({ title: <div>Create a New <b>Personal</b> List:</div>, open: createListModalStatus, body: this.createListBody() }) }
+          { this.createListModalWrapper({ title: <div>Create a New List:</div>, open: createListModalStatus, body: this.createListBody() }) }
 
           <div style={{ cursor: 'pointer', display: 'flex', backgroundColor: 'rgba(0, 0, 0, 0.35)', width: '100%', padding: '5px 5px 5px 10px', borderBottom: '1px solid rgb(46, 110, 115)', borderRight: '1px solid rgb(46, 110, 115)', alignItems: 'center' }}>
             <FlatButton onClick={ () => (this.setModal('createListModal'))} style={{ minWidth: '30px', paddingRight: '5px' }}>
@@ -195,11 +228,13 @@ class Lists extends Component {
               { userToken ? 
                 <div className="row">
                     <div className="col-xl-3" style={{ padding: '30px', margin: '-20px 10px -20px -20px' }}>
-                        <ListItems lists={filteredLists} />
+                        { lists &&
+                          <ListItems lists={filteredLists} />
+                        }
                     </div>
                     <div className="col-xl-9">
                         { activeList &&
-                          <Boids listName={activeList.name} listId={activeList.id} />
+                          <Boids listName={activeList.name} lists={filteredLists} listId={activeList.id} />
                         }
                     </div>
                 </div>

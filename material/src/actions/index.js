@@ -14,6 +14,9 @@ export const getAttributesSuccess = (json, meta) => (universalActionCreator(type
 export const getLists = (meta) => (universalActionCreator(types.GET_LISTS, {}, meta));
 export const getListsSuccess = (json, meta) => (universalActionCreator(types.GET_LISTS_SUCCESS, json, meta));
 
+export const getListsByType = (type, meta) => (universalActionCreator(types.GET_LISTS_BY_TYPE, { type }, meta));
+export const getListsByTypeSuccess = (json, meta) => (universalActionCreator(types.GET_LISTS_BY_TYPE_SUCCESS, json, meta));
+
 export const invalidateLists = (meta) => (universalActionCreator(types.INVALIDATE_LISTS, {}, meta));
 export const invalidateListsSuccess = (json, meta) => (universalActionCreator(types.INVALIDATE_LISTS_SUCCESS, json, meta));
 

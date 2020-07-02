@@ -1,5 +1,6 @@
 import {
     GET_LISTS_SUCCESS,
+    GET_LISTS_BY_TYPE_SUCCESS,
     GET_LIST_SUCCESS,
     INVALIDATE_LISTS,
   } from '../constants/ActionTypes';
@@ -17,6 +18,16 @@ import {
         return {
           ...state,
           lists,
+        };
+
+      case GET_LISTS_BY_TYPE_SUCCESS:
+  
+        const data = action.payload;
+
+        console.log("DATA", data)
+        return {
+          ...state,
+          [data.type]: data.lists,
         }
 
       case GET_LIST_SUCCESS:
@@ -26,13 +37,13 @@ import {
         return {
           ...state,
           activeList: activeList.id,
-        }
+        };
 
       case INVALIDATE_LISTS:
         return {
           ...state,
           list: null,
-        } 
+        };
 
       default:
         return state;

@@ -22,6 +22,21 @@ export const fetchLists = (token, uriRoot = baseUri) => {
         .then(({ json, response }) => ({ json, response }));
 };
 
+export const fetchListsByType = (type, token, uriRoot = baseUri) => {
+
+    const url = `${uriRoot}/lists/${type}`;
+
+    return fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': `JWT ${token}`, 
+            },
+        })
+        .then(parseJson)
+        .then(({ json, response }) => ({ json, response }));
+};
+
 export const fetchList = (id, token, uriRoot = baseUri) => {
 
     const url = `${uriRoot}/list/${id}`;

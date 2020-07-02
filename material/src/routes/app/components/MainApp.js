@@ -48,8 +48,6 @@ class MainApp extends Component {
 
     const { match, message } = this.props;
 
-    console.log("AUTH", this.isAuthed());
-
     return (
       <div className="main-app-container">
         <Sidenav />
@@ -71,23 +69,17 @@ class MainApp extends Component {
                     render={ props => <PlayerSearch {...props} isAuthed={this.isAuthed} /> }
                   />
                   <Route
-                    path={`${match.url}/lists`}
+                    exact
+                    path={`${match.url}/lists/:key`}
                     render={ props => <Lists {...props} isAuthed={this.isAuthed} /> }
                   />
                   <Route
-                    path={`${match.url}/personallists`}
-                    render={ props => <Lists {...props} type="personal" isAuthed={this.isAuthed} /> }
+                    exact
+                    path={`${match.url}/lists/:key/:type/`}
+                    render={ props => <Lists {...props} isAuthed={this.isAuthed} /> }
                   />
                   <Route
-                    path={`${match.url}/rankings`}
-                    render={ props => <Lists {...props} type="rankings" isAuthed={this.isAuthed} /> }
-                  />
-                  <Route
-                    path={`${match.url}/drafts`}
-                    render={ props => <Lists {...props} type="draft" isAuthed={this.isAuthed} /> }
-                  />
-                  <Route
-                    path={`${match.url}/playerdetail/:playerId`}
+                    path={`${match.url}/playerdetail/:playerId/`}
                     render={ props => <PlayerDetail {...props} isAuthed={this.isAuthed} /> }
                   />
                   <Route

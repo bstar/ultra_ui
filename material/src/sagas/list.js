@@ -4,6 +4,7 @@ import { get } from 'lodash';
 import * as types from 'constants/ActionTypes';
 import { 
     fetchLists,
+    fetchListsByType,
     fetchList,
     putPlayerRank,
     putPlayerRanks,
@@ -12,7 +13,9 @@ import {
 } from '../api/list';
 import {
     getLists,
+    getListsByType,
     getListsSuccess,
+    getListsByTypeSuccess,
     getListSuccess,
     setPlayerRankSuccess,
     batchPlayerRanksSuccess,
@@ -30,7 +33,21 @@ function* getListsSaga () {
     const { json, response } = yield call(fetchLists, token);
 
     yield put(getListsSuccess(json, { response }));
-}
+};
+
+function* getListsByTypeSaga (action) {
+
+    console.log("SAGA ACTION", action.payload)
+
+    const state = yield select();
+    const token = get(state, 'user.data.token') || localStorage.getItem('token');
+    const type = action.payload.type;
+
+    const { json, response } = yield call(fetchListsByType, type, token, action.payload.query);
+
+    console.log("SAGA JSON", json)
+    yield put(getListsByTypeSuccess({ type, lists: json }, { response }));
+};
 
 function* getListSaga (action) {
 
@@ -39,14 +56,14 @@ function* getListSaga (action) {
     const { json, response } = yield call(fetchList, action.payload.id, token, action.payload.query);
 
     yield put(getListSuccess(json, { response }));
-}
+};
 
 function* setPlayerRankSaga (action) {
 
     const { json, response } = yield call(putPlayerRank, action.payload.player, action.payload.query);
 
     yield put(setPlayerRankSuccess(json, { response }));
-}
+};
 
 function* batchPlayerRanksSaga (action) {
 
@@ -55,8 +72,8 @@ function* batchPlayerRanksSaga (action) {
     const { json, response } = yield call(putPlayerRanks, action.payload.listId, action.payload.players, token, action.payload.query);
 
     yield put(batchPlayerRanksSuccess(json, { response }));
-    yield put(getLists());
-}
+    // yield put(getLists()); // TODO update to refresh proper list key
+};
 
 function* setPlayerDataSaga (action) {
 
@@ -69,7 +86,7 @@ function* setPlayerDataSaga (action) {
     const { json, response } = yield call(putPlayerData, listId, { boidId, ...{ team: teamSelection, gm: gmSelection, grade: gradeSelection } }, token, action.payload.query);
 
     yield put(setPlayerDataSuccess(json, { response }));
-}
+};
 
 function* createListSaga (action) {
 
@@ -78,18 +95,19 @@ function* createListSaga (action) {
     const { json, response } = yield call(createList, action.payload, token, action.payload.query);
 
     yield put(createListSuccess(json, { response }));
-}
+};
 
 function* createListSuccessSaga () {
 
     yield put(closeModalSuccess({ id: 'createListModal' }));
     yield put(loadMessageSuccess({ open: true, text: <b>New list created!</b> }));
-    yield getListsSaga();
-}
+    // yield getListsSaga(); // TODO update to refresh proper list key
+};
 
 export default function* allListsSagas () {
     yield all([
         takeLatest(types.GET_LISTS, getListsSaga),
+        takeLatest(types.GET_LISTS_BY_TYPE, getListsByTypeSaga),
         takeLatest(types.GET_LIST, getListSaga),
         takeLatest(types.SET_ACTIVE_LIST, getListSaga),
         takeEvery(types.SET_PLAYER_RANK, setPlayerRankSaga),
