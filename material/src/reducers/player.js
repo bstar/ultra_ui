@@ -24,7 +24,7 @@ const player = (state = initialSettings, action) => {
   
         return {
           ...state,
-          'search': players,
+          search: players,
         }
 
     default:

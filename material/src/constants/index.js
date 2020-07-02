@@ -4,13 +4,14 @@ const leagueConversionMap = {
   AHL: 'American Hockey League',
   'Kontinental Hockey League': 'Russia',
   ECHL: 'ECHL',
-  USHL: 'USHL',
+  USHL: 'United States Hockey League',
   WHL: 'Western Hockey League',
   OHL: 'Ontario Hockey League',
   QMJHL: 'Quebec Major Junior Hockey League',
   'Big Ten': 'Central Collegiate Hockey Association',
   NCHC: 'Northern Collegiate Hockey Association',
   WCHA: 'Western Collegiate Hockey Association',
+  OJHL: 'Ontario Provincial Junior A Hockey League',
 };
 
 const nhlTeams = [

@@ -4,12 +4,12 @@ import React from 'react';
 
 const PlayerLists = ({ lists }) => {
 
-  const globalLists = lists && lists.filter(list => list.type === 'global');
-  const personalLists = lists && lists.filter(list => list.type === 'personal');
+  const globalLists = lists && lists.filter(list => list.key === 'global');
+  const personalLists = lists && lists.filter(list => list.key === 'personal');
 
   return (
     <div className="row" style={{ height: '186px', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ margin: '15px -10px 0px 10px', width: '50%', overflowY: 'auto', position: 'relative', height: '155px' }}>
+      <div style={{ margin: '15px -10px 0px 10px', width: 'width: 270px', overflowY: 'auto', position: 'relative', height: '180px' }}>
         <div style={{ marginBottom: '7px', color: 'rgb(159, 207, 223)', fontWeight: 500, textShadow: 'rgba(0, 0, 0, 0.4) 1px 1px 3px', fontSize: '18px' }}>Global Rankings:</div>
 
         { globalLists.length > 0 ?
@@ -20,7 +20,7 @@ const PlayerLists = ({ lists }) => {
             <div>Player does not belong to a Global list</div>
         }
       </div>
-      <div style={{ margin: '15px 0px 0px 10px', width: '50%', overflowY: 'auto', position: 'relative', height: '155px' }}>
+      <div style={{ margin: '15px 0px 0px 20px', width: 'width: 260px', overflowY: 'auto', position: 'relative', height: '180px' }}>
         <div style={{ marginBottom: '7px', color: 'rgb(159, 207, 223)', fontWeight: 500, textShadow: 'rgba(0, 0, 0, 0.4) 1px 1px 3px', fontSize: '18px' }}>Personal Lists: <span style={{ fontSize: '14px', cursor: 'pointer' }}>(hide)</span></div>
 
         <div>

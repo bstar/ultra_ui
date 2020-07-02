@@ -41,7 +41,7 @@ class Lists extends Component {
 
   constructor (props) {
 
-    super(props)
+    super(props);
 
     this.state = {
       openCreateListModal: false,
@@ -174,8 +174,9 @@ class Lists extends Component {
 
   render () {
 
-    const { lists, activeListId, userToken, createListModalStatus, isAuthed } = this.props;
-    const activeList = find(lists, { 'id': activeListId });
+    const { lists, activeListId, userToken, createListModalStatus, isAuthed, type } = this.props;
+    const filteredLists = lists && lists.filter(list => list.type === type);
+    const activeList = find(filteredLists, { 'id': activeListId });
 
     if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px' }}>Not Authenticated</div> };
 
@@ -186,7 +187,7 @@ class Lists extends Component {
           <div style={{ cursor: 'pointer', display: 'flex', backgroundColor: 'rgba(0, 0, 0, 0.35)', width: '100%', padding: '5px 5px 5px 10px', borderBottom: '1px solid rgb(46, 110, 115)', borderRight: '1px solid rgb(46, 110, 115)', alignItems: 'center' }}>
             <FlatButton onClick={ () => (this.setModal('createListModal'))} style={{ minWidth: '30px', paddingRight: '5px' }}>
               <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                <i className="nav-icon material-icons" style={{ color: '#1ecbce', padding: '0px 5px 0px 10px' }}>add</i><span style={{ paddingRight: '10px' }}>Create Personal List</span>
+                <i className="nav-icon material-icons" style={{ color: '#1ecbce', padding: '0px 5px 0px 10px' }}>add</i><span style={{ paddingRight: '10px', textTransform: 'capitalize' }}>create {type} list</span>
               </div>
             </FlatButton>
           </div>
@@ -194,7 +195,7 @@ class Lists extends Component {
               { userToken ? 
                 <div className="row">
                     <div className="col-xl-3" style={{ padding: '30px', margin: '-20px 10px -20px -20px' }}>
-                        <ListItems lists={lists} />
+                        <ListItems lists={filteredLists} />
                     </div>
                     <div className="col-xl-9">
                         { activeList &&

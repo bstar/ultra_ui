@@ -35,7 +35,7 @@ class Login extends Component {
                             </section>
                             <section className="logo">
                                 <h4><span style={{ color: '#5db7b4' }}>Email:</span> {user.email}</h4>
-                                <h4><span style={{ color: '#5db7b4' }}>Team:</span> {user.team}</h4>
+                                <h4><span style={{ color: '#5db7b4' }}>Assigned Team:</span> {user.team}</h4>
                                 <h4><span style={{ color: '#5db7b4' }}>Role:</span> {user.role}</h4>
                                 <h4><span style={{ color: '#5db7b4' }}>Token Creation:</span> {iat}</h4>
                                 <h4><span style={{ color: '#5db7b4' }}>Token Expiration:</span> {expiration}</h4>

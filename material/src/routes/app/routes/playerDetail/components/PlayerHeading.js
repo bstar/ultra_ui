@@ -17,7 +17,8 @@ const styles = {
   logo: {
     maxWidth: '100%',
     maxHeight: '100px',
-    padding: '5px 10px 15px',
+    padding: '5px 10px 15px 0px',
+
     marginLeft: '0px',
     filter: 'drop-shadow(5px 8px 7px rgba(0,0,0,.3))',
   },
@@ -37,7 +38,6 @@ const styles = {
 };
 
 const PlayerHeading = ({ player, fallbackImage }) => (
-
   <div className="row" style={{ minHeight: '100px', marginTop: '-8px' }}>
     <div>
       <ReactImageFallback
@@ -60,6 +60,6 @@ const PlayerHeading = ({ player, fallbackImage }) => (
 
 PlayerHeading.defaultProps = {
   fallbackImage: 'assets/img/default-team.png',
-}
+};
 
 export default PlayerHeading;

@@ -29,7 +29,6 @@ const mapDispatchToProps = dispatch => ({
 
 class MainApp extends Component {
 
-
   handleClose = () => {
 
     const { close } = this.props;
@@ -77,15 +76,15 @@ class MainApp extends Component {
                   />
                   <Route
                     path={`${match.url}/personallists`}
-                    render={ props => <Lists {...props} isAuthed={this.isAuthed} /> }
+                    render={ props => <Lists {...props} type="personal" isAuthed={this.isAuthed} /> }
                   />
                   <Route
                     path={`${match.url}/rankings`}
-                    render={ props => <Lists {...props} isAuthed={this.isAuthed} /> }
+                    render={ props => <Lists {...props} type="rankings" isAuthed={this.isAuthed} /> }
                   />
                   <Route
                     path={`${match.url}/drafts`}
-                    render={ props => <Lists {...props} isAuthed={this.isAuthed} /> }
+                    render={ props => <Lists {...props} type="draft" isAuthed={this.isAuthed} /> }
                   />
                   <Route
                     path={`${match.url}/playerdetail/:playerId`}

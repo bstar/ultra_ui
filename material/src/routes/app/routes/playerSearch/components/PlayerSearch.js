@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
-import { getCOMColor, getAOColor, getGrowthColor, convertWeighted, convertCombined, getRatingColor } from 'utils';
+import { getCOMColor, getAOColor, getGrowthColor, convertCombined, getRatingColor, roleMap } from 'utils';
 import { getPlayers, getLists, loadMessage, addPlayersToList, openModal, closeModal } from 'actions';
 import { nhlTeams, tempGMList, grades } from '../../../../../constants';
 import TextField from 'material-ui/TextField';
@@ -54,38 +54,58 @@ const styles = {
 
 const defaultSearch = { order: 'combined_rating', positions_short: '', ageMin: 12, ageMax: 48, name: '', club_contracted: '', nation: '', position: '', role: '' };
 
-class SelectFieldExampleSimple extends React.Component {
+class SelectSort extends React.Component {
 
   render () {
 
     const { onChange, order } = this.props;
 
     return (
-      <div>
-        <SelectField
-          name="order"
-          autoWidth={false}
-          floatingLabelText="Sort by..."
-          style={{ width: '200px' }}
-          value={order}
-          onChange={onChange}
-        >
-          <MenuItem value="combined_rating" primaryText="Combined Rating" />
-          <MenuItem value="technical_rating" primaryText="Technical Rating" />
-          <MenuItem value="mental_rating" primaryText="Mental Rating" />
-          <MenuItem value="physical_rating" primaryText="Physical Rating" />
-          <MenuItem value="att_growth" primaryText="Attributes growth" />
-          <MenuItem value="age_over" primaryText="Age / Over" />
-        </SelectField>
-      </div>
+      <SelectField
+        name="order"
+        autoWidth={false}
+        floatingLabelText="Sort by..."
+        style={{ width: '200px' }}
+        value={order}
+        onChange={onChange}
+      >
+        <MenuItem value="combined_rating" primaryText="Combined Rating" />
+        <MenuItem value="technical_rating" primaryText="Technical Rating" />
+        <MenuItem value="mental_rating" primaryText="Mental Rating" />
+        <MenuItem value="physical_rating" primaryText="Physical Rating" />
+        <MenuItem value="att_growth" primaryText="Attributes growth" />
+        <MenuItem value="age_over" primaryText="Age / Over" />
+      </SelectField>
     );
   }
-}
+};
 
-class Main extends Component {
+class SelectRoles extends React.Component {
+
+  render () {
+
+    const { onChange, role } = this.props;
+    const roles = Object.keys(roleMap);
+
+    return (
+      <SelectField
+        name="role"
+        autoWidth={false}
+        floatingLabelText="Role"
+        style={{ width: '250px', top: '-10px' }}
+        value={role}
+        onChange={onChange}
+      >
+        <MenuItem value={null} primaryText="" />
+        { roles.map(role => <MenuItem value={role} primaryText={role} /> )}
+      </SelectField>
+    );
+  }
+};
+
+class PlayerSearch extends Component {
 
   constructor (props) {
-
     super(props)
 
     this.state = {
@@ -95,15 +115,6 @@ class Main extends Component {
       openAddPlayerModal: false,
       openCreateListFromSearchModal: false,
     };
-
-    this.getPlayersByFilter = this.getPlayersByFilter.bind(this);
-    this.onChangeText = this.onChangeText.bind(this);
-    this.onChangeRadio = this.onChangeRadio.bind(this);
-    this.onChangeAgeMin = this.onChangeAgeMin.bind(this);
-    this.onChangeAgeMax = this.onChangeAgeMax.bind(this);
-    this.ageSlider = this.ageSlider.bind(this);
-    this.onChangeOrderBy = this.onChangeOrderBy.bind(this);
-    this.clearHandler = this.clearHandler.bind(this);
   }
 
   componentDidMount () {
@@ -117,7 +128,7 @@ class Main extends Component {
     this.props.getLists();
   }
 
-  ageSlider () {
+  ageSlider = () => {
 
     const { search } = this.state;
 
@@ -133,7 +144,7 @@ class Main extends Component {
     );
   }
 
-  getPlayersByFilter () {
+  getPlayersByFilter = () => {
 
     const { getPlayers } = this.props;
     const { search } = this.state;
@@ -153,7 +164,7 @@ class Main extends Component {
     getPlayers(params);
   }
 
-  onChangeText (event) {
+  onChangeText = event => {
 
     const { search } = this.state;
     const fieldName = event.target.name;
@@ -166,7 +177,18 @@ class Main extends Component {
     })
   }
 
-  onChangeAgeMin (e, value) {
+  onChangeRole = (event, index, value) => {
+
+    const { search } = this.state;
+
+    search.role = value;
+
+    this.setState(search, () => {
+      this.getPlayersByFilter();
+    });
+  }
+
+  onChangeAgeMin = (e, value) => {
 
     const { search } = this.state
 
@@ -179,10 +201,10 @@ class Main extends Component {
 
     this.setState(search, () => {
       this.getPlayersByFilter();
-    })
+    });
   }
 
-  onChangeAgeMax (e, value) {
+  onChangeAgeMax = (e, value) => {
 
     const { search } = this.state
 
@@ -195,20 +217,20 @@ class Main extends Component {
 
     this.setState(search, () => {
       this.getPlayersByFilter();
-    })
+    });
   }
 
-  onChangeOrderBy (event, index, value) {
+  onChangeOrderBy = (event, index, value) => {
 
     const { search } = this.state
 
     search.order = value;
     this.setState(search, () => {
       this.getPlayersByFilter();
-    })
+    });
   }
 
-  onChangeRadio (e, value) {
+  onChangeRadio = (e, value) => {
 
     const { search } = this.state
 
@@ -220,19 +242,19 @@ class Main extends Component {
 
     this.setState(search, () => {
       this.getPlayersByFilter();
-    })
+    });
   }
 
-  clearHandler (e) {
+  clearHandler = e => {
 
     e.preventDefault();
 
     this.setState({ search: defaultSearch }, () => {
       this.getPlayersByFilter();
-    })
+    });
   }
 
-  setModal (id, data) {
+  setModal = (id, data) => {
 
     const { showModal } = this.props;
 
@@ -240,7 +262,7 @@ class Main extends Component {
     showModal(id);
   }
 
-  addPlayerModalWrapper ({ title, open, body }) {
+  addPlayerModalWrapper = ({ title, body }) => {
 
     const { stagedPlayers, stagedList, teamSelection, gmSelection, gradeSelection } = this.state; 
     const { addPlayerToListStatus, hideModal } = this.props;
@@ -276,7 +298,7 @@ class Main extends Component {
     )
   }
 
-  addPlayerBody () {
+  addPlayerBody = () => {
 
     const { stagedPlayers, teamSelection, gmSelection, gradeSelection, stagedList } = this.state;
     const { lists } = this.props;
@@ -355,8 +377,8 @@ class Main extends Component {
     )
   }
 
-  // TODO implement feature
-  createListFromSearchModalWrapper ({ title, open, body }) {
+  // TODO placeholder, implement feature
+  createListFromSearchModalWrapper = ({ title, open, body }) => {
 
     const actions = [
       <FlatButton
@@ -386,7 +408,7 @@ class Main extends Component {
     )
   }
 
-  addPlayerToList ({ boidIds, listId, selections }) {
+  addPlayerToList = ({ boidIds, listId, selections }) => {
 
     const { addPlayer } = this.props;
 
@@ -410,9 +432,9 @@ class Main extends Component {
 
         <div>
           <div className="row" style={{ border: '0px 0px 40px 0px', borderRight: '1px solid rgb(46, 110, 115)', borderBottom: '1px solid rgb(46, 110, 115)', paddingBottom: '0px', boxShadow: '0px 13px 56px -13px rgba(0,0,0,0.35)', margin: "0px -25px 0px -25px" }}>
-            <div className="search-pod-container" style={{ paddingTop: '12px' }}>
+            <div className="search-pod-container" style={{ padding: '12px 30px 0px 30px' }}>
               <div className="search-pod">
-                <SelectFieldExampleSimple onChange={this.onChangeOrderBy} order={search.order} />
+                <SelectSort onChange={this.onChangeOrderBy} order={search.order} />
               </div>
               <div className="search-pod">
                 <RadioButtonGroup name="playerType" defaultSelected={playerType} onChange={this.onChangeRadio}>
@@ -471,13 +493,7 @@ class Main extends Component {
                 />
               </div>
               <div className="search-pod">
-                <TextField
-                  onChange={this.onChangeText}
-                  name="role"
-                  value={search.role}
-                  hintText="Role"
-                  style={{ width: '200px' }}
-                />
+                <SelectRoles onChange={this.onChangeRole} role={search.role} />
               </div>
             </div>
             <div style={{ borderTop: '1px solid rgb(46, 110, 115)', margin: '10px 0px 0px 0px', padding: '6px 30px 5px 30px', backgroundColor: 'rgba(0,0,0,0.35)', width: '100%' }}>
@@ -566,15 +582,7 @@ class Main extends Component {
   }
 };
 
-const PlayerSearch = () => (
-  <section className="player-search-container container-fluid">
-      <div key="2">
-        <Main />
-      </div>
-  </section>
-);
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Main);
+)(PlayerSearch);
