@@ -1,6 +1,6 @@
 import {
     GET_LISTS_SUCCESS,
-    GET_LISTS_BY_TYPE_SUCCESS,
+    GET_LISTS_BY_KEY_SUCCESS,
     GET_LIST_SUCCESS,
     INVALIDATE_LISTS,
   } from '../constants/ActionTypes';
@@ -11,23 +11,23 @@ import {
     
     switch (action.type) {
   
-      case GET_LISTS_SUCCESS:
+      // TODO Might want this for admin views
+      // case GET_LISTS_SUCCESS:
     
-        const lists = action.payload;
+      //   const lists = action.payload;
   
-        return {
-          ...state,
-          lists,
-        };
+      //   return {
+      //     ...state,
+      //     lists,
+      //   };
 
-      case GET_LISTS_BY_TYPE_SUCCESS:
+      case GET_LISTS_BY_KEY_SUCCESS:
   
         const data = action.payload;
 
-        console.log("DATA", data)
         return {
           ...state,
-          [data.type]: data.lists,
+          [data.key]: data.lists,
         }
 
       case GET_LIST_SUCCESS:
@@ -36,7 +36,7 @@ import {
   
         return {
           ...state,
-          activeList: activeList.id,
+          activeList: { id: activeList.id, key: activeList.key },
         };
 
       case INVALIDATE_LISTS:

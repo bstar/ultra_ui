@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { get, find } from 'lodash';
 import {
-  getListsByType,
+  getListsByKey,
   createList,
   loadMessage,
   openModal,
@@ -21,13 +21,14 @@ const mapStateToProps = state => ({
   userToken: get(state, 'user.data.token'),
   personalLists: get(state, 'list.personal'),
   globalLists: get(state, 'list.global'),
-  activeListId: get(state, 'list.activeList'),
+  activeListId: get(state, 'list.activeList.id'),
+  activeListKey: get(state, 'list.activeList.key'),
   createListModalStatus: get(state, 'modal.createListModal'),
 });
 
 const mapDispatchToProps = dispatch => ({
-  getListsByType: type => {
-    dispatch(getListsByType(type));
+  getListsByKey: key => {
+    dispatch(getListsByKey(key));
   },
   createPlayerList: list => {
     dispatch(createList(list));
@@ -57,26 +58,26 @@ class Lists extends Component {
 
   componentDidMount () {
 
-    const { getListsByType, match } = this.props;
+    const { getListsByKey, match } = this.props;
     const { key, type } = match.params;
 
     this.setState({ key, type });
 
-    getListsByType(key);
+    getListsByKey(key);
   }
 
   componentDidUpdate () {
 
-    const { getListsByType, match } = this.props;
+    const { getListsByKey, match } = this.props;
     const { key, type } = this.state;
     const params = match.params
 
     // looks for key and type change when navigating routes
     if ((key !== params.key) || (type !== params.type)) {
       this.setState({ key: params.key, type: params.type });
-      getListsByType(params.key);
+      getListsByKey(params.key);
     }
-}
+  }
 
   setModal = id => {
 
@@ -209,8 +210,6 @@ class Lists extends Component {
     const filteredLists = this.filteredLists(lists, key, type);
     const activeList = find(filteredLists, { 'id': activeListId });
 
-    console.log("ACTIVE LIST", activeList)
-
     if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px' }}>Not Authenticated</div> };
 
     return (
@@ -234,7 +233,7 @@ class Lists extends Component {
                     </div>
                     <div className="col-xl-9">
                         { activeList &&
-                          <Boids listName={activeList.name} lists={filteredLists} listId={activeList.id} />
+                          <Boids listName={activeList.name} activeListName={activeList.name} activeListId={activeList.id} activeListKey={activeList.key} activeListBoids={activeList.boids} />
                         }
                     </div>
                 </div>

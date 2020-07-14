@@ -17,7 +17,7 @@ const ListItems = ({ lists }) => {
                         <div className="content-header">
                             <h5 style={{ margin: '0px 0px 0px 20px' }}>{key}:</h5>
                         </div>
-                        { orderBy(grouped[key], ['name'], ['desc']).map(list => <ListCard key={list.id} list={list} />) }
+                        { orderBy(grouped[key], ['name'], ['desc']).map(list => <ListCard key={list.key} id={list.id} list={list} />) }
                     </div>
                 ))}
             </div>

@@ -4,7 +4,7 @@ import { get } from 'lodash';
 import * as types from 'constants/ActionTypes';
 import { 
     fetchLists,
-    fetchListsByType,
+    fetchListsByKey,
     fetchList,
     putPlayerRank,
     putPlayerRanks,
@@ -13,9 +13,9 @@ import {
 } from '../api/list';
 import {
     getLists,
-    getListsByType,
+    getListsByKey,
     getListsSuccess,
-    getListsByTypeSuccess,
+    getListsByKeySuccess,
     getListSuccess,
     setPlayerRankSuccess,
     batchPlayerRanksSuccess,
@@ -35,18 +35,15 @@ function* getListsSaga () {
     yield put(getListsSuccess(json, { response }));
 };
 
-function* getListsByTypeSaga (action) {
-
-    console.log("SAGA ACTION", action.payload)
+function* getListsByKeySaga (action) {
 
     const state = yield select();
     const token = get(state, 'user.data.token') || localStorage.getItem('token');
-    const type = action.payload.type;
+    const key = action.payload.key;
 
-    const { json, response } = yield call(fetchListsByType, type, token, action.payload.query);
+    const { json, response } = yield call(fetchListsByKey, key, token, action.payload.query);
 
-    console.log("SAGA JSON", json)
-    yield put(getListsByTypeSuccess({ type, lists: json }, { response }));
+    yield put(getListsByKeySuccess({ key, lists: json }, { response }));
 };
 
 function* getListSaga (action) {
@@ -72,7 +69,7 @@ function* batchPlayerRanksSaga (action) {
     const { json, response } = yield call(putPlayerRanks, action.payload.listId, action.payload.players, token, action.payload.query);
 
     yield put(batchPlayerRanksSuccess(json, { response }));
-    // yield put(getLists()); // TODO update to refresh proper list key
+    yield put({ type: 'GET_LISTS_BY_KEY', payload: { key: action.payload.key }});
 };
 
 function* setPlayerDataSaga (action) {
@@ -107,7 +104,7 @@ function* createListSuccessSaga () {
 export default function* allListsSagas () {
     yield all([
         takeLatest(types.GET_LISTS, getListsSaga),
-        takeLatest(types.GET_LISTS_BY_TYPE, getListsByTypeSaga),
+        takeLatest(types.GET_LISTS_BY_KEY, getListsByKeySaga),
         takeLatest(types.GET_LIST, getListSaga),
         takeLatest(types.SET_ACTIVE_LIST, getListSaga),
         takeEvery(types.SET_PLAYER_RANK, setPlayerRankSaga),

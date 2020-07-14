@@ -19,47 +19,47 @@ const styles = {
     },
 };
 
-const syncString = boids => {
+// const syncString = boids => {
     
-    return boids.reduce((acc, boid, i) => {
+//     return boids.reduce((acc, boid, i) => {
         
-        const inc = typeof(get(boid, 'listdata.rank')) === 'number' ?  get(boid, 'listdata.rank') : i+1;
+//         const inc = typeof(get(boid, 'listdata.rank')) === 'number' ?  get(boid, 'listdata.rank') : i+1;
 
-        return (acc + boid.id + '_' + inc + '|')
-    },'');
-};
+//         return (acc + boid.id + '_' + inc + '|')
+//     },'');
+// };
 
-const hasMissingRank = boids => boids.find(boid => boid.listdata.rank === null);
+// const hasMissingRank = boids => boids.find(boid => boid.listdata.rank === null);
 
-const mapStateToProps = state => {
+// const mapStateToProps = state => {
 
-    const lists = get(state, 'list.lists');
-    const activeListId = get(state, 'list.activeList');
-    const list = find(lists, { id: activeListId });
+//     const lists = get(state, 'list.lists');
+//     const activeListId = get(state, 'list.activeList');
+//     const list = find(lists, { id: activeListId });
 
-    return ({ activeListId, boids: orderBy(list.boids,  [ 'listdata.rank' ]) });
-};
+//     return ({ activeListId, boids: orderBy(list.boids,  [ 'listdata.rank' ]) });
+// };
 
 const mapDispatchToProps = dispatch => ({
     setPlayerRanksById: id => {
       dispatch(setPlayerRank(id));
     },
-    batchPlayerRanksById: (listId, players) => {
-        dispatch(batchPlayerRanks(listId, players));
+    batchPlayerRanksById: (listId, players, key) => {
+        dispatch(batchPlayerRanks(listId, players, key));
     },
     getLists: () => {
         dispatch(getLists());
     },
 });
 
-const SortableItem = SortableElement(({ boid, pos, sortByNumber  }) => <BoidCard boid={boid} pos={pos} sortByNumber={sortByNumber} />);
+const SortableItem = SortableElement(({ boid, pos, sortByNumber  }) => <BoidCard boid={boid} pos={pos} rank={boid.listdata.rank} sortByNumber={sortByNumber} />);
 
 const SortableList = SortableContainer(({ boids, sortByNumber }) => {
 
     return (
         <div>
             { boids.map((boid, index) => (
-                <SortableItem key={`boid-${boid.id}`} index={index} pos={index+1} boid={boid} sortByNumber={sortByNumber} />
+                <SortableItem key={`boid-${boid.id}`} index={index} pos={index+1} boid={boid} rsortByNumber={sortByNumber} />
             ))}
         </div>
     );
@@ -87,25 +87,26 @@ class Boids extends Component {
 
     componentDidMount () {
 
-        const { boids, activeListId, getLists } = this.props;
-        const ordered = orderBy(boids, [ 'listdata.rank' ] );
-
+        const { activeListBoids, activeListId, getLists } = this.props;
+        const ordered = orderBy(activeListBoids, [ 'listdata.rank' ] );
+        
         this.setState({ boids: ordered, activeListId });
     }
 
     componentDidUpdate () {
 
-        const { activeListId, boids } = this.props;
+        const { activeListId, activeListBoids } = this.props;
+
 
         if (activeListId !== this.state.activeListId) {
-            const ordered = orderBy(boids, [ 'listdata.rank' ] );
-
+            const ordered = orderBy(activeListBoids, [ 'listdata.rank' ] );
             this.setState({ boids: ordered, activeListId }); 
         }
 
-        if (this.props.boids.length !== this.state.boids.length) {
-            this.refreshState();
-        }
+        // TODO handles deleting a boid, should do this in a cleaner way
+        // if (activeListBoids.length !== this.state.boids.length) {
+        //     this.refreshState();
+        // }
     }
 
     onSortEnd = ({ oldIndex, newIndex }) => {
@@ -117,7 +118,7 @@ class Boids extends Component {
 
     applyOrder = () => {
 
-        const { batchPlayerRanksById, listId, getLists } = this.props;
+        const { batchPlayerRanksById, activeListId, activeListKey, getLists } = this.props;
         const { boids } = this.state;
 
         const ranked = boids.reduce((acc, boid, i) => {
@@ -138,7 +139,7 @@ class Boids extends Component {
             return acc;
         }, {});
 
-        batchPlayerRanksById(listId, converted);
+        batchPlayerRanksById(activeListId, converted, activeListKey);
     }
 
     cancelChange = () => {
@@ -155,16 +156,14 @@ class Boids extends Component {
 
     render () {
 
-        const { listName } = this.props;
+        const { activeListName } = this.props;
         const { boids } = this.state;
-        // const synced = syncString(this.state.boids) === syncString(this.props.boids);
-        // const missingRank = hasMissingRank(boids);
 
         return (
             <div className="list-boids-container">
                 <div className="content-header">
                     <h5 style={{ margin: '10px 10px 10px 10px', paddingBottom: '10px' }}>
-                        <span style={{ marginRight: '10px' }}>{listName} - {boids.length} total players</span>
+                        <span style={{ marginRight: '10px' }}>{activeListName} - {boids.length} total players</span>
                         <span>
                             <button title="Sets the player ranks, use when player cards are highlighted in purple" style={styles.button} onClick={this.applyOrder}>[ Set Ranks ]</button>
                             <button title="Cancels any order/rank changes you have made" onClick={this.cancelChange} style={styles.button}>[ Cancel ]</button>
@@ -184,6 +183,6 @@ class Boids extends Component {
 
 
 export default connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps,
 )(Boids);

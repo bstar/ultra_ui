@@ -10,7 +10,7 @@ import { nhlTeams } from '../../../../../constants'
 
 const mapStateToProps = state => {
 
-    const lists = get(state, 'list.lists');
+    const lists = get(state, 'list.global');
     const activeListId = get(state, 'list.activeList');
     const list = find(lists, { 'id': activeListId });
 
@@ -108,7 +108,6 @@ class BoidCard extends Component {
         }
     }
 
-
     handleRemovePlayer = ({ listId, boidId, listName, boidName }) => {
 
         const { removePlayer } = this.props;
@@ -118,7 +117,7 @@ class BoidCard extends Component {
     
     render () {
 
-        const { boid, pos, sortByNumber, list, lists } = this.props;
+        const { boid, pos, rank, sortByNumber, list, lists } = this.props;
         const { team, gm, grade } = boid.listdata;
         const technicalWeighted = convertWeighted(boid.technical_off_weighted);
         const mentalWeighted = convertWeighted(boid.mental_off_weighted);
@@ -127,7 +126,7 @@ class BoidCard extends Component {
 
         if (boid) {
             return (
-                <div className="boid-card-container" style={{ cursor: 'default', width: 'fit-content', ...this.getBorder(boid.listdata.rank, pos) }}>
+                <div className="boid-card-container" style={{ cursor: 'default', width: 'fit-content', ...this.getBorder(rank, pos) }}>
                     <div style={{ display: 'flex', userSelect: 'none', alignSelf: 'center', alignItems: 'center', flexDirection: 'column', width: '100px', fontSize: '22px', padding: '0px 18px 0px 10px', textShadow: '1px 1px 2px black' }}>
                         <div>{pos}</div>
                         <div className="handle"><DragHandle /></div>
@@ -137,17 +136,17 @@ class BoidCard extends Component {
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
                             <div style={{ padding: '0px 10px 0px 10px', width: '280px' }}>
                                 <div style={{ fontSize: '18px' }}>
-                                    <a style={{ paddingRight: '5px' }} href={`#/app/playerdetail/${boid.id}`}>{boid.name}</a> 
+                                    <a style={{ paddingRight: '5px' }} href={`#/app/playerdetail/${boid.id}`}>{boid.name} {pos} {boid.listdata.rank}</a> 
                                     <span style={{ fontSize: '11px' }}><b>{boid.positions_short}</b></span>
                                 </div>
                                 <div title="Player's date of birth">{boid.dob} ({boid.age})</div>
-                                <div title="Team that drafted player"><b>{getStatus(list, lists, boid)}</b></div>
+                                {/* <div title="Team that drafted player"><b>{getStatus(list, lists, boid)}</b></div> */}
                             </div>
-                            <div style={{ padding: '0px 10px 0px 10px', width: '220px', overflow: 'hidden' }}>
+                            {/* <div style={{ padding: '0px 10px 0px 10px', width: '220px', overflow: 'hidden' }}>
                                 <div title="Team that drafted player"><b>Drafted By: </b><a href="#">{team || 'n/a'}</a></div>
                                 <div title="GM who drafted player"><b>Drafted GM:</b> <a href="#">{gm || 'n/a'}</a></div>
                                 <div title="Player's assigned grade from GM"><b>Grade:</b> <a href="#">{grade || 'n/a'}</a></div>
-                            </div>
+                            </div> */}
                             <div style={{ padding: '0px 10px 0px 10px', width: '220px', overflow: 'hidden' }}>
                                 <div title="Player's nation of origin"><b>Nation: </b><a href="#">{boid.nation}</a></div>
                                 <div title="Player's current contracted club"><b>Club:</b> <a href="#">{boid.club_playing}</a></div>

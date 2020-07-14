@@ -22,9 +22,9 @@ export const fetchLists = (token, uriRoot = baseUri) => {
         .then(({ json, response }) => ({ json, response }));
 };
 
-export const fetchListsByType = (type, token, uriRoot = baseUri) => {
+export const fetchListsByKey = (key, token, uriRoot = baseUri) => {
 
-    const url = `${uriRoot}/lists/${type}`;
+    const url = `${uriRoot}/lists/${key}`;
 
     return fetch(url, {
             method: 'GET',
