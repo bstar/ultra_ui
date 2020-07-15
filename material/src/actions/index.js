@@ -29,7 +29,7 @@ export const createListSuccess = (json, meta) => (universalActionCreator(types.C
 export const deleteList = (id, meta) => (universalActionCreator(types.DELETE_LIST, { id }, meta));
 export const deleteListSuccess = (json, meta) => (universalActionCreator(types.DELETE_LIST_SUCCESS, json, meta));
 
-export const removePlayerFromList = (listId, playerId, listName, boidName, meta) => (universalActionCreator(types.REMOVE_PLAYER_FROM_LIST, { listId, playerId, listName, boidName }, meta));
+export const removePlayerFromList = (listId, playerId, listName, boidName, key, meta) => (universalActionCreator(types.REMOVE_PLAYER_FROM_LIST, { listId, playerId, listName, boidName, key }, meta));
 export const removePlayerFromListSuccess = (json, meta) => (universalActionCreator(types.REMOVE_PLAYER_FROM_LIST_SUCCESS, json, meta));
 
 export const setActiveList = (id, key, meta) => (universalActionCreator(types.SET_ACTIVE_LIST, { id, key }, meta));

@@ -36,20 +36,19 @@ function* addPlayersToListSaga (action) {
         yield put(addPlayersToListSuccess({ selections, listId, boidId: ids[0] }, { response }));
     }
 
-    yield put({ type: 'GET_LISTS' });
+    // yield put({ type: 'GET_LISTS' });
     yield put(closeModalSuccess({ id: 'addPlayersToList' }));
     yield put(loadMessageSuccess({ open: true, text: <b>Player added to list!</b> }));
 }
 
 function* removePlayerFromListSaga (action) {
 
-    const { listId, playerId, listName, boidName } = action.payload;
+    const { listId, playerId, listName, boidName, key } = action.payload;
     const { response } = yield call(deletePlayerFromList, { listId, boidId: playerId }, action.payload.query);
-
-    yield put({ type: 'GET_LISTS' });
     const text = <b><span style={{ color: '#eee' }}>{boidName}</span> removed from <span style={{ color: '#eee' }}>{listName} list</span></b>;
 
     yield put(loadMessageSuccess({ open: true, text }));
+    yield put({ type: 'GET_LISTS_BY_KEY', payload: { key }});
 }
 
 export default function* allPlayersSagas () {

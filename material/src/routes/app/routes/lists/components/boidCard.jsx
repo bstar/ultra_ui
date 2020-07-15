@@ -10,19 +10,20 @@ import { nhlTeams } from '../../../../../constants'
 
 const mapStateToProps = state => {
 
-    const lists = get(state, 'list.global');
-    const activeListId = get(state, 'list.activeList');
+    const activeListId = get(state, 'list.activeList.id');
+    const activeListKey = get(state, 'list.activeList.key');
+    const lists = get(state, `list[${activeListKey}]`);
     const list = find(lists, { 'id': activeListId });
 
-    return ({ list, lists });
+    return ({ list, lists, activeListKey });
 };
 
 const mapDispatchToProps = dispatch => ({
     showMessage: message => {
         dispatch(loadMessage(message));
     },
-    removePlayer: (listId, playerId, listName, boidName) => {
-        dispatch(removePlayerFromList(listId, playerId, listName, boidName));
+    removePlayer: (listId, playerId, listName, boidName, listKey) => {
+        dispatch(removePlayerFromList(listId, playerId, listName, boidName, listKey));
     },
     showModal: id => {
         dispatch(openModal(id));
@@ -31,7 +32,6 @@ const mapDispatchToProps = dispatch => ({
         dispatch(closeModal(id));
     },
 });
-
 
 const handleKeyPress = (e, pos, sortByNumber) => {
 
@@ -110,14 +110,14 @@ class BoidCard extends Component {
 
     handleRemovePlayer = ({ listId, boidId, listName, boidName }) => {
 
-        const { removePlayer } = this.props;
+        const { removePlayer, activeListKey } = this.props;
 
-        removePlayer(listId, boidId, listName, boidName);
+        removePlayer(listId, boidId, listName, boidName, activeListKey);
     }
     
     render () {
 
-        const { boid, pos, rank, sortByNumber, list, lists } = this.props;
+        const { boid, pos, rank, sortByNumber, list } = this.props;
         const { team, gm, grade } = boid.listdata;
         const technicalWeighted = convertWeighted(boid.technical_off_weighted);
         const mentalWeighted = convertWeighted(boid.mental_off_weighted);
@@ -136,7 +136,7 @@ class BoidCard extends Component {
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
                             <div style={{ padding: '0px 10px 0px 10px', width: '280px' }}>
                                 <div style={{ fontSize: '18px' }}>
-                                    <a style={{ paddingRight: '5px' }} href={`#/app/playerdetail/${boid.id}`}>{boid.name} {pos} {boid.listdata.rank}</a> 
+                                    <a style={{ paddingRight: '5px' }} href={`#/app/playerdetail/${boid.id}`}>{boid.name}</a> 
                                     <span style={{ fontSize: '11px' }}><b>{boid.positions_short}</b></span>
                                 </div>
                                 <div title="Player's date of birth">{boid.dob} ({boid.age})</div>
@@ -165,7 +165,11 @@ class BoidCard extends Component {
                         </div>
     
                     </div>
-                    <div><i onClick={() => this.handleRemovePlayer({ listId: list.id, boidId: boid.id, listName: list.name, boidName: boid.name }) } title="Remove player from list" className="nav-icon material-icons" style={{ textShadow: '1px 1px 8px #222', cursor: 'pointer', color: 'red', paddingRight: '5px' }}>close</i></div>
+                    <div>
+                        { list &&
+                            <i onClick={() => this.handleRemovePlayer({ listId: list.id, boidId: boid.id, listName: list.name, boidName: boid.name }) } title="Remove player from list" className="nav-icon material-icons" style={{ textShadow: '1px 1px 8px #222', cursor: 'pointer', color: 'red', paddingRight: '5px' }}>close</i>
+                        }
+                    </div>
                 </div>
             );
         }

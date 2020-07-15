@@ -104,7 +104,7 @@ function* createListSuccessSaga () {
 export default function* allListsSagas () {
     yield all([
         takeLatest(types.GET_LISTS, getListsSaga),
-        takeLatest(types.GET_LISTS_BY_KEY, getListsByKeySaga),
+        takeEvery(types.GET_LISTS_BY_KEY, getListsByKeySaga),
         takeLatest(types.GET_LIST, getListSaga),
         takeLatest(types.SET_ACTIVE_LIST, getListSaga),
         takeEvery(types.SET_PLAYER_RANK, setPlayerRankSaga),

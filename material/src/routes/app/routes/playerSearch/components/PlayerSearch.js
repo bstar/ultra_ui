@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
 import { getCOMColor, getAOColor, getGrowthColor, convertCombined, getRatingColor, roleMap } from 'utils';
-import { getPlayers, getLists, loadMessage, addPlayersToList, openModal, closeModal } from 'actions';
+import { getPlayers, getLists, getListsByKey, loadMessage, addPlayersToList, openModal, closeModal } from 'actions';
 import { nhlTeams, tempGMList, grades } from '../../../../../constants';
 import TextField from 'material-ui/TextField';
 import Slider from 'material-ui/Slider';
@@ -17,7 +17,9 @@ const mapStateToProps = state => {
 
   return ({
     players: state.player.search,
-    lists: get(state, 'list.lists'),
+    personalLists: get(state, 'list.personal'),
+    globalLists: get(state, 'list.global'),
+    // lists: get(state, 'list.lists'),
     addPlayerToListStatus: get(state, 'modal.addPlayersToList')
   });
 };
@@ -25,6 +27,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   getPlayers: query => dispatch(getPlayers(query)),
   getLists: () => dispatch(getLists()),
+  getListsByKey: key => {
+    dispatch(getListsByKey(key));
+  },
   showMessage: message => {
     dispatch(loadMessage(message));
   },
@@ -125,7 +130,8 @@ class PlayerSearch extends Component {
       this.setState({ search: JSON.parse(searchString) }, () => this.getPlayersByFilter());
     }
 
-    this.props.getLists();
+    this.props.getListsByKey('personal');
+    this.props.getListsByKey('global');
   }
 
   ageSlider = () => {
@@ -287,7 +293,7 @@ class PlayerSearch extends Component {
             title={title}
             actions={actions}
             modal={true}
-            contentStyle={{ borderRaduis: '20px', border: '1px solid rgb(46, 110, 115)' }}
+            contentStyle={{ borderRaduis: '20px', border: '1px solid rgb(46, 110, 115)', maxWidth: '50%' }}
             actionsContainerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.35)', borderTop: '1px solid rgb(46, 110, 115)' }}
             titleStyle={{ color: 'rgb(159, 207, 223)', paddingBottom: '10px' }}
             open={addPlayerToListStatus}
@@ -301,25 +307,42 @@ class PlayerSearch extends Component {
   addPlayerBody = () => {
 
     const { stagedPlayers, teamSelection, gmSelection, gradeSelection, stagedList } = this.state;
-    const { lists } = this.props;
+    const { lists, personalLists, globalLists } = this.props;
     const player = stagedPlayers && stagedPlayers[0];
 
     return (
       <div>
         <h4 style={{ textShadow: 'rgba(52, 163, 203, 0.4) 1px 1px 3px' }}>{player && player.name}</h4>
-        <div>
-          { lists && lists.map(list => {
+        <div style={{ display: 'flex' }}>
 
-            const buttonClass = (stagedList && (list.id === stagedList.id)) ? 'selectedListButton' : 'listButton';
+          <div style={{ marginRight: '25px', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+            <h5>Global Lists</h5>
+            { globalLists && globalLists.map(list => {
 
-            return (
-              <div className={buttonClass}>
-                <button onClick={() => this.setState({ stagedList: list })}>{list.name}</button>
-              </div>
-            )
-          })}
+              const buttonClass = (stagedList && (list.id === stagedList.id)) ? 'selectedListButton' : 'listButton';
 
-          <div style={{ marginTop: '10px' }}>
+              return (
+                <div className={buttonClass}>
+                  <button onClick={() => this.setState({ stagedList: list })}>{list.name}</button>
+                </div>
+              )
+            })}
+          </div>
+          <div style={{ overflow: 'hidden', whiteSpace: 'nowrap', paddingRight: '25px', borderRight: '1px solid rgb(46, 110, 115)' }}>
+            <h5>Personal Lists</h5>
+            { personalLists && personalLists.map(list => {
+
+              const buttonClass = (stagedList && (list.id === stagedList.id)) ? 'selectedListButton' : 'listButton';
+
+              return (
+                <div className={buttonClass}>
+                  <button onClick={() => this.setState({ stagedList: list })}>{list.name}</button>
+                </div>
+              )
+            })}
+          </div>
+
+          <div style={{ margin: '10px 0px 0px 25px'  }}>
             { get(stagedList, 'captureTeam') &&
               <div>
                 <SelectField
@@ -410,10 +433,13 @@ class PlayerSearch extends Component {
 
   addPlayerToList = ({ boidIds, listId, selections }) => {
 
-    const { addPlayer } = this.props;
+    const { addPlayer, getListsByKey } = this.props;
 
     addPlayer({ listId, ids: [boidIds[0].id], selections });
-    getLists();
+
+    // TODO should prolly happen at saga level
+    getListsByKey('personal');
+    getListsByKey('global');
   }
 
   render () {

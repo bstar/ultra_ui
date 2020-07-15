@@ -19,27 +19,6 @@ const styles = {
     },
 };
 
-// const syncString = boids => {
-    
-//     return boids.reduce((acc, boid, i) => {
-        
-//         const inc = typeof(get(boid, 'listdata.rank')) === 'number' ?  get(boid, 'listdata.rank') : i+1;
-
-//         return (acc + boid.id + '_' + inc + '|')
-//     },'');
-// };
-
-// const hasMissingRank = boids => boids.find(boid => boid.listdata.rank === null);
-
-// const mapStateToProps = state => {
-
-//     const lists = get(state, 'list.lists');
-//     const activeListId = get(state, 'list.activeList');
-//     const list = find(lists, { id: activeListId });
-
-//     return ({ activeListId, boids: orderBy(list.boids,  [ 'listdata.rank' ]) });
-// };
-
 const mapDispatchToProps = dispatch => ({
     setPlayerRanksById: id => {
       dispatch(setPlayerRank(id));
@@ -87,7 +66,7 @@ class Boids extends Component {
 
     componentDidMount () {
 
-        const { activeListBoids, activeListId, getLists } = this.props;
+        const { activeListBoids, activeListId } = this.props;
         const ordered = orderBy(activeListBoids, [ 'listdata.rank' ] );
         
         this.setState({ boids: ordered, activeListId });
@@ -104,9 +83,9 @@ class Boids extends Component {
         }
 
         // TODO handles deleting a boid, should do this in a cleaner way
-        // if (activeListBoids.length !== this.state.boids.length) {
-        //     this.refreshState();
-        // }
+        if (activeListBoids.length !== this.state.boids.length) {
+            this.refreshState();
+        }
     }
 
     onSortEnd = ({ oldIndex, newIndex }) => {
@@ -149,9 +128,10 @@ class Boids extends Component {
 
     refreshState = () => {
 
-        const { boids } = this.props;
-
-        this.setState({ boids }); 
+        const { activeListBoids } = this.props;
+        const boids = orderBy(activeListBoids, [ 'listdata.rank' ] );
+        
+        this.setState({ boids });
     }
 
     render () {
