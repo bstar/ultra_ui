@@ -83,7 +83,6 @@ const getStatus = (list, lists, boid) => {
     }
 };
 
-
 class BoidCard extends Component {
 
     static propTypes = {
@@ -117,7 +116,7 @@ class BoidCard extends Component {
     
     render () {
 
-        const { boid, pos, rank, sortByNumber, list } = this.props;
+        const { boid, pos, rank, onSortEnd, list } = this.props;
         const { team, gm, grade } = boid.listdata;
         const technicalWeighted = convertWeighted(boid.technical_off_weighted);
         const mentalWeighted = convertWeighted(boid.mental_off_weighted);
@@ -130,7 +129,7 @@ class BoidCard extends Component {
                     <div style={{ display: 'flex', userSelect: 'none', alignSelf: 'center', alignItems: 'center', flexDirection: 'column', width: '100px', fontSize: '22px', padding: '0px 18px 0px 10px', textShadow: '1px 1px 2px black' }}>
                         <div>{pos}</div>
                         <div className="handle"><DragHandle /></div>
-                        <div><input onKeyPress={e => handleKeyPress(e, pos, sortByNumber)} style={{ textAlign: 'center', outline: 'none', border: '1px solid #2e6e73', width: '28px', height: '20px', padding: '2px', fontSize: '12px', background: 'none', color: '#eee' }}></input></div>
+                        <div><input onKeyPress={e => handleKeyPress(e, pos, onSortEnd)} style={{ textAlign: 'center', outline: 'none', border: '1px solid #2e6e73', width: '28px', height: '20px', padding: '2px', fontSize: '12px', background: 'none', color: '#eee' }}></input></div>
                     </div>
                     <div style={{ userSelect: 'none', flexDirection: 'row', display: 'flex', overflow: 'auto' }}>
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -142,11 +141,11 @@ class BoidCard extends Component {
                                 <div title="Player's date of birth">{boid.dob} ({boid.age})</div>
                                 {/* <div title="Team that drafted player"><b>{getStatus(list, lists, boid)}</b></div> */}
                             </div>
-                            {/* <div style={{ padding: '0px 10px 0px 10px', width: '220px', overflow: 'hidden' }}>
+                            <div style={{ padding: '0px 10px 0px 10px', width: '220px', overflow: 'hidden' }}>
                                 <div title="Team that drafted player"><b>Drafted By: </b><a href="#">{team || 'n/a'}</a></div>
                                 <div title="GM who drafted player"><b>Drafted GM:</b> <a href="#">{gm || 'n/a'}</a></div>
                                 <div title="Player's assigned grade from GM"><b>Grade:</b> <a href="#">{grade || 'n/a'}</a></div>
-                            </div> */}
+                            </div>
                             <div style={{ padding: '0px 10px 0px 10px', width: '220px', overflow: 'hidden' }}>
                                 <div title="Player's nation of origin"><b>Nation: </b><a href="#">{boid.nation}</a></div>
                                 <div title="Player's current contracted club"><b>Club:</b> <a href="#">{boid.club_playing}</a></div>

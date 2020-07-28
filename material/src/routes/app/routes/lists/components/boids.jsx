@@ -31,14 +31,15 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-const SortableItem = SortableElement(({ boid, pos, sortByNumber  }) => <BoidCard boid={boid} pos={pos} rank={boid.listdata.rank} sortByNumber={sortByNumber} />);
+const SortableItem = SortableElement(({ boid, pos, onSortEnd }) => <BoidCard boid={boid} pos={pos} rank={boid.listdata.rank} onSortEnd={onSortEnd} />);
 
 const SortableList = SortableContainer(({ boids, sortByNumber }) => {
+
 
     return (
         <div>
             { boids.map((boid, index) => (
-                <SortableItem key={`boid-${boid.id}`} index={index} pos={index+1} boid={boid} rsortByNumber={sortByNumber} />
+                <SortableItem key={`boid-${boid.id}`} index={index} pos={index+1} boid={boid} onSortEnd={sortByNumber} />
             ))}
         </div>
     );
@@ -56,18 +57,17 @@ class Boids extends Component {
     }
 
     constructor (props) {
-
         super(props);
     
         this.state = {
           boids: [],
-        }
+        };
     }
 
     componentDidMount () {
 
         const { activeListBoids, activeListId } = this.props;
-        const ordered = orderBy(activeListBoids, [ 'listdata.rank' ] );
+        const ordered = orderBy(activeListBoids, [ 'listdata.rank', 'listdata.createdAt' ]);
         
         this.setState({ boids: ordered, activeListId });
     }
@@ -78,11 +78,11 @@ class Boids extends Component {
 
 
         if (activeListId !== this.state.activeListId) {
-            const ordered = orderBy(activeListBoids, [ 'listdata.rank' ] );
+            const ordered = orderBy(activeListBoids, [ 'listdata.rank', 'listdata.createdAt']);
             this.setState({ boids: ordered, activeListId }); 
         }
 
-        // TODO handles deleting a boid, should do this in a cleaner way
+        // TODO handles refreshes when deleting a boid, should do this in saga?
         if (activeListBoids.length !== this.state.boids.length) {
             this.refreshState();
         }
@@ -112,7 +112,7 @@ class Boids extends Component {
             return acc;
         }, []);
 
-        const ordered = orderBy(ranked, ['listdata.rank']);
+        const ordered = orderBy(ranked, ['listdata.rank', 'listdata.createdAt']);
         const converted = ordered.reduce((acc, boid) => {
             acc[boid.id] = boid.listdata.rank;
             return acc;
@@ -129,7 +129,7 @@ class Boids extends Component {
     refreshState = () => {
 
         const { activeListBoids } = this.props;
-        const boids = orderBy(activeListBoids, [ 'listdata.rank' ] );
+        const boids = orderBy(activeListBoids, [ 'listdata.rank', 'listdata.createdAt']);
         
         this.setState({ boids });
     }
@@ -160,7 +160,6 @@ class Boids extends Component {
         );
     }
 }
-
 
 export default connect(
     null,
