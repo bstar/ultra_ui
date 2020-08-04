@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { get, orderBy, find } from 'lodash';
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { setPlayerRank, batchPlayerRanks, getLists } from 'actions';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import { SelectRoles } from '../../../../../components/Search';
 import arrayMove from 'array-move';
 import BoidCard from './boidCard';
 
@@ -32,9 +34,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const SortableItem = SortableElement(({ boid, pos, onSortEnd }) => <BoidCard boid={boid} pos={pos} rank={boid.listdata.rank} onSortEnd={onSortEnd} />);
-
 const SortableList = SortableContainer(({ boids, sortByNumber }) => {
-
 
     return (
         <div>
@@ -60,31 +60,40 @@ class Boids extends Component {
         super(props);
     
         this.state = {
-          boids: [],
+            boids: [],
+            direction: 'asc',
+            role: '',
+            filter: { role: null, wtech: null, wmen: null, wphy: null, com: null, age: null }, // TBD
+            filter: 'listdata.rank',
         };
     }
 
     componentDidMount () {
 
         const { activeListBoids, activeListId } = this.props;
-        const ordered = orderBy(activeListBoids, [ 'listdata.rank', 'listdata.createdAt' ]);
+        const { filter, direction } = this.state;
+        const ordered = orderBy(activeListBoids, [ filter, 'listdata.createdAt' ], [direction]);
         
         this.setState({ boids: ordered, activeListId });
     }
 
-    componentDidUpdate () {
+    componentDidUpdate (prevProps, prevState) {
 
         const { activeListId, activeListBoids } = this.props;
-
+        const { filter, direction, boids } = this.state;
+        const ordered = orderBy(boids, [ filter, 'listdata.createdAt'], [direction]);
 
         if (activeListId !== this.state.activeListId) {
-            const ordered = orderBy(activeListBoids, [ 'listdata.rank', 'listdata.createdAt']);
             this.setState({ boids: ordered, activeListId }); 
         }
 
         // TODO handles refreshes when deleting a boid, should do this in saga?
         if (activeListBoids.length !== this.state.boids.length) {
             this.refreshState();
+        }
+
+        if (prevState.direction !== direction) {
+            this.setState({ boids: ordered, activeListId });
         }
     }
 
@@ -98,7 +107,7 @@ class Boids extends Component {
     applyOrder = () => {
 
         const { batchPlayerRanksById, activeListId, activeListKey, getLists } = this.props;
-        const { boids } = this.state;
+        const { filter, boids, direction } = this.state;
 
         const ranked = boids.reduce((acc, boid, i) => {
 
@@ -112,7 +121,7 @@ class Boids extends Component {
             return acc;
         }, []);
 
-        const ordered = orderBy(ranked, ['listdata.rank', 'listdata.createdAt']);
+        const ordered = orderBy(ranked, [filter, 'listdata.createdAt'], [direction]);
         const converted = ordered.reduce((acc, boid) => {
             acc[boid.id] = boid.listdata.rank;
             return acc;
@@ -129,15 +138,44 @@ class Boids extends Component {
     refreshState = () => {
 
         const { activeListBoids } = this.props;
-        const boids = orderBy(activeListBoids, [ 'listdata.rank', 'listdata.createdAt']);
+        const { filter, direction } = this.state;
+        const boids = orderBy(activeListBoids, [ filter, 'listdata.createdAt'], [direction]);
         
         this.setState({ boids });
     }
 
+    filterAndSort = (e, filter) => {
+
+        const { boids } = this.state;
+        const filters = [ 'combined_rating', 'age_over', 'att_growth' ];
+        // direction dynamically set based on most sensible ordering
+        const direction = filters.includes(filter) ? 'desc' : (filter === 'listdata.rank') ? 'asc' : this.state.direction;
+
+        this.setState({ boids: orderBy(boids, [ filter, 'listdata.createdAt'], [direction]), filter, direction });
+    }
+
+    setDirection = e => {
+
+        // bug in material ui v0.20.1 requires that onClick event used for radio buttons
+        const direction = e.target.value;
+
+        this.setState({ direction })
+    }
+
+    // onChangeRole = (event, index, value) => {
+
+    //     const { boids } = this.state;
+    //     const filteredBoids = boids.filter(boid => boid.player_roles === value);
+
+    //     console.log("FILTERED", filteredBoids)
+
+    //     this.setState({ boids: filteredBoids, role: value });
+    // }
+
     render () {
 
         const { activeListName } = this.props;
-        const { boids } = this.state;
+        const { boids, direction, role } = this.state;
 
         return (
             <div className="list-boids-container">
@@ -149,6 +187,55 @@ class Boids extends Component {
                             <button title="Cancels any order/rank changes you have made" onClick={this.cancelChange} style={styles.button}>[ Cancel ]</button>
                         </span>
                     </h5>
+                </div>
+                <div style={{ padding: '10px', display: 'flex' }}>
+                    <div className="search-pod" style={{ display: 'flex', height: 'inherit', margin: '0px 20px 0px 0px', width: '100%' }}>
+                        <div style={{ width: '50%' }}>
+                            <div style={{ fontSize: '16px', marginBottom: '10px', padding: '0px' }}>Sort:</div>
+                            <RadioButtonGroup name="sortList" defaultSelected="listdata.rank" onChange={this.filterAndSort}>
+                                <RadioButton
+                                    style={{ maxWidth: 250, float: 'left' }}
+                                    value="listdata.rank"
+                                    label="Rank"
+                                />
+                                <RadioButton
+                                    style={{ maxWidth: 250, float: 'left' }}
+                                    value="combined_rating"
+                                    label="COM Score"
+                                />
+                                <RadioButton
+                                    style={{ maxWidth: 250, float: 'left' }}
+                                    value="age_over"
+                                    label="Age / Over"
+                                />
+                                <RadioButton
+                                    style={{ maxWidth: 250, float: 'left' }}
+                                    value="att_growth"
+                                    label="Growth"
+                                />
+                            </RadioButtonGroup>
+                        </div>
+                        <div style={{ width: '50%' }}>
+                            <div style={{ fontSize: '16px', marginBottom: '10px', padding: '0px' }}>Direction:</div>
+                            <RadioButton
+                                style={{ maxWidth: 250 }}
+                                value="desc"
+                                label="Descending"
+                                checked={direction === 'desc'}
+                                onClick={this.setDirection}
+                            />
+                            <RadioButton
+                                style={{ maxWidth: 250 }}
+                                value="asc"
+                                label="Ascending"
+                                checked={direction === 'asc'}
+                                onClick={this.setDirection}
+                            />
+                        </div>
+                    </div>
+                    {/* <div className="search-pod" style={{ display: 'flex', height: 'inherit', margin: '0px' }}>
+                        <SelectRoles onChange={this.onChangeRole} role={role} />
+                    </div> */}
                 </div>
 
                 { boids.length > 0 ?

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
-import { getCOMColor, getAOColor, getGrowthColor, convertCombined, getRatingColor, roleMap } from 'utils';
+import { getCOMColor, getAOColor, getGrowthColor, convertCombined, getRatingColor } from 'utils';
 import { getPlayers, getLists, getListsByKey, loadMessage, addPlayersToList, openModal, closeModal } from 'actions';
 import { nhlTeams, tempGMList, grades } from '../../../../../constants';
 import TextField from 'material-ui/TextField';
@@ -11,6 +11,7 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import FlatButton from 'material-ui/FlatButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import { SelectRoles } from '../../../../../components/Search';
 
 
 const mapStateToProps = state => {
@@ -80,29 +81,6 @@ class SelectSort extends React.Component {
         <MenuItem value="physical_rating" primaryText="Physical Rating" />
         <MenuItem value="att_growth" primaryText="Attributes growth" />
         <MenuItem value="age_over" primaryText="Age / Over" />
-      </SelectField>
-    );
-  }
-};
-
-class SelectRoles extends React.Component {
-
-  render () {
-
-    const { onChange, role } = this.props;
-    const roles = Object.keys(roleMap);
-
-    return (
-      <SelectField
-        name="role"
-        autoWidth={false}
-        floatingLabelText="Role"
-        style={{ width: '250px', top: '-10px' }}
-        value={role}
-        onChange={onChange}
-      >
-        <MenuItem value={null} primaryText="" />
-        { roles.map(role => <MenuItem value={role} primaryText={role} /> )}
       </SelectField>
     );
   }
