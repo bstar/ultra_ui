@@ -21,7 +21,7 @@ const mapStateToProps = state => {
     personalLists: get(state, 'list.personal'),
     globalLists: get(state, 'list.global'),
     // lists: get(state, 'list.lists'),
-    addPlayerToListStatus: get(state, 'modal.addPlayersToList')
+    addPlayerToListStatus: get(state, 'modal.addPlayersToList'),
   });
 };
 

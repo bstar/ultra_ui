@@ -53,3 +53,19 @@ export const deletePlayerFromList = ({ listId, boidId }, uriRoot = baseUri) => {
         })
         .then(response => response.json())
 };
+
+export const batchUpdatePlayers = (players, token, uriRoot = baseUri) => {
+
+    const url = `${uriRoot}/boids/batch`;
+
+    return fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify({ players }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${token}`,
+            },
+        })
+        .then(response => response.json())
+};

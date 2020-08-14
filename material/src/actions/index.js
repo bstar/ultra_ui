@@ -8,6 +8,9 @@ export const getPlayerSuccess = (json, meta) => (universalActionCreator(types.GE
 export const getPlayers = meta => (universalActionCreator(types.GET_PLAYERS, {}, meta));
 export const getPlayersSuccess = (json, meta) => (universalActionCreator(types.GET_PLAYERS_SUCCESS, json, meta));
 
+export const batchUpdatePlayers = (players, meta) => (universalActionCreator(types.BATCH_UPDATE_PLAYERS, { players }, meta));
+export const batchUpdatePlayersSuccess = (json, meta) => (universalActionCreator(types.BATCH_UPDATE_PLAYERS_SUCCESS, json, meta));
+
 export const getAttributes = (id, meta) => (universalActionCreator(types.GET_ATTRIBUTES, { id }, meta));
 export const getAttributesSuccess = (json, meta) => (universalActionCreator(types.GET_ATTRIBUTES_SUCCESS, json, meta));
 

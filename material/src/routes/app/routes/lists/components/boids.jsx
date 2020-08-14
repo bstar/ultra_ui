@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { get, orderBy, find } from 'lodash';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
-import { setPlayerRank, batchPlayerRanks, getLists } from 'actions';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import { setPlayerRank, batchPlayerRanks, batchUpdatePlayers, getLists, openModal, closeModal } from 'actions';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { SelectRoles } from '../../../../../components/Search';
 import arrayMove from 'array-move';
@@ -21,15 +23,28 @@ const styles = {
     },
 };
 
+const mapStateToProps = state => ({
+    batchUpdatePlayersStatus: get(state, 'modal.batchUpdatePlayers', false),
+});
+
 const mapDispatchToProps = dispatch => ({
     setPlayerRanksById: id => {
-      dispatch(setPlayerRank(id));
+        dispatch(setPlayerRank(id));
     },
     batchPlayerRanksById: (listId, players, key) => {
         dispatch(batchPlayerRanks(listId, players, key));
     },
+    updatePlayers: players => {
+        dispatch(batchUpdatePlayers(players));
+    },
     getLists: () => {
         dispatch(getLists());
+    },
+    showModal: id => {
+        dispatch(openModal(id));
+    },
+    hideModal: id => {
+        dispatch(closeModal(id));
     },
 });
 
@@ -63,8 +78,9 @@ class Boids extends Component {
             boids: [],
             direction: 'asc',
             role: '',
-            filter: { role: null, wtech: null, wmen: null, wphy: null, com: null, age: null }, // TBD
+            // filter: { role: null, wtech: null, wmen: null, wphy: null, com: null, age: null }, // TBD
             filter: 'listdata.rank',
+            openBatchUpdatePlayersModal: false,
         };
     }
 
@@ -163,27 +179,96 @@ class Boids extends Component {
     }
 
     // onChangeRole = (event, index, value) => {
-
     //     const { boids } = this.state;
     //     const filteredBoids = boids.filter(boid => boid.player_roles === value);
-
     //     console.log("FILTERED", filteredBoids)
-
     //     this.setState({ boids: filteredBoids, role: value });
     // }
 
+    setPlayerData = () => {
+        
+        const { showModal } = this.props;
+
+        showModal('batchUpdatePlayers');
+    }
+
+    // setModal = id => {
+
+    //     const { showModal } = this.props;
+
+    //     showModal(id);
+    // }
+
+
+
+    // Types supported: iis, com, age, off, draft
+    convertBoids = (boids, year, type) => {
+
+        const year_drafted = (type === 'draft') ? year : null;
+
+        return boids.map((boid, index) => {
+
+            const converted = { id: boid.id, [`${type}_ranking`]: index + 1 };
+            if (year_drafted) converted.year_drafted = year_drafted;
+
+            return converted;
+        });
+    }
+
+    batchUpdatePlayersModalWrapper = ({ title, body, open }) => {
+
+        const { hideModal, updatePlayers, year, type } = this.props;
+        const { boids } = this.state;
+        const convertedBoids = this.convertBoids(boids, year, type);
+    
+        const actions = [
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onClick={() => hideModal('batchUpdatePlayers')}
+          />,
+          <FlatButton
+            label="Submit"
+            primary={true}
+            disabled={false}
+            onClick={() => updatePlayers(convertedBoids)}
+            batchUpdatePlayers
+          />,
+        ];
+    
+        return (
+          <div>
+              <Dialog
+                title={title}
+                actions={actions}
+                modal={true}
+                contentStyle={{ borderRaduis: '20px', border: '1px solid rgb(46, 110, 115)', maxWidth: '50%' }}
+                actionsContainerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.35)', borderTop: '1px solid rgb(46, 110, 115)' }}
+                titleStyle={{ color: 'rgb(159, 207, 223)', paddingBottom: '10px' }}
+                open={open}
+              >
+                {body}
+            </Dialog>
+          </div>
+        )
+      }
+
     render () {
 
-        const { activeListName } = this.props;
+        const { activeListName, batchUpdatePlayersStatus, year, type } = this.props;
         const { boids, direction, role } = this.state;
 
         return (
             <div className="list-boids-container">
+
+                { this.batchUpdatePlayersModalWrapper({ title: 'Are you sure you want to update these players?', open: batchUpdatePlayersStatus, body: <div>Body here...</div> }) }
+    
                 <div className="content-header">
                     <h5 style={{ margin: '10px 10px 10px 10px', paddingBottom: '10px' }}>
-                        <span style={{ marginRight: '10px' }}>{activeListName} - {boids.length} total players</span>
+                        <span style={{ marginRight: '10px' }}>{year} {activeListName} - {boids.length} total players</span>
                         <span>
                             <button title="Sets the player ranks, use when player cards are highlighted in purple" style={styles.button} onClick={this.applyOrder}>[ Set Ranks ]</button>
+                            <button title="Sets the player ranks, use when player cards are highlighted in purple" style={styles.button} onClick={this.setPlayerData}>[ Set Players ]</button>
                             <button title="Cancels any order/rank changes you have made" onClick={this.cancelChange} style={styles.button}>[ Cancel ]</button>
                         </span>
                     </h5>
@@ -249,6 +334,6 @@ class Boids extends Component {
 }
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps,
 )(Boids);

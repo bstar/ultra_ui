@@ -1,7 +1,8 @@
 import React from 'react';
-import { takeLatest, put, call, all, throttle } from 'redux-saga/effects';
+import { takeLatest, put, call, all, throttle, select } from 'redux-saga/effects';
+import { get } from 'lodash';
 import * as types from 'constants/ActionTypes';
-import { fetchPlayer, fetchPlayers, postPlayersToList, deletePlayerFromList } from '../api/player';
+import { fetchPlayer, fetchPlayers, postPlayersToList, deletePlayerFromList, batchUpdatePlayers } from '../api/player';
 
 import {
     getPlayerSuccess,
@@ -9,6 +10,7 @@ import {
     addPlayersToListSuccess,
     closeModalSuccess,
     loadMessageSuccess,
+    batchUpdatePlayersSuccess,
 } from '../actions';
 
 
@@ -17,14 +19,14 @@ function* getPlayerSaga (action) {
     const { json, response } = yield call(fetchPlayer, action.payload.id, action.payload.query);
 
     yield put(getPlayerSuccess(json, { response }));
-}
+};
 
 function* getPlayersSaga (action) {
 
     const { json, response } = yield call(fetchPlayers, action.meta);
 
     yield put(getPlayersSuccess(json, { response }));
-}
+};
 
 function* addPlayersToListSaga (action) {
 
@@ -39,7 +41,7 @@ function* addPlayersToListSaga (action) {
     // yield put({ type: 'GET_LISTS' });
     yield put(closeModalSuccess({ id: 'addPlayersToList' }));
     yield put(loadMessageSuccess({ open: true, text: <b>Player added to list!</b> }));
-}
+};
 
 function* removePlayerFromListSaga (action) {
 
@@ -49,7 +51,19 @@ function* removePlayerFromListSaga (action) {
 
     yield put(loadMessageSuccess({ open: true, text }));
     yield put({ type: 'GET_LISTS_BY_KEY', payload: { key }});
-}
+};
+
+function* batchPlayersUpdateSaga (action) {
+
+    const state = yield select();
+    const token = get(state, 'user.data.token');
+    const { json, response } = yield call(batchUpdatePlayers, action.payload.players, token, action.payload.query);
+
+    yield put(batchUpdatePlayersSuccess(json, { response }));
+    yield put(closeModalSuccess({ id: 'batchUpdatePlayers' }));
+    yield put(loadMessageSuccess({ open: true, text: <b>Players Updated!</b> }));
+};
+
 
 export default function* allPlayersSagas () {
     yield all([
@@ -57,5 +71,6 @@ export default function* allPlayersSagas () {
         takeLatest(types.ADD_PLAYERS_TO_LIST, addPlayersToListSaga),
         takeLatest(types.REMOVE_PLAYER_FROM_LIST, removePlayerFromListSaga),
         throttle(500, types.GET_PLAYERS, getPlayersSaga),
+        takeLatest(types.BATCH_UPDATE_PLAYERS, batchPlayersUpdateSaga),
     ]);
 };

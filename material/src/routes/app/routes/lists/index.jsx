@@ -233,7 +233,7 @@ class Lists extends Component {
                     </div>
                     <div className="col-xl-9">
                         { activeList &&
-                          <Boids listName={activeList.name} activeListName={activeList.name} activeListId={activeList.id} activeListKey={activeList.key} activeListBoids={activeList.boids} />
+                          <Boids listName={activeList.name} activeListName={activeList.name} year={activeList.year} type={activeList.type} activeListId={activeList.id} activeListKey={activeList.key} activeListBoids={activeList.boids} />
                         }
                     </div>
                 </div>
