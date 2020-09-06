@@ -192,15 +192,6 @@ class Boids extends Component {
         showModal('batchUpdatePlayers');
     }
 
-    // setModal = id => {
-
-    //     const { showModal } = this.props;
-
-    //     showModal(id);
-    // }
-
-
-
     // Types supported: iis, com, age, off, draft
     convertBoids = (boids, year, type) => {
 

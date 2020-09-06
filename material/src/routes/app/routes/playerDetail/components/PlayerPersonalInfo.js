@@ -38,7 +38,7 @@ const styles = {
   portrait: {
     height: 'auto',
     borderRadius: '50%',
-    margin: '-10px 0px 0px 40px',
+    margin: '-10px 0px 0px 0px',
     opacity: 0.2,
     transform: 'scale(1, 1)',
   },
@@ -61,12 +61,19 @@ const styles = {
   team: {
     fontSize: '22px',
   },
+  tag: {
+    border: '1px solid rgb(64 110 111)',
+    borderRadius: '5px',
+    padding: '1px 4px 0px 4px',
+    background: 'rgb(51 86 86)',
+    marginRight: '6px',
+  },
 };
 
-const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, handedness, player_roles, combined_rating, stanley_cups_won, attributes }) => (
+const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, handedness, player_roles, combined_rating, stanley_cups_won, iss_ranking, draft_ranking, attributes }) => (
   <div>
     <div style={{ display: 'flex', flexDirection: 'row', paddingRight: '10px', marginTop: '10px' }}>
-      <div style={{ paddingRight: '10px', minWidth: '280px' }}>
+      <div style={{ paddingRight: '10px', minWidth: '360px' }}>
         <div className="row" style={{ marginTop: '8px' }}>
           <span style={styles.listTitle}>Born:</span><span style={styles.listItem}>{dob && `${dob} - ${age} y/o`}</span>
         </div>
@@ -83,7 +90,11 @@ const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, han
           <span style={styles.listTitle}>Ratings:</span><span style={styles.listItem}>{combined_rating} com / {(combined_rating/age).toFixed(1)} ao</span>
         </div>
         <div className="row">
-          <span style={styles.listTitle}>Cups:</span><span style={styles.listItem}>{stanley_cups_won}</span>
+          <span style={styles.listTitle}>Feats:</span><span style={styles.listItem}>
+            { iss_ranking && <span style={styles.tag}>ISS: #{iss_ranking}</span> }
+            { draft_ranking && <span style={styles.tag}>Drafted: {draft_ranking}oa</span> }
+            <span style={styles.tag}>Cups: {stanley_cups_won}</span>
+          </span>
         </div>
       </div>
 

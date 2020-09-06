@@ -51,7 +51,7 @@ class ListCard extends Component {
         if (activeListId === id) {
             return selectedListStyle;
         } else {
-            return { bob: 'god' };
+            return { };
         }
     }
 

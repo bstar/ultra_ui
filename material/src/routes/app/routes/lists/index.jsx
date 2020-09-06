@@ -198,7 +198,9 @@ class Lists extends Component {
 
     if (key === 'personal') return lists; // personal lists are never filtered by type
 
-    return lists && lists.filter(list => list.type === type);
+    const types = (type === 'rankings') ? [ 'iss', 'com', 'age', 'off' ] : [type];
+
+    return lists && lists.filter(list => types.includes(list.type));
   }
 
   render () {
