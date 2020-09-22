@@ -26,7 +26,6 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-
 class MainApp extends Component {
 
   handleClose = () => {

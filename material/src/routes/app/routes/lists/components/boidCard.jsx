@@ -132,8 +132,8 @@ class BoidCard extends Component {
 
         if (boid) {
 
-            const iss = boid.iss_ranking ? <span> - ISS <b>#{boid.iss_ranking}</b></span> : '';
-            const draftedText = boid.draft_ranking ? <span style={{ color: 'rgb(30, 203, 206)' }}>Drafted <b>{boid.draft_ranking}oa</b> in {boid.year_drafted} {iss}</span> : <span>Undrafted {iss}</span>;
+            const iss = boid.iss_ranking ? <span> - ISS <b style={{ color: '#eee' }}>#{boid.iss_ranking}</b></span> : '';
+            const draftedText = boid.draft_ranking ? <span style={{ color: 'rgb(30, 203, 206)' }}>Drafted <b style={{ color: '#eee' }}>{boid.draft_ranking}oa</b> in {boid.year_drafted} {iss}</span> : <span>Undrafted {iss}</span>;
             const drafted = boid.draft_ranking ? true : false;
 
             return (
@@ -154,9 +154,9 @@ class BoidCard extends Component {
                                 <div title="Draft details">{draftedText}</div>
                             </div>
                             <div style={{ padding: '0px 10px 0px 10px', width: '220px', overflow: 'hidden' }}>
-                                <div title="Team that drafted player"><b>Drafted By: </b><a href="#">{team || 'n/a'}</a></div>
-                                <div title="GM who drafted player"><b>Drafted GM:</b> <a href="#">{gm || 'n/a'}</a></div>
-                                <div title="Player's assigned grade from GM"><b>Tier:</b> <a href="#">{grade || 'n/a'}</a></div>
+                                <div title="Team that drafted player"><b>Drafted By: </b><a style={{ textTransform: 'uppercase' }} href="#">{team || 'n/a'}</a></div>
+                                <div title="GM who drafted player"><b>Drafted GM:</b> <a href="#">{gm || 'N/A'}</a></div>
+                                { grade && <div title="Player's assigned grade from GM"><b>Tier:</b> <a href="#">{grade}</a></div> }
                             </div>
                             <div style={{ padding: '0px 10px 0px 10px', width: '220px', overflow: 'hidden' }}>
                                 <div title="Player's nation of origin"><b>Nation: </b><a href="#">{boid.nation}</a></div>

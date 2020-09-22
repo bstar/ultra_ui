@@ -5,9 +5,9 @@ import { get, orderBy, find } from 'lodash';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import { setPlayerRank, batchPlayerRanks, batchUpdatePlayers, getLists, openModal, closeModal } from 'actions';
+import { setPlayerRank, batchPlayerRanks, batchUpdatePlayers, getLists, openModal, closeModal, loadMessage } from 'actions';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import { SelectRoles } from '../../../../../components/Search';
+// import { SelectRoles } from '../../../../../components/Search';
 import arrayMove from 'array-move';
 import BoidCard from './boidCard';
 
@@ -45,6 +45,9 @@ const mapDispatchToProps = dispatch => ({
     },
     hideModal: id => {
         dispatch(closeModal(id));
+    },
+    showMessage: message => {
+        dispatch(loadMessage(message));
     },
 });
 
@@ -185,12 +188,12 @@ class Boids extends Component {
     //     this.setState({ boids: filteredBoids, role: value });
     // }
 
-    setPlayerData = () => {
+    // setPlayerData = () => {
         
-        const { showModal } = this.props;
+    //     const { showModal } = this.props;
 
-        showModal('batchUpdatePlayers');
-    }
+    //     showModal('batchUpdatePlayers');
+    // }
 
     // Types supported: iis, com, age, off, draft
     convertBoids = (boids, year, type) => {
@@ -242,7 +245,20 @@ class Boids extends Component {
             </Dialog>
           </div>
         )
-      }
+    }
+
+    cloneList = () => {
+
+        console.log("CLONING!", this.state.boids);
+    }
+
+    setModal = id => {
+
+        const { showModal } = this.props;
+    
+        showModal(id);
+    }
+    
 
     render () {
 
@@ -259,8 +275,9 @@ class Boids extends Component {
                         <span style={{ marginRight: '10px' }}>{year} {activeListName} - {boids.length} total players</span>
                         <span>
                             <button title="Sets the player ranks, use when player cards are highlighted in purple" style={styles.button} onClick={this.applyOrder}>[ Set Ranks ]</button>
-                            <button title="Sets the player ranks, use when player cards are highlighted in purple" style={styles.button} onClick={this.setPlayerData}>[ Set Players ]</button>
-                            <button title="Cancels any order/rank changes you have made" onClick={this.cancelChange} style={styles.button}>[ Cancel ]</button>
+                            <button title="Sets the player ranks, use when player cards are highlighted in purple" style={styles.button} onClick={() => this.setModal('batchUpdatePlayers')}>[ Set Players ]</button>
+                            <button title="Cancels any order/rank changes you have made" onClick={this.cancelChange} style={styles.button}>[ Cancel Changes ]</button>
+                            <button title="Clones active list" onClick={this.cloneList} style={styles.button}>[ Clone List ]</button>
                         </span>
                     </h5>
                 </div>
