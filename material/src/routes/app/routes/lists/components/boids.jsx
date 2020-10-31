@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { get, orderBy, find } from 'lodash';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
+import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import { setPlayerRank, batchPlayerRanks, batchUpdatePlayers, getLists, openModal, closeModal, loadMessage } from 'actions';
+import { setPlayerRank, batchPlayerRanks, batchUpdatePlayers, getLists, openModal, closeModal, loadMessage, createList, createListWithPlayers } from 'actions';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 // import { SelectRoles } from '../../../../../components/Search';
 import arrayMove from 'array-move';
@@ -25,6 +26,7 @@ const styles = {
 
 const mapStateToProps = state => ({
     batchUpdatePlayersStatus: get(state, 'modal.batchUpdatePlayers', false),
+    cloneListStatus: get(state, 'modal.cloneList', false),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -49,6 +51,12 @@ const mapDispatchToProps = dispatch => ({
     showMessage: message => {
         dispatch(loadMessage(message));
     },
+    createPlayerList: list => {
+        dispatch(createList(list));
+    },
+    cloneList: (list, boids) => {
+        dispatch(createListWithPlayers(list, boids))
+    }
 });
 
 const SortableItem = SortableElement(({ boid, pos, onSortEnd }) => <BoidCard boid={boid} pos={pos} rank={boid.listdata.rank} onSortEnd={onSortEnd} />);
@@ -84,6 +92,7 @@ class Boids extends Component {
             // filter: { role: null, wtech: null, wmen: null, wphy: null, com: null, age: null }, // TBD
             filter: 'listdata.rank',
             openBatchUpdatePlayersModal: false,
+            cloneName: '',
         };
     }
 
@@ -189,9 +198,7 @@ class Boids extends Component {
     // }
 
     // setPlayerData = () => {
-        
     //     const { showModal } = this.props;
-
     //     showModal('batchUpdatePlayers');
     // }
 
@@ -207,6 +214,21 @@ class Boids extends Component {
 
             return converted;
         });
+    }
+
+    createCloneList = (name, boids) => {
+
+        const { createPlayerList, cloneList } = this.props;
+
+        // captureGM: true
+        // captureGrade: true
+        // captureTeam: true
+        // category: "TEST CAT"
+        // description: "TEST DESC"
+        // name: "TEST"
+
+        cloneList({ name }, boids);
+        console.log('Create Clone List:', name, boids);
     }
 
     batchUpdatePlayersModalWrapper = ({ title, body, open }) => {
@@ -232,24 +254,77 @@ class Boids extends Component {
     
         return (
           <div>
-              <Dialog
-                title={title}
-                actions={actions}
-                modal={true}
-                contentStyle={{ borderRaduis: '20px', border: '1px solid rgb(46, 110, 115)', maxWidth: '50%' }}
-                actionsContainerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.35)', borderTop: '1px solid rgb(46, 110, 115)' }}
-                titleStyle={{ color: 'rgb(159, 207, 223)', paddingBottom: '10px' }}
-                open={open}
-              >
-                {body}
-            </Dialog>
+                <Dialog
+                  title={title}
+                  actions={actions}
+                  modal={true}
+                  contentStyle={{ borderRaduis: '20px', border: '1px solid rgb(46, 110, 115)', maxWidth: '50%' }}
+                  actionsContainerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.35)', borderTop: '1px solid rgb(46, 110, 115)' }}
+                  titleStyle={{ color: 'rgb(159, 207, 223)', paddingBottom: '10px' }}
+                  open={open}
+                >
+                    {body}
+                </Dialog>
           </div>
         )
     }
 
+    cloneListModalWrapper = ({ title, body, open }) => {
+
+        const { hideModal } = this.props;
+    
+        const actions = [
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onClick={() => hideModal('cloneList')}
+          />,
+          <FlatButton
+            label="Submit"
+            primary={true}
+            disabled={false}
+            onClick={() => this.createCloneList(this.state.cloneName, this.state.boids)}
+          />,
+        ];
+    
+        return (
+            <div>
+                <Dialog
+                  title={title}
+                  actions={actions}
+                  modal={true}
+                  contentStyle={{ borderRaduis: '20px', border: '1px solid rgb(46, 110, 115)', maxWidth: '50%' }}
+                  actionsContainerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.35)', borderTop: '1px solid rgb(46, 110, 115)' }}
+                  titleStyle={{ color: 'rgb(159, 207, 223)', paddingBottom: '10px' }}
+                  open={open}
+                >
+                    {body}
+                </Dialog>
+            </div>
+        )
+    }
+    
+    onChangeCloneName = e => {
+
+        const cloneName = e.target.value;
+
+        this.setState({ cloneName });
+    }
+
+    cloneListbody = () => (
+        <div>
+            <TextField
+                onChange={this.onChangeCloneName}
+                autoFocus
+                hintText="Name of New List"
+                style={{ marginRight: 20, width: '200px' }}
+            />
+        </div>
+    )
+
     cloneList = () => {
 
-        console.log("CLONING!", this.state.boids);
+        this.setModal('cloneList');
     }
 
     setModal = id => {
@@ -262,21 +337,23 @@ class Boids extends Component {
 
     render () {
 
-        const { activeListName, batchUpdatePlayersStatus, year, type } = this.props;
+        const { activeListName, batchUpdatePlayersStatus, cloneListStatus, year, type } = this.props;
         const { boids, direction, role } = this.state;
 
         return (
             <div className="list-boids-container">
 
                 { this.batchUpdatePlayersModalWrapper({ title: 'Are you sure you want to update these players?', open: batchUpdatePlayersStatus, body: <div>Body here...</div> }) }
+                { this.cloneListModalWrapper({ title: 'Are you sure you want to clone this list?', open: cloneListStatus, body: this.cloneListbody() }) }
     
                 <div className="content-header">
                     <h5 style={{ margin: '10px 10px 10px 10px', paddingBottom: '10px' }}>
                         <span style={{ marginRight: '10px' }}>{year} {activeListName} - {boids.length} total players</span>
                         <span>
-                            <button title="Sets the player ranks, use when player cards are highlighted in purple" style={styles.button} onClick={this.applyOrder}>[ Set Ranks ]</button>
-                            <button title="Sets the player ranks, use when player cards are highlighted in purple" style={styles.button} onClick={() => this.setModal('batchUpdatePlayers')}>[ Set Players ]</button>
+                            <button title="Sets the player ranks in the list, use when player cards are highlighted in purple" style={styles.button} onClick={this.applyOrder}>[ Set Ranks ]</button>
+                            <button title="Sets the player ranks at player level, use when player cards are highlighted in purple" style={styles.button} onClick={() => this.setModal('batchUpdatePlayers')}>[ Set Players ]</button>
                             <button title="Cancels any order/rank changes you have made" onClick={this.cancelChange} style={styles.button}>[ Cancel Changes ]</button>
+
                             <button title="Clones active list" onClick={this.cloneList} style={styles.button}>[ Clone List ]</button>
                         </span>
                     </h5>

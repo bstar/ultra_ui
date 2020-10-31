@@ -46,6 +46,22 @@ export const fetchList = (id, token, uriRoot = baseUri) => {
         .then(({ json, response }) => ({ json, response }));
 };
 
+export const deleteList = (id, token, uriRoot = baseUri) => {
+
+    const url = `${uriRoot}/list/${id}`;
+
+    return fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${token}`,
+            },
+        })
+        .then(parseJson)
+        .then(({ json, response }) => ({ json, response }));
+};
+
 // individual player rank update (deprecated)
 export const putPlayerRank = (item, uriRoot = baseUri) => {
 

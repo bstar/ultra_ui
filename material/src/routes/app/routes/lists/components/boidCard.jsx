@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { get, find } from 'lodash';
@@ -178,7 +182,14 @@ class BoidCard extends Component {
                     </div>
                     <div>
                         { list &&
-                            <i onClick={() => this.handleRemovePlayer({ listId: list.id, boidId: boid.id, listName: list.name, boidName: boid.name }) } title="Remove player from list" className="nav-icon material-icons" style={{ textShadow: '1px 1px 8px #222', cursor: 'pointer', color: 'red', paddingRight: '5px' }}>close</i>
+                            <IconMenu
+                              iconButtonElement={<IconButton iconStyle={{ color: 'rgb(33, 151, 153)' }}><MoreVertIcon /></IconButton>}
+                              multiple={true}
+                            >
+                                <MenuItem
+                                  primaryText="Remove Player"
+                                  onClick={() => this.handleRemovePlayer({ listId: list.id, boidId: boid.id, listName: list.name, boidName: boid.name }) } />
+                            </IconMenu>
                         }
                     </div>
                 </div>

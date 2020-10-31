@@ -29,6 +29,9 @@ export const getListSuccess = (json, meta) => (universalActionCreator(types.GET_
 export const createList = (list, meta) => (universalActionCreator(types.CREATE_LIST, list, meta));
 export const createListSuccess = (json, meta) => (universalActionCreator(types.CREATE_LIST_SUCCESS, json, meta));
 
+export const createListWithPlayers = (list, boids, meta) => (universalActionCreator(types.CREATE_LIST_WITH_PLAYERS, { list, boids }, meta));
+export const createListWithPlayersSuccess = (json, meta) => (universalActionCreator(types.CREATE_LIST_WITH_PLAYERS_SUCCESS, json, meta));
+
 export const deleteList = (id, meta) => (universalActionCreator(types.DELETE_LIST, { id }, meta));
 export const deleteListSuccess = (json, meta) => (universalActionCreator(types.DELETE_LIST_SUCCESS, json, meta));
 

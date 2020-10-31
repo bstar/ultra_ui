@@ -1,7 +1,10 @@
+import { remove, get } from 'lodash';
+
 import {
     GET_LISTS_SUCCESS,
     GET_LISTS_BY_KEY_SUCCESS,
     GET_LIST_SUCCESS,
+    DELETE_LIST_SUCCESS,
     INVALIDATE_LISTS,
   } from '../constants/ActionTypes';
   
@@ -12,14 +15,16 @@ import {
     switch (action.type) {
   
       // TODO Might want this for admin views
-      // case GET_LISTS_SUCCESS:
+      case GET_LISTS_SUCCESS:
     
-      //   const lists = action.payload;
+        const lists = action.payload;
+
+        console.log("REDUCER", lists)
   
-      //   return {
-      //     ...state,
-      //     lists,
-      //   };
+        return {
+          ...state,
+          lists,
+        };
 
       case GET_LISTS_BY_KEY_SUCCESS:
   
@@ -38,12 +43,9 @@ import {
           ...state,
           activeList: { id: activeList.id, key: activeList.key },
         };
-
+      
       case INVALIDATE_LISTS:
-        return {
-          ...state,
-          list: null,
-        };
+        return null;
 
       default:
         return state;

@@ -10,6 +10,7 @@ import {
     putPlayerRanks,
     putPlayerData,
     createList,
+    deleteList,
 } from '../api/list';
 import {
     getLists,
@@ -21,8 +22,10 @@ import {
     batchPlayerRanksSuccess,
     setPlayerDataSuccess,
     createListSuccess,
+    createListWithPlayersSuccess,
     closeModalSuccess,
     loadMessageSuccess,
+    deleteListSuccess,
 } from '../actions';
 
 
@@ -53,6 +56,15 @@ function* getListSaga (action) {
     const { json, response } = yield call(fetchList, action.payload.id, token, action.payload.query);
 
     yield put(getListSuccess(json, { response }));
+};
+
+function* deleteListSaga (action) {
+
+    const state = yield select();
+    const token = get(state, 'user.data.token');
+    const { json, response } = yield call(deleteList, action.payload.id, token, action.payload.query);
+
+    yield put(deleteListSuccess({ ...json, id: action.payload.id }, { response }));
 };
 
 function* setPlayerRankSaga (action) {
@@ -101,16 +113,47 @@ function* createListSuccessSaga () {
     // yield getListsSaga(); // TODO update to refresh proper list key
 };
 
+function* createListWithPlayersSaga (action) {
+
+    const state = yield select();
+    const token = get(state, 'user.data.token');
+    const { list, boids, query } = action.payload;
+    const boidIds = boids ? boids.map(boid => (boid.id)) : [];
+
+    const { json, response } = yield call(createList, list, token, query);
+
+    yield put({ type: 'ADD_PLAYERS_TO_LIST', payload: { listId: json.id, ids: boidIds } });
+
+    yield put(createListWithPlayersSuccess(json, { response }));
+};
+
+function* createListWithPlayersSuccessSaga () {
+
+    yield put(closeModalSuccess({ id: 'cloneList' }));
+    yield put(loadMessageSuccess({ open: true, text: <b>New list cloned!</b> }));
+    // yield getListsSaga(); // TODO update to refresh proper list key
+};
+
+function* deleteListSuccessSaga () {
+
+    yield put(loadMessageSuccess({ open: true, text: <b>List Successfully Deleted!</b> }));
+    // yield getListsSaga(); // TODO update to refresh proper list key
+};
+
 export default function* allListsSagas () {
     yield all([
         takeLatest(types.GET_LISTS, getListsSaga),
         takeEvery(types.GET_LISTS_BY_KEY, getListsByKeySaga),
         takeLatest(types.GET_LIST, getListSaga),
+        takeLatest(types.DELETE_LIST, deleteListSaga),
         takeLatest(types.SET_ACTIVE_LIST, getListSaga),
         takeEvery(types.SET_PLAYER_RANK, setPlayerRankSaga),
         takeEvery(types.BATCH_PLAYER_RANKS, batchPlayerRanksSaga),
         takeEvery(types.ADD_PLAYERS_TO_LIST_SUCCESS, setPlayerDataSaga),
         takeEvery(types.CREATE_LIST, createListSaga),
         takeEvery(types.CREATE_LIST_SUCCESS, createListSuccessSaga),
+        takeEvery(types.CREATE_LIST_WITH_PLAYERS, createListWithPlayersSaga),
+        takeEvery(types.CREATE_LIST_WITH_PLAYERS_SUCCESS, createListWithPlayersSuccessSaga),
+        takeEvery(types.DELETE_LIST_SUCCESS, deleteListSuccessSaga),
     ]);
 };
