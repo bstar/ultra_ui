@@ -38,6 +38,7 @@ function* getListsSaga () {
     yield put(getListsSuccess(json, { response }));
 };
 
+
 function* getListsByKeySaga (action) {
 
     const state = yield select();
@@ -110,7 +111,8 @@ function* createListSuccessSaga () {
 
     yield put(closeModalSuccess({ id: 'createListModal' }));
     yield put(loadMessageSuccess({ open: true, text: <b>New list created!</b> }));
-    // yield getListsSaga(); // TODO update to refresh proper list key
+    
+    yield getListsByKeySaga({ payload: { key: 'personal' }}); // TODO update to target global vs personal lists
 };
 
 function* createListWithPlayersSaga (action) {
@@ -131,13 +133,13 @@ function* createListWithPlayersSuccessSaga () {
 
     yield put(closeModalSuccess({ id: 'cloneList' }));
     yield put(loadMessageSuccess({ open: true, text: <b>New list cloned!</b> }));
-    // yield getListsSaga(); // TODO update to refresh proper list key
+    yield getListsByKeySaga({ payload: { key: 'personal' }}); // TODO update to target global vs personal lists
 };
 
 function* deleteListSuccessSaga () {
 
     yield put(loadMessageSuccess({ open: true, text: <b>List Successfully Deleted!</b> }));
-    // yield getListsSaga(); // TODO update to refresh proper list key
+    yield getListsByKeySaga({ payload: { key: 'personal' }}); // TODO update to target global vs personal lists
 };
 
 export default function* allListsSagas () {

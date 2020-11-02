@@ -163,11 +163,31 @@ class Boids extends Component {
         this.refreshState();
     }
 
+    didChange = () => {
+
+        const { activeListBoids } = this.props;
+        const { boids } = this.state;
+        let changed;
+
+        if (boids.length > 0) {
+
+            activeListBoids.map((boid, i) => {
+                
+                if (boid.id !== get(boids[i], 'id')) {
+                    console.log("Changed", boid.id);
+                    changed = true;
+                }
+            });
+        }
+
+        return changed ? true : false;
+    }
+
     refreshState = () => {
 
         const { activeListBoids } = this.props;
         const { filter, direction } = this.state;
-        const boids = orderBy(activeListBoids, [ filter, 'listdata.createdAt'], [direction]);
+        const boids = orderBy(activeListBoids, [ filter, 'listdata.rank'], [direction]);
         
         this.setState({ boids });
     }
@@ -352,7 +372,9 @@ class Boids extends Component {
                         <span>
                             <button title="Sets the player ranks in the list, use when player cards are highlighted in purple" style={styles.button} onClick={this.applyOrder}>[ Set Ranks ]</button>
                             <button title="Sets the player ranks at player level, use when player cards are highlighted in purple" style={styles.button} onClick={() => this.setModal('batchUpdatePlayers')}>[ Set Players ]</button>
-                            <button title="Cancels any order/rank changes you have made" onClick={this.cancelChange} style={styles.button}>[ Cancel Changes ]</button>
+                            { this.didChange() &&
+                                <button title="Cancels any order/rank changes you have made" onClick={this.cancelChange} style={styles.button}>[ Cancel Changes ]</button>
+                            }
 
                             <button title="Clones active list" onClick={this.cloneList} style={styles.button}>[ Clone List ]</button>
                         </span>
