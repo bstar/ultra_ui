@@ -22,11 +22,20 @@ const styles = {
         cursor: 'pointer',
         outline: 'none',
     },
+    AlertButton: {
+        background: 'none',
+        color: '#d64f4f',
+        fontSize: '16px',
+        border: '0px',
+        cursor: 'pointer',
+        outline: 'none',
+    },
 };
 
 const mapStateToProps = state => ({
     batchUpdatePlayersStatus: get(state, 'modal.batchUpdatePlayers', false),
     cloneListStatus: get(state, 'modal.cloneList', false),
+    userRole: get(state, 'user.jwt.role'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -100,7 +109,7 @@ class Boids extends Component {
 
         const { activeListBoids, activeListId } = this.props;
         const { filter, direction } = this.state;
-        const ordered = orderBy(activeListBoids, [ filter, 'listdata.createdAt' ], [direction]);
+        const ordered = orderBy(activeListBoids, [ filter, 'listdata.rank' ], [direction]);
         
         this.setState({ boids: ordered, activeListId });
     }
@@ -109,7 +118,7 @@ class Boids extends Component {
 
         const { activeListId, activeListBoids } = this.props;
         const { filter, direction, boids } = this.state;
-        const ordered = orderBy(boids, [ filter, 'listdata.createdAt'], [direction]);
+        const ordered = orderBy(boids, [ filter, 'listdata.rank'], [direction]);
 
         if (activeListId !== this.state.activeListId) {
             this.setState({ boids: ordered, activeListId }); 
@@ -166,15 +175,15 @@ class Boids extends Component {
     didChange = () => {
 
         const { activeListBoids } = this.props;
-        const { boids } = this.state;
+        const { boids, filter, direction } = this.state;
         let changed;
 
         if (boids.length > 0) {
 
-            activeListBoids.map((boid, i) => {
+            orderBy(activeListBoids, [filter, 'listdata.rank'], [direction]).map((boid, i) => {
                 
-                if (boid.id !== get(boids[i], 'id')) {
-                    console.log("Changed", boid.id);
+                // test that all ranks are set and ids line up
+                if (!boid.listdata.rank || (boid.id !== get(boids[i], 'id'))) {
                     changed = true;
                 }
             });
@@ -357,7 +366,7 @@ class Boids extends Component {
 
     render () {
 
-        const { activeListName, batchUpdatePlayersStatus, cloneListStatus, year, type } = this.props;
+        const { activeListName, batchUpdatePlayersStatus, cloneListStatus, year, type, userRole } = this.props;
         const { boids, direction, role } = this.state;
 
         return (
@@ -368,15 +377,19 @@ class Boids extends Component {
     
                 <div className="content-header">
                     <h5 style={{ margin: '10px 10px 10px 10px', paddingBottom: '10px' }}>
-                        <span style={{ marginRight: '10px' }}>{year} {activeListName} - {boids.length} total players</span>
+                        <span style={{ marginRight: '10px', textTransform: 'capitalize' }}>{year} {activeListName} - {boids.length} total players</span>
                         <span>
-                            <button title="Sets the player ranks in the list, use when player cards are highlighted in purple" style={styles.button} onClick={this.applyOrder}>[ Set Ranks ]</button>
-                            <button title="Sets the player ranks at player level, use when player cards are highlighted in purple" style={styles.button} onClick={() => this.setModal('batchUpdatePlayers')}>[ Set Players ]</button>
                             { this.didChange() &&
-                                <button title="Cancels any order/rank changes you have made" onClick={this.cancelChange} style={styles.button}>[ Cancel Changes ]</button>
+                                <span>
+                                    <button title="Sets the player ranks in the list, use when player cards are highlighted in purple" style={styles.button} onClick={this.applyOrder}>[ Set Ranks ]</button>
+                                    <button title="Cancels any order/rank changes you have made" onClick={this.cancelChange} style={styles.button}>[ Cancel Changes ]</button>
+                                </span>
+                            }
+                            { ['admin', 'super'].includes(userRole) &&
+                                <button title="Sets the player ranks at player level, use when player cards are highlighted in purple" style={styles.AlertButton} onClick={() => this.setModal('batchUpdatePlayers')}>[ Set Player Rankings ]</button>
                             }
 
-                            <button title="Clones active list" onClick={this.cloneList} style={styles.button}>[ Clone List ]</button>
+                            <button title="Clones active list" onClick={this.cloneList} style={styles.button}>[ Clone to Personal List ]</button>
                         </span>
                     </h5>
                 </div>

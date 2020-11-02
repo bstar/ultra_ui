@@ -95,7 +95,7 @@ class ListCard extends Component {
                     </IconMenu>
                 </div>
                 <div onClick={() => this.listHandler(id, key)}>
-                    <div style={{ fontSize: '18px' }}>{list.name}</div>
+                    <div style={{ fontSize: '18px', textTransform: 'capitalize' }}>{list.name}</div>
                     <div>{list.description}</div>
                 </div>
             </button>
