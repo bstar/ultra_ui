@@ -132,6 +132,10 @@
     }
 }
 
+.lists-container {
+  padding-right: 10px;
+}
+
 
 .list-card-container {
     display: block;
@@ -139,8 +143,8 @@
     color: #eee;
     font-size: 14px;
     background-color: rgba(36, 87, 121, 0.253);
-    padding: 10px;
-    margin: 20px;
+    padding: 10px 20px 10px 20px;
+    margin: 15px 0px 10px 0px;
     width: 100%;
     box-shadow: 0px 2px 14px -5px rgba(0,0,0,0.75);
     border: 1px solid rgb(46, 110, 115);

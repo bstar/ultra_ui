@@ -228,7 +228,7 @@ class Lists extends Component {
           <div className="container-fluid no-breadcrumbs page-dashboard">
               { userToken ? 
                 <div className="row">
-                    <div className="col-xl-3" style={{ padding: '30px', margin: '-20px 10px -20px -20px' }}>
+                    <div className="col-xl-3" style={{ padding: '30px', margin: '-20px 10px -20px -20px', backgroundColor: 'rgba(0, 0, 0, 0.2)', borderRight: '1px solid rgb(46, 110, 115)', borderBottom: '1px solid rgb(46, 110, 115)' }}>
                         { lists &&
                           <ListItems lists={filteredLists} />
                         }

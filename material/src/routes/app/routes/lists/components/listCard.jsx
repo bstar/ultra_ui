@@ -82,8 +82,8 @@ class ListCard extends Component {
         const { list, id, key, activeListId } = this.props;
 
         return (
-            <button className="list-card-container" style={{ ...this.getListStyle(activeListId, id), margin: '10px 20px 10px 20px' }}>
-                <div style={{ position: 'absolute', right: '0px', marginTop: '-10px', marginRight: '-10px' }}>
+            <button className="list-card-container" style={{ ...this.getListStyle(activeListId, id) }}>
+                <div style={{ position: 'absolute', right: '20px', marginTop: '-10px' }}>
                     <IconMenu
                         iconButtonElement={<IconButton iconStyle={{ color: 'rgb(33, 151, 153)' }}><MoreVertIcon /></IconButton>}
                         multiple={true}
@@ -96,7 +96,7 @@ class ListCard extends Component {
                 </div>
                 <div onClick={() => this.listHandler(id, key)}>
                     <div style={{ fontSize: '18px', textTransform: 'capitalize' }}>{list.name}</div>
-                    <div>{list.description}</div>
+                    <div style={{ color: '#bbb' }}>{list.description}</div>
                 </div>
             </button>
         );
