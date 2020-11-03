@@ -96,7 +96,7 @@ class Main extends Component {
           </div>
           <div className="col-xl-8">
             <div className="box box-default">
-              <div className="box-body">
+              <div className="box-body" style={{ height: '423px' }}>
                 <PlayerAttributes attributes={attributes} position={player.positions_short} playerRoles={player.player_roles} />
               </div>
             </div>
@@ -104,7 +104,7 @@ class Main extends Component {
         </div>
         <StatBoxes player={player} />
         <div className="row">
-          <div className="col-xl-2">
+          <div className="col-xl-2 col-lg-2">
             <div style={{ height: '100%' }}>
                 <PlayerRadarChart position={player.positions_short} attributes={attributes} />
             </div>

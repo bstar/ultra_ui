@@ -62,7 +62,10 @@
 }
 
 .snapshot-selector {
-    margin-top: -60px;
+    position: absolute;
+    right: 0px;
+    bottom: 10px;
+    padding-right: 30px;
 }
 
 @media (max-width: 985px) {

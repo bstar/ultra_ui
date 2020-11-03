@@ -510,7 +510,7 @@ class PlayerSearch extends Component {
 
               <FlatButton style={{ minWidth: '30px', paddingRight: '5px' }}>
                 <div onClick={e => { this.setModal({ openCreateListFromSearchModal: true }) }} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                  <i className="nav-icon material-icons" style={{ color: '#1ecbce', padding: '0px 5px 0px 10px' }}>playlist_add</i><span style={{ paddingRight: '10px' }}>Create List From Search</span>
+                  {/* <i className="nav-icon material-icons" style={{ color: '#1ecbce', padding: '0px 5px 0px 10px' }}>playlist_add</i><span style={{ paddingRight: '10px' }}>Create List From Search</span> */}
                 </div>
               </FlatButton>
             </div>

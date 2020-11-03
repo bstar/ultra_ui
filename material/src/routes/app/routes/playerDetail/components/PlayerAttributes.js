@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './styles.css';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import roleData from '../../../../../config/roles.json';
@@ -103,7 +102,7 @@ class Attributes extends React.Component {
 
     return (
       <div>
-        <div className={`row ${styles.txt}`}>
+        <div className="row">
           <div className="col-xl-4 col-lg-6">
             <h6>Technical</h6>
 
@@ -162,7 +161,7 @@ class Attributes extends React.Component {
 
           </div>
         </div>
-        <div className="row snapshot-selector" style={{ display: 'flex', flex: 'auto', flexFlow: 'row-reverse' }}>
+        <div className="row snapshot-selector">
           <SnapshotSelectField style={{ width: 300 }} attributes={attributes} cursor={currentCursor} handleChange={this.handleChange} />
         </div>
       </div>
