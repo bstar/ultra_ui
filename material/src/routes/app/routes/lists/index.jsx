@@ -18,6 +18,7 @@ import Boids from './components/boids';
 
 
 const mapStateToProps = state => ({
+  userRole: get(state, 'user.jwt.role'),
   userToken: get(state, 'user.data.token'),
   personalLists: get(state, 'list.personal'),
   globalLists: get(state, 'list.global'),
@@ -206,7 +207,7 @@ class Lists extends Component {
   render () {
 
     const { key, type } = this.state;
-    const { personalLists, globalLists, activeListId, userToken, createListModalStatus, isAuthed } = this.props;
+    const { personalLists, globalLists, activeListId, userToken, userRole, createListModalStatus, isAuthed } = this.props;
     const listGroups = { personal: personalLists, global: globalLists };
     const lists = listGroups[key];
     const filteredLists = this.filteredLists(lists, key, type);
@@ -220,17 +221,21 @@ class Lists extends Component {
 
           <div style={{ cursor: 'pointer', display: 'flex', backgroundColor: 'rgba(0, 0, 0, 0.35)', width: '100%', padding: '5px 5px 5px 10px', borderBottom: '1px solid rgb(46, 110, 115)', borderRight: '1px solid rgb(46, 110, 115)', alignItems: 'center' }}>
             <FlatButton onClick={ () => (this.setModal('createListModal'))} style={{ minWidth: '30px', paddingRight: '5px' }}>
-              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                <i className="nav-icon material-icons" style={{ color: '#1ecbce', padding: '0px 5px 0px 10px' }}>add</i><span style={{ paddingRight: '10px', textTransform: 'capitalize' }}>create {type} list</span>
-              </div>
+              { [ 'admin', 'super' ].includes(userRole) || key === 'personal' &&
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                  <i className="nav-icon material-icons" style={{ color: '#1ecbce', padding: '0px 5px 0px 10px' }}>add</i><span style={{ paddingRight: '10px', textTransform: 'capitalize' }}>create {type} list</span>
+                </div>
+              }
             </FlatButton>
           </div>
           <div className="container-fluid no-breadcrumbs page-dashboard">
-              { userToken ? 
+              { userToken ?
                 <div className="row">
                     <div className="col-xl-3" style={{ padding: '30px', margin: '-20px 10px -20px -20px', backgroundColor: 'rgba(0, 0, 0, 0.2)', borderRight: '1px solid rgb(46, 110, 115)', borderBottom: '1px solid rgb(46, 110, 115)' }}>
-                        { lists &&
+                        { lists && lists.length > 0 ?
                           <ListItems lists={filteredLists} />
+                        :
+                        <div style={{ marginLeft: '30px', color: '#eee' }}>No lists to display</div>
                         }
                     </div>
                     <div className="col-xl-9">

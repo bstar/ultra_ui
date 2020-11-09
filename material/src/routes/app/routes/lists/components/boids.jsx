@@ -93,7 +93,7 @@ class Boids extends Component {
 
     constructor (props) {
         super(props);
-    
+
         this.state = {
             boids: [],
             direction: 'asc',
@@ -110,7 +110,7 @@ class Boids extends Component {
         const { activeListBoids, activeListId } = this.props;
         const { filter, direction } = this.state;
         const ordered = orderBy(activeListBoids, [ filter, 'listdata.rank' ], [direction]);
-        
+
         this.setState({ boids: ordered, activeListId });
     }
 
@@ -121,7 +121,7 @@ class Boids extends Component {
         const ordered = orderBy(boids, [ filter, 'listdata.rank'], [direction]);
 
         if (activeListId !== this.state.activeListId) {
-            this.setState({ boids: ordered, activeListId }); 
+            this.setState({ boids: ordered, activeListId });
         }
 
         // TODO handles refreshes when deleting a boid, should do this in saga?
@@ -181,7 +181,7 @@ class Boids extends Component {
         if (boids.length > 0) {
 
             orderBy(activeListBoids, [filter, 'listdata.rank'], [direction]).map((boid, i) => {
-                
+
                 // test that all ranks are set and ids line up
                 if (!boid.listdata.rank || (boid.id !== get(boids[i], 'id'))) {
                     changed = true;
@@ -197,7 +197,7 @@ class Boids extends Component {
         const { activeListBoids } = this.props;
         const { filter, direction } = this.state;
         const boids = orderBy(activeListBoids, [ filter, 'listdata.rank'], [direction]);
-        
+
         this.setState({ boids });
     }
 
@@ -245,7 +245,7 @@ class Boids extends Component {
         });
     }
 
-    createCloneList = (name, boids) => {
+    createCloneList = (name, description, boids) => {
 
         const { createPlayerList, cloneList } = this.props;
 
@@ -256,8 +256,7 @@ class Boids extends Component {
         // description: "TEST DESC"
         // name: "TEST"
 
-        cloneList({ name }, boids);
-        console.log('Create Clone List:', name, boids);
+        cloneList({ name, description }, boids);
     }
 
     batchUpdatePlayersModalWrapper = ({ title, body, open }) => {
@@ -265,7 +264,7 @@ class Boids extends Component {
         const { hideModal, updatePlayers, year, type } = this.props;
         const { boids } = this.state;
         const convertedBoids = this.convertBoids(boids, year, type);
-    
+
         const actions = [
           <FlatButton
             label="Cancel"
@@ -280,7 +279,7 @@ class Boids extends Component {
             batchUpdatePlayers
           />,
         ];
-    
+
         return (
           <div>
                 <Dialog
@@ -301,7 +300,7 @@ class Boids extends Component {
     cloneListModalWrapper = ({ title, body, open }) => {
 
         const { hideModal } = this.props;
-    
+
         const actions = [
           <FlatButton
             label="Cancel"
@@ -312,10 +311,10 @@ class Boids extends Component {
             label="Submit"
             primary={true}
             disabled={false}
-            onClick={() => this.createCloneList(this.state.cloneName, this.state.boids)}
+            onClick={() => this.createCloneList(this.state.cloneName, this.state.cloneDescription, this.state.boids)}
           />,
         ];
-    
+
         return (
             <div>
                 <Dialog
@@ -332,21 +331,28 @@ class Boids extends Component {
             </div>
         )
     }
-    
-    onChangeCloneName = e => {
 
-        const cloneName = e.target.value;
+    onChangeCloneList = e => {
 
-        this.setState({ cloneName });
+        const { name, value } = e.target;
+
+        this.setState({ [name]: value });
     }
 
     cloneListbody = () => (
         <div>
             <TextField
-                onChange={this.onChangeCloneName}
+                onChange={this.onChangeCloneList}
                 autoFocus
-                hintText="Name of New List"
+                hintText="Name"
+                name="cloneName"
                 style={{ marginRight: 20, width: '200px' }}
+            />
+            <TextField
+                onChange={this.onChangeCloneList}
+                hintText="Description"
+                name="cloneDescription"
+                style={{ marginRight: 20, width: '400px' }}
             />
         </div>
     )
@@ -359,10 +365,10 @@ class Boids extends Component {
     setModal = id => {
 
         const { showModal } = this.props;
-    
+
         showModal(id);
     }
-    
+
 
     render () {
 
@@ -373,8 +379,8 @@ class Boids extends Component {
             <div className="list-boids-container">
 
                 { this.batchUpdatePlayersModalWrapper({ title: 'Are you sure you want to update these players?', open: batchUpdatePlayersStatus, body: <div>Body here...</div> }) }
-                { this.cloneListModalWrapper({ title: 'Are you sure you want to clone this list?', open: cloneListStatus, body: this.cloneListbody() }) }
-    
+                { this.cloneListModalWrapper({ title: 'Cloning to a new list', open: cloneListStatus, body: this.cloneListbody() }) }
+
                 <div className="content-header">
                     <h5 style={{ margin: '10px 10px 10px 10px', paddingBottom: '10px' }}>
                         <span style={{ marginRight: '10px', textTransform: 'capitalize' }}>{year} {activeListName} - {boids.length} total players</span>
@@ -389,7 +395,7 @@ class Boids extends Component {
                                 <button title="Sets the player ranks at player level, use when player cards are highlighted in purple" style={styles.AlertButton} onClick={() => this.setModal('batchUpdatePlayers')}>[ Set Player Rankings ]</button>
                             }
 
-                            <button title="Clones active list" onClick={this.cloneList} style={styles.button}>[ Clone to Personal List ]</button>
+                            <button title="Clones active list" onClick={this.cloneList} style={styles.button}>[ Clone This List to New Personal List ]</button>
                         </span>
                     </h5>
                 </div>
