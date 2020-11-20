@@ -80,6 +80,7 @@ const SortableList = SortableContainer(({ boids, sortByNumber }) => {
     );
 });
 
+// TODO move to hooks
 class Boids extends Component {
 
     static propTypes = {

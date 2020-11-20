@@ -22,6 +22,7 @@ const mapStateToProps = state => {
     globalLists: get(state, 'list.global'),
     // lists: get(state, 'list.lists'),
     addPlayerToListStatus: get(state, 'modal.addPlayersToList'),
+    userRole: get(state, 'user.jwt.role'),
   });
 };
 
@@ -248,7 +249,7 @@ class PlayerSearch extends Component {
 
   addPlayerModalWrapper = ({ title, body }) => {
 
-    const { stagedPlayers, stagedList, teamSelection, gmSelection, gradeSelection } = this.state; 
+    const { stagedPlayers, stagedList, teamSelection, gmSelection, gradeSelection } = this.state;
     const { addPlayerToListStatus, hideModal } = this.props;
 
     const actions = [
@@ -285,7 +286,7 @@ class PlayerSearch extends Component {
   addPlayerBody = () => {
 
     const { stagedPlayers, teamSelection, gmSelection, gradeSelection, stagedList } = this.state;
-    const { lists, personalLists, globalLists } = this.props;
+    const { lists, personalLists, globalLists, userRole } = this.props;
     const player = stagedPlayers && stagedPlayers[0];
 
     return (
@@ -293,19 +294,21 @@ class PlayerSearch extends Component {
         <h4 style={{ textShadow: 'rgba(52, 163, 203, 0.4) 1px 1px 3px' }}>{player && player.name}</h4>
         <div style={{ display: 'flex' }}>
 
-          <div style={{ marginRight: '25px', overflow: 'hidden', whiteSpace: 'nowrap' }}>
-            <h5>Global Lists</h5>
-            { globalLists && globalLists.map(list => {
+          { ['admin', 'super'].includes(userRole) &&
+            <div style={{ marginRight: '25px', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+              <h5>Global Lists</h5>
+              { globalLists && globalLists.map(list => {
 
-              const buttonClass = (stagedList && (list.id === stagedList.id)) ? 'selectedListButton' : 'listButton';
+                const buttonClass = (stagedList && (list.id === stagedList.id)) ? 'selectedListButton' : 'listButton';
 
-              return (
-                <div className={buttonClass}>
-                  <button onClick={() => this.setState({ stagedList: list })}>{list.name}</button>
-                </div>
-              )
-            })}
-          </div>
+                return (
+                  <div className={buttonClass}>
+                    <button onClick={() => this.setState({ stagedList: list })}>{list.name}</button>
+                  </div>
+                )
+              })}
+            </div>
+          }
           <div style={{ overflow: 'hidden', whiteSpace: 'nowrap', paddingRight: '25px', borderRight: '1px solid rgb(46, 110, 115)' }}>
             <h5>Personal Lists</h5>
             { personalLists && personalLists.map(list => {
@@ -331,7 +334,7 @@ class PlayerSearch extends Component {
                   hintText={`Choose team to associate ${player.name}`}
                   style={{ width: '400px' }}
                   value={teamSelection}
-                  onChange={(e, i, teamSelection) => this.setState({ teamSelection })} 
+                  onChange={(e, i, teamSelection) => this.setState({ teamSelection })}
                 >
                   <MenuItem value={null} primaryText="" />
                   { nhlTeams.map(team => <MenuItem value={team.short} primaryText={`${team.region} ${team.name}`} /> )}
@@ -348,7 +351,7 @@ class PlayerSearch extends Component {
                   floatingLabelFixed={true}
                   style={{ width: '400px' }}
                   value={gmSelection}
-                  onChange={(e, i, gmSelection) => this.setState({ gmSelection })} 
+                  onChange={(e, i, gmSelection) => this.setState({ gmSelection })}
                 >
                   <MenuItem value={null} primaryText="" />
                   { tempGMList.map(gm => <MenuItem value={gm} primaryText={gm} /> )}
@@ -365,7 +368,7 @@ class PlayerSearch extends Component {
                   hintText={`Grade ${player.name}`}
                   style={{ width: '220px' }}
                   value={gradeSelection}
-                  onChange={(e, i, gradeSelection) => this.setState({ gradeSelection })} 
+                  onChange={(e, i, gradeSelection) => this.setState({ gradeSelection })}
                 >
                   <MenuItem value={null} primaryText="" />
                   { grades.map(grade => <MenuItem value={grade} primaryText={grade} /> )}
@@ -457,7 +460,7 @@ class PlayerSearch extends Component {
               <div className="search-pod">
                 {this.ageSlider()}
               </div>
-              <div className="search-pod"> 
+              <div className="search-pod">
                 <TextField
                   onChange={this.onChangeText}
                   name="name"
@@ -486,7 +489,7 @@ class PlayerSearch extends Component {
                   hintText="Use: c, lw, rw, ld, rd, g"
                 />
               </div>
-              <div className="search-pod"> 
+              <div className="search-pod">
                 <TextField
                   onChange={this.onChangeText}
                   name="nation"
