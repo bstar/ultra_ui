@@ -221,7 +221,7 @@ class Lists extends Component {
 
           <div style={{ cursor: 'pointer', display: 'flex', backgroundColor: 'rgba(0, 0, 0, 0.35)', width: '100%', padding: '5px 5px 5px 10px', borderBottom: '1px solid rgb(46, 110, 115)', borderRight: '1px solid rgb(46, 110, 115)', alignItems: 'center' }}>
             <FlatButton onClick={ () => (this.setModal('createListModal'))} style={{ minWidth: '30px', paddingRight: '5px' }}>
-              { [ 'admin', 'super' ].includes(userRole) || key === 'personal' &&
+              { ([ 'admin', 'super' ].includes(userRole) || key === 'personal') &&
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                   <i className="nav-icon material-icons" style={{ color: '#1ecbce', padding: '0px 5px 0px 10px' }}>add</i><span style={{ paddingRight: '10px', textTransform: 'capitalize' }}>create {type} list</span>
                 </div>
