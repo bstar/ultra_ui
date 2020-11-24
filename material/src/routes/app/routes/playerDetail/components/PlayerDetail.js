@@ -19,6 +19,7 @@ const mapStateToProps = state => {
     playerMap: state.player,
     attributesMap: state.attribute,
     lists: get(state, 'list.lists'),
+    username: get(state, 'user.jwt.id'),
   });
 };
 
@@ -50,7 +51,7 @@ class Main extends Component {
 
   render () {
 
-    const { playerMap, attributesMap, playerId } = this.props;
+    const { playerMap, attributesMap, playerId, username } = this.props;
     const player = playerMap[playerId];
     const attributes = attributesMap[playerId];
 
@@ -89,7 +90,7 @@ class Main extends Component {
             <div>
               <div className="box box-default" style={{ overflow: 'hidden' }}>
                 <div className="box-body">
-                  <PlayerLists lists={player.lists} />
+                  <PlayerLists lists={player.lists} username={username} />
                 </div>
               </div>
             </div>
@@ -123,14 +124,14 @@ class Main extends Component {
   }
 };
 
-const PlayerDetail = ({ match, getPlayerById, playerMap, attributesMap, lists, isAuthed }) => {
+const PlayerDetail = ({ match, getPlayerById, playerMap, attributesMap, lists, isAuthed, username }) => {
 
   if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px' }}>Not Authenticated</div> };
 
   return (
     <div className="container-fluid no-breadcrumbs page-dashboard">
       <QueueAnim type="bottom" className="ui-animate">
-        <Main isAuthed={isAuthed} playerId={match.params.playerId} getPlayerById={getPlayerById} playerMap={playerMap} attributesMap={attributesMap} lists={lists} />
+        <Main isAuthed={isAuthed} playerId={match.params.playerId} getPlayerById={getPlayerById} playerMap={playerMap} attributesMap={attributesMap} lists={lists} username={username} />
       </QueueAnim>
     </div>
   );

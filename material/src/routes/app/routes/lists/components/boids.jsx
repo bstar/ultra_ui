@@ -181,7 +181,7 @@ class Boids extends Component {
 
         if (boids.length > 0) {
 
-            orderBy(activeListBoids, [filter, 'listdata.rank'], [direction]).map((boid, i) => {
+            orderBy(activeListBoids, [filter, 'listdata.createdAt'], [direction]).map((boid, i) => {
 
                 // test that all ranks are set and ids line up
                 if (!boid.listdata.rank || (boid.id !== get(boids[i], 'id'))) {

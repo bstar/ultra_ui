@@ -1,11 +1,10 @@
 import React from 'react';
 
 
-
-const PlayerLists = ({ lists }) => {
+const PlayerLists = ({ lists, username }) => {
 
   const globalLists = lists && lists.filter(list => list.key === 'global');
-  const personalLists = lists && lists.filter(list => list.key === 'personal');
+  const personalLists = lists && lists.filter(list => (list.key === 'personal') && (list.userName === username));
 
   return (
     <div className="row" style={{ height: '186px', display: 'flex', flexDirection: 'column' }}>
