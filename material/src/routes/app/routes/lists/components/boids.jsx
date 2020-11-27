@@ -110,7 +110,7 @@ class Boids extends Component {
 
         const { activeListBoids, activeListId } = this.props;
         const { filter, direction } = this.state;
-        const ordered = orderBy(activeListBoids, [ filter, 'listdata.rank' ], [direction]);
+        const ordered = orderBy(activeListBoids, [ filter, 'listdata.createdAt' ], [direction]);
 
         this.setState({ boids: ordered, activeListId });
     }
@@ -119,7 +119,7 @@ class Boids extends Component {
 
         const { activeListId, activeListBoids } = this.props;
         const { filter, direction, boids } = this.state;
-        const ordered = orderBy(boids, [ filter, 'listdata.rank'], [direction]);
+        const ordered = orderBy(boids, [ filter, 'listdata.createdAt'], [direction]);
 
         if (activeListId !== this.state.activeListId) {
             this.setState({ boids: ordered, activeListId });
@@ -197,7 +197,7 @@ class Boids extends Component {
 
         const { activeListBoids } = this.props;
         const { filter, direction } = this.state;
-        const boids = orderBy(activeListBoids, [ filter, 'listdata.rank'], [direction]);
+        const boids = orderBy(activeListBoids, [ filter, 'listdata.createdAt'], [direction]);
 
         this.setState({ boids });
     }
