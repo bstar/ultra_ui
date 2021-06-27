@@ -2,7 +2,7 @@ import React from 'react';
 import { takeLatest, takeEvery, put, call, all, select } from 'redux-saga/effects';
 import { get } from 'lodash';
 import * as types from 'constants/ActionTypes';
-import { 
+import {
     fetchLists,
     fetchListsByKey,
     fetchList,
@@ -111,7 +111,7 @@ function* createListSuccessSaga () {
 
     yield put(closeModalSuccess({ id: 'createListModal' }));
     yield put(loadMessageSuccess({ open: true, text: <b>New list created!</b> }));
-    
+
     yield getListsByKeySaga({ payload: { key: 'personal' }}); // TODO update to target global vs personal lists
 };
 

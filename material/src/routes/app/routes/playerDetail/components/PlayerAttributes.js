@@ -13,11 +13,20 @@ import {
   getAttributeColor,
 } from 'utils';
 
+const colorMap = {
+  0: { color: '#ccc' }, // white
+  1: { color: '#3cae3c' }, // green
+  2: { color: '#5895d2' }, // blue
+  3: { color: '#ff1cff' }, // purple
+  4: { color: '#ff1cff' }, // purple
+  5: { color: '#ff1cff' }, // purple
+};
 
 const getGrowthSymbol = (current, previous) => {
+  const diff = current - previous;
 
   if (current > previous) {
-    return <i style={{ color: '#ccc', fontSize: '16px', fontWeight: 600 }} className="material-icons">keyboard_arrow_up</i>;
+    return <i style={{ fontSize: '16px', fontWeight: 600, ...colorMap[diff] } } className="material-icons">keyboard_arrow_up</i>;
   }
 
   if (current < previous) {

@@ -48,7 +48,7 @@ class NavRightList extends React.Component {
           <li style={{ marginRight: '20px' }}>
             <div style={{ float: 'left', marginTop: '17px' }}>{user.id}</div>
             <IconMenu
-              iconButtonElement={<IconButton style={{ marginRight: '10px' }}><img src={`assets/img/clubs/huge/${leagueConversionMap['NHL']}/${team.region} ${team.name}.png`} alt="" className=" img40_40" /></IconButton>}
+              iconButtonElement={<IconButton style={{ marginRight: '10px', marginTop: '4px' }}><img src={`assets/img/clubs/huge/${leagueConversionMap['NHL']}/${team.region} ${team.name}.png`} alt="" className=" img50" /></IconButton>}
               listStyle={{ border: '1px solid rgb(46, 110, 115)', borderRadius: '5px' }}
               onChange={this.handleChange}
               anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
@@ -71,7 +71,7 @@ class NavRightList extends React.Component {
                 leftIcon={<i className="material-icons">forward</i>}
                           />
             </IconMenu>
-          </li>        
+          </li>
         :
           <li style={{ marginRight: '20px' }}>
             <IconMenu

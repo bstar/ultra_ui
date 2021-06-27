@@ -30,7 +30,6 @@ function* getPlayersSaga (action) {
 
 function* addPlayersToListSaga (action) {
 
-    console.log("CALLED!!!!!!!!!!!!!!!!!!!!!")
     const { listId, ids, selections } = action.payload;
     const { response } = yield call(postPlayersToList, { listId, boidIds: ids }, action.payload.query);
 

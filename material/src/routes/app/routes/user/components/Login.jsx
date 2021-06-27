@@ -79,11 +79,11 @@ class Login extends Component {
                           </div>
                         </form>
                     </div>
-                    {/* <div className="additional-info">
+                    <div className="additional-info">
                         <a href="#/app/register">Register</a>
                         <span className="divider-h" style={{ padding: '10px' }}> | </span>
                         <a href="#/forgot-password">Password Reset</a>
-                    </div> */}
+                    </div>
                 </div>
             </div>
         );

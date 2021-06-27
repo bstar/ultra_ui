@@ -248,7 +248,7 @@ class Boids extends Component {
 
     createCloneList = (name, description, boids) => {
 
-        const { createPlayerList, cloneList } = this.props;
+        const { cloneList } = this.props;
 
         // captureGM: true
         // captureGrade: true
@@ -384,7 +384,7 @@ class Boids extends Component {
 
                 <div className="content-header">
                     <h5 style={{ margin: '10px 10px 10px 10px', paddingBottom: '10px' }}>
-                        <span style={{ marginRight: '10px', textTransform: 'capitalize' }}>{year} {activeListName} - {boids.length} total players</span>
+                        <span style={{ marginRight: '10px', textTransform: 'capitalize' }}>{activeListName} - {boids.length} total players</span>
                         <span>
                             { this.didChange() &&
                                 <span>
