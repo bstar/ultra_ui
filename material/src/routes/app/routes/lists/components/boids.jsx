@@ -36,6 +36,7 @@ const mapStateToProps = state => ({
     batchUpdatePlayersStatus: get(state, 'modal.batchUpdatePlayers', false),
     cloneListStatus: get(state, 'modal.cloneList', false),
     userRole: get(state, 'user.jwt.role'),
+    list: get(state, 'list'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -117,8 +118,10 @@ class Boids extends Component {
 
     componentDidUpdate (prevProps, prevState) {
 
-        const { activeListId, activeListBoids } = this.props;
-        const { filter, direction, boids } = this.state;
+        const { activeListId, activeListBoids, list } = this.props;
+        const { filter, direction } = this.state;
+        const activeList = find(list.personal, { id: activeListId });
+        const boids = activeList ? activeList.boids : [];
         const ordered = orderBy(boids, [ filter, 'listdata.createdAt'], [direction]);
 
         if (activeListId !== this.state.activeListId) {
@@ -373,7 +376,7 @@ class Boids extends Component {
 
     render () {
 
-        const { activeListName, batchUpdatePlayersStatus, cloneListStatus, year, type, userRole } = this.props;
+        const { activeListName, batchUpdatePlayersStatus, cloneListStatus, year, type, userRole, activeId, activeListId } = this.props;
         const { boids, direction, role } = this.state;
 
         return (

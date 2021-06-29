@@ -35,6 +35,7 @@ class Login extends Component {
 
         const { username, password } = this.state;
         const { login } = this.props;
+        console.log("SUBMIT", username, password);
 
         login(username, password);
     }
@@ -79,10 +80,9 @@ class Login extends Component {
                           </div>
                         </form>
                     </div>
-                    <div className="additional-info">
+                    <div className="additional-info" style={{ display: 'none' }}>
                         <a href="#/app/register">Register</a>
                         <span className="divider-h" style={{ padding: '10px' }}> | </span>
-                        <a href="#/forgot-password">Password Reset</a>
                     </div>
                 </div>
             </div>
