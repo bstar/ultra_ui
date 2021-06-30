@@ -70,7 +70,7 @@ const styles = {
   },
 };
 
-const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, handedness, player_roles, combined_rating, stanley_cups_won, iss_ranking, draft_ranking, attributes }) => (
+const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, handedness, player_roles, combined_rating, stanley_cups_won, iss_ranking, com_ranking, draft_ranking, attributes }) => (
   <div>
     <div style={{ display: 'flex', flexDirection: 'row', paddingRight: '10px', marginTop: '10px' }}>
       <div style={{ paddingRight: '10px', minWidth: '360px' }}>
@@ -90,8 +90,9 @@ const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, han
           <span style={styles.listTitle}>Ratings:</span><span style={styles.listItem}>{combined_rating} com / {(combined_rating/age).toFixed(1)} ao</span>
         </div>
         <div className="row">
-          <span style={styles.listTitle}>Feats:</span><span style={styles.listItem}>
+          <span style={styles.listItem}>
             { iss_ranking && <span style={styles.tag}>ISS: #{iss_ranking}</span> }
+            { com_ranking && <span style={styles.tag}>COM: #{com_ranking}</span> }
             { draft_ranking && <span style={styles.tag}>Drafted: {draft_ranking}oa</span> }
             <span style={styles.tag}>Cups: {stanley_cups_won}</span>
           </span>

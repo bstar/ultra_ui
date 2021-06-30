@@ -58,7 +58,7 @@ const getStatus = (list, lists, boid) => {
     const { draftId, rankId } = list;
 
     if (draftId) {
-        
+
         const draftedList = find(lists, { 'id': draftId });
         const draftedBoid = find(draftedList.boids, { 'id': boid.id });
 
@@ -75,7 +75,7 @@ const getStatus = (list, lists, boid) => {
     }
 
     if (rankId) {
-        
+
         const rankedList = find(lists, { 'id': rankId });
         const rankedBoid = find(rankedList.boids, { 'id': boid.id });
 
@@ -100,12 +100,12 @@ class BoidCard extends Component {
     constructor (props) {
 
         super(props)
-    
+
         this.state = {};
     }
 
     getBorder = (rank, pos, drafted) => {
-   
+
         if (rank !== pos) {
             if (drafted) {
                 return  { border: '1px solid #c16ea4' };
@@ -124,7 +124,7 @@ class BoidCard extends Component {
 
         removePlayer(listId, boidId, listName, boidName, activeListKey);
     }
-    
+
     render () {
 
         const { boid, pos, rank, onSortEnd, list } = this.props;
@@ -151,15 +151,15 @@ class BoidCard extends Component {
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
                             <div style={{ padding: '0px 10px 0px 10px', width: '280px' }}>
                                 <div style={{ fontSize: '18px' }}>
-                                    <a style={{ paddingRight: '5px' }} href={`#/app/playerdetail/${boid.id}`}>{boid.name}</a> 
+                                    <a style={{ paddingRight: '5px' }} href={`#/app/playerdetail/${boid.id}`}>{boid.name}</a>
                                     <span style={{ fontSize: '11px' }}><b>{boid.positions_short}</b></span>
                                 </div>
                                 <div title="Player's date of birth">{boid.dob} ({boid.age})</div>
                                 <div title="Draft details">{draftedText}</div>
                             </div>
                             <div style={{ padding: '0px 10px 0px 10px', width: '220px', overflow: 'hidden' }}>
+                                {boid.com_ranking && <div title="Team that drafted player"><b>COM Ranking: </b><a style={{ textTransform: 'uppercase' }} href="#">#{boid.com_ranking}</a></div>}
                                 <div title="Team that drafted player"><b>Drafted By: </b><a style={{ textTransform: 'uppercase' }} href="#">{team || 'n/a'}</a></div>
-                                <div title="GM who drafted player"><b>Drafted GM:</b> <a href="#">{gm || 'N/A'}</a></div>
                                 { grade && <div title="Player's assigned grade from GM"><b>Tier:</b> <a href="#">{grade}</a></div> }
                             </div>
                             <div style={{ padding: '0px 10px 0px 10px', width: '220px', overflow: 'hidden' }}>
@@ -178,7 +178,7 @@ class BoidCard extends Component {
                                 <div title="Weighted Pphysicals"><b>W Physical:</b> <span className={getRatingColor(physicalWeighted)}>{physicalWeighted}</span></div>
                             </div>
                         </div>
-    
+
                     </div>
                     <div>
                         { list &&

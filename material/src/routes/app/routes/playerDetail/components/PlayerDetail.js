@@ -83,6 +83,7 @@ class Main extends Component {
                   positions_short={player.positions_short}
                   stanley_cups_won={player.stanley_cups_won}
                   iss_ranking={player.iss_ranking}
+                  com_ranking={player.com_ranking}
                   draft_ranking={player.draft_ranking}
                   attributes={attributes} />
               </div>

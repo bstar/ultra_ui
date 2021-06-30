@@ -13,7 +13,7 @@ const PlayerLists = ({ lists, username }) => {
 
         { globalLists.length > 0 ?
             globalLists.map(list => {
-                return <div><a href={`#/app/lists`}>{list.name} ({list.listdata.rank})</a></div>
+                return <div>{list.name} ({list.listdata.rank})</div>
             })
         :
             <div>Player does not belong to a Global list</div>
