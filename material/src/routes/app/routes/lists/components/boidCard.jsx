@@ -159,7 +159,11 @@ class BoidCard extends Component {
                             </div>
                             <div style={{ padding: '0px 10px 0px 10px', width: '220px', overflow: 'hidden' }}>
                                 {boid.com_ranking && <div title="Team that drafted player"><b>COM Ranking: </b><a style={{ textTransform: 'uppercase' }} href="#">#{boid.com_ranking}</a></div>}
-                                <div title="Team that drafted player"><b>Drafted By: </b><a style={{ textTransform: 'uppercase' }} href="#">{team || 'n/a'}</a></div>
+                                <div title="Team that drafted player">
+                                  <b>Drafted By: </b>
+                                  <a style={{ textTransform: 'uppercase' }} href="#">
+                                    {team || 'n/a'}
+                                  </a></div>
                                 { grade && <div title="Player's assigned grade from GM"><b>Tier:</b> <a href="#">{grade}</a></div> }
                             </div>
                             <div style={{ padding: '0px 10px 0px 10px', width: '220px', overflow: 'hidden' }}>

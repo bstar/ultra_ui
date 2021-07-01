@@ -373,6 +373,20 @@ class Boids extends Component {
         showModal(id);
     }
 
+    exportList = () => {
+      const exportedPlayers = this.state.boids.map(boid => {
+        console.log(boid);
+        return `${boid.name};${boid.positions_short}\n`
+      });
+
+      const element = document.createElement("a");
+      const file = new Blob(exportedPlayers, {type: 'text/plain'});
+      element.href = URL.createObjectURL(file);
+      element.download = "export.txt";
+      document.body.appendChild(element); // Required for this to work in FireFox
+      element.click();
+    }
+
 
     render () {
 
@@ -400,6 +414,7 @@ class Boids extends Component {
                             }
 
                             <button title="Clones active list" onClick={this.cloneList} style={styles.button}>[ Clone This List to New Personal List ]</button>
+                            <button id="exportList" style={styles.button} onClick={this.exportList}>[ Export List ]</button>
                         </span>
                     </h5>
                 </div>
