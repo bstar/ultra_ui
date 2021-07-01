@@ -39,7 +39,7 @@ class MainApp extends Component {
 
     const { user } = this.props;
     const exp = get(user, 'jwt.exp');
-  
+
     return moment().isBefore(moment.unix(exp));
   }
 
@@ -52,7 +52,7 @@ class MainApp extends Component {
         <Sidenav />
         <section id="page-container" className="app-page-container">
           <Header />
-          <div className="app-content-wrapper" style={{ background: 'url(assets/images/6.png)', backgroundSize: 'cover', backgroundAttachment: 'fixed', overflow: 'hidden' }}>
+          <div className="app-content-wrapper">
             <div className="app-content">
               <div className="full-height" style={{ maxWidth: '1800px' }}>
                   <Route
