@@ -4,6 +4,23 @@ import QueueAnim from 'rc-queue-anim';
 
 const posts = [
   {
+    title: '0.5.5 Release: EHM 1.5 & SHA Era',
+    date: '2021-07-01',
+    avatar: 'assets/images-demo/avatars/1.jpg',
+    author: 'Bob',
+    category: 'Release',
+    content: "Resurrecting the tool for SHA.  It's been about a year since the last update and I've addressed some nagging issues over that time.  There's a ton of placeholders for some incredible features that might still come to pass, but major architecture and changes in focus are unlikely.",
+    issues: [
+      "Major performance improvement in scrolling",
+      "Fixed bug where cloned global lists were not loading properly",
+      "On player detail page, arrow icon to show growth now supports 3 colors: green = +1, blue = +2, iridium = +3",
+      "Improved where draft/iss/com rankings are surfaced",
+      "Player detail page no longer has 'feats' text, just pills for accomplishments",
+      "Back-end updates for EHM v1.5",
+      "Lists can be exported now!",
+    ]
+  },
+  {
     title: '0.5.0 Release: Player lists and user logins',
     date: '2020-07-06',
     avatar: 'assets/images-demo/avatars/1.jpg',
@@ -33,25 +50,6 @@ const posts = [
       "Reordered search columns to make more sense",
       "Reworked UI state management to improve performance and support more features",
       "UI and API support authorization levels... initially only admins can create global lists (draft and rankings)",
-    ]
-  },
-  {
-    title: '0.4.0 Release: Web Only Going Forward',
-    date: '2020-04-09',
-    avatar: 'assets/images-demo/avatars/1.jpg',
-    author: 'Bob',
-    category: 'Release',
-    content: "This is the web-only update, no more application builds to download.  The app will no longer work so you can trash it.  We now have mobile support and all future updates will happen transparently.  These changes are a precursor to supporting player tagging, player list and ultimately a live draft.  Enjoy.",
-    issues: [
-      "Reworked Player Detail state management to use redux and redux sagas.  All accessed players will get cached now, so loading them a second time will be instantaneous.",
-      "Node server now caches all player requests.  The longer the server is up, the faster accessing players will be.",
-      "Removed a bunch of the computed scores... we only care about COM scores and offensive scores.",
-      "Introduced AO scores (Age Over).  It simply a players COM score divided by their age.",
-      "Responsive design... you can now view all pages in the tool at any aspect ratio or resolution.",
-      "Support for mobile devices.",
-      "Revamped search page, now supporting responsive design principles.",
-      "Can now filter by Nation.",
-      "Player search results now support a left to right pan-able table.",
     ]
   },
   {
@@ -141,7 +139,7 @@ const posts = [
     avatar: 'assets/images-demo/avatars/1.jpg',
     author: 'Bob',
     category: 'Release',
-    content: "This is the Release Candidate for all of NASL.  Search was reworked so that it persists and can be cleared.  There are also some other minir things I updated, but aren't worth mentioning.  Enjoy.",
+    content: "This is the Release Candidate for all of NASL.  Search was reworked so that it persists and can be cleared.  There are also some other minor things I updated, but aren't worth mentioning.  Enjoy.",
   },
   {
     title: 'The League Companion Alpha Release is finally here!',

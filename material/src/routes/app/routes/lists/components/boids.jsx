@@ -421,7 +421,6 @@ class Boids extends Component {
                 <div style={{ padding: '10px', display: 'flex' }}>
                     <div className="search-pod" style={{ display: 'flex', height: 'inherit', margin: '0px 20px 0px 0px', width: '100%' }}>
                         <div style={{ width: '50%' }}>
-                            <div style={{ fontSize: '16px', marginBottom: '10px', padding: '0px' }}>Sort:</div>
                             <RadioButtonGroup name="sortList" defaultSelected="listdata.rank" onChange={this.filterAndSort}>
                                 <RadioButton
                                     style={{ maxWidth: 250, float: 'left' }}
@@ -446,7 +445,6 @@ class Boids extends Component {
                             </RadioButtonGroup>
                         </div>
                         <div style={{ width: '50%' }}>
-                            <div style={{ fontSize: '16px', marginBottom: '10px', padding: '0px' }}>Direction:</div>
                             <RadioButton
                                 style={{ maxWidth: 250 }}
                                 value="desc"
