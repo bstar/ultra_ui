@@ -503,7 +503,7 @@ class PlayerSearch extends Component {
                 <SelectRoles onChange={this.onChangeRole} role={search.role} />
               </div>
             </div>
-            <div style={{ borderTop: '1px solid rgb(46, 110, 115)', margin: '10px 0px 0px 0px', padding: '6px 30px 5px 30px', backgroundColor: 'rgba(0,0,0,0.35)', width: '100%' }}>
+            <div style={{ height: '49px', position: 'relative', borderTop: '1px solid rgb(46, 110, 115)', borderBottom: '1px solid rgb(46, 110, 115)', margin: '10px 0px 0px 0px', padding: '6px 30px 5px 30px', backgroundColor: 'rgba(0,0,0,0.35)', width: '100%' }}>
 
               <FlatButton style={{ minWidth: '30px', paddingRight: '5px' }}>
                 <div onClick={this.clearHandler} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -520,7 +520,7 @@ class PlayerSearch extends Component {
           </div>
         </div>
 
-        <div className="player-table-container" style={{ overflowX: 'auto', marginLeft: '20px' }}>
+        <div className="player-table-container" style={{ overflowX: 'auto', marginLeft: '20px', position: 'relative' }}>
           { players ?
             <table className="player-search-table" style={{ minWidth: '1700px', maxWidth: '100%', margin: '20px 0px 20px 0px' }}>
                 <thead style={{ fontSize: '14px', color: '#A3C3C6' }}>

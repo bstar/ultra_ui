@@ -219,7 +219,7 @@ class Lists extends Component {
         <div>
           { this.createListModalWrapper({ title: <div>Create a New List:</div>, open: createListModalStatus, body: this.createListBody() }) }
 
-          <div style={{ cursor: 'pointer', display: 'flex', backgroundColor: 'rgba(0, 0, 0, 0.35)', width: '100%', padding: '5px 5px 5px 10px', borderBottom: '1px solid rgb(46, 110, 115)', borderRight: '1px solid rgb(46, 110, 115)', alignItems: 'center' }}>
+          <div style={{ position: 'relative', cursor: 'pointer', display: 'flex', backgroundColor: 'rgba(0, 0, 0, 0.35)', width: '100%', padding: '5px 5px 5px 10px', borderBottom: '1px solid rgb(46, 110, 115)', borderRight: '1px solid rgb(46, 110, 115)', alignItems: 'center' }}>
             <FlatButton onClick={ () => (this.setModal('createListModal'))} style={{ minWidth: '30px', paddingRight: '5px' }}>
               { ([ 'admin', 'super' ].includes(userRole) || key === 'personal') &&
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
