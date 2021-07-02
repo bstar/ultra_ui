@@ -66,7 +66,7 @@ class Main extends Component {
         </div>
         <div className="row">
           <div className="col-xl-4">
-            <div className="box box-default" style={{ overflow: 'hidden', marginBottom: '15px' }}>
+            <div className="box box-default" style={{ marginBottom: '15px' }}>
               <div className="box-body">
                 <PlayerPersonalInfo
                   lists={player.lists}
@@ -90,7 +90,7 @@ class Main extends Component {
             </div>
             <div>
               <div className="box box-default" style={{ overflow: 'hidden' }}>
-                <div className="box-body">
+                <div className="box-body" style={{ minHeight: '203px' }}>
                   <PlayerLists lists={player.lists} username={username} />
                 </div>
               </div>
@@ -98,7 +98,7 @@ class Main extends Component {
           </div>
           <div className="col-xl-8">
             <div className="box box-default">
-              <div className="box-body" style={{ height: '423px' }}>
+              <div className="box-body" style={{ minHeight: '423px' }}>
                 <PlayerAttributes attributes={attributes} position={player.positions_short} playerRoles={player.player_roles} />
               </div>
             </div>

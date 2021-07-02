@@ -90,7 +90,7 @@ const PlayerPersonalInfo = ({ dob, age, positions_short, birth_town, nation, han
         <div className="row">
           <span style={styles.listTitle}>Ratings:</span><span style={styles.listItem}>{combined_rating} com / {(combined_rating/age).toFixed(1)} ao</span>
         </div>
-        <div className="row">
+        <div className="row" style={{ overflow: 'hidden' }}>
           <span style={styles.listItem}>
             { iss_ranking && <span style={styles.tag}>ISS: #{iss_ranking}</span> }
             { com_ranking && <span style={styles.tag}>COM: #{com_ranking}</span> }

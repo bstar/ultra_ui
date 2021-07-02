@@ -38,7 +38,7 @@ const styles = {
 };
 
 const PlayerHeading = ({ player, fallbackImage }) => (
-  <div className="row" style={{ minHeight: '100px', marginTop: '-8px' }}>
+  <div className="row playerHeading">
     <div>
       <ReactImageFallback
         src={`assets/img/clubs/large/${leagueConversionMap[player.division_playing] || player.division_playing}/${get(player, 'club_playing', '').toLowerCase()}.png`}
