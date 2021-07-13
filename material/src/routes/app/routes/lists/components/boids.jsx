@@ -374,9 +374,9 @@ class Boids extends Component {
     }
 
     exportList = () => {
-      const exportedPlayers = this.state.boids.map(boid => {
+      const exportedPlayers = this.state.boids.map((boid, index) => {
         console.log(boid);
-        return `${boid.name};${boid.positions_short}\n`
+        return `${index+1};${boid.name};${boid.age};${boid.positions_short};${boid.club_playing}\n`
       });
 
       const element = document.createElement("a");

@@ -37,7 +37,7 @@ class Header extends React.Component {
     return (
       <section className="app-header" style={styles.section}>
         <div
-          style={{ borderBottom: `2px solid ${getHighlightColor('phi')}`, height: '62px', boxShadow: '0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)' }}
+          style={{ borderBottom: `2px solid ${getHighlightColor('sjs')}`, height: '62px', boxShadow: '0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)' }}
           className="appHeaderInner">
 
           <div className="d-lg-none d-xl-none float-left">
