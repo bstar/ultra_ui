@@ -30,7 +30,7 @@ class SidebarContent extends React.Component {
           </li>
           <li>
             <NavLink to={{ pathname: '/app/gms' }} activeClassName="selected">
-              <i className="nav-icon material-icons">account_circle</i><span className="nav-text" style={ styles.textItem }>General Managers</span>
+              <i className="nav-icon material-icons">account_circle</i><span className="nav-text" style={ styles.textItem }>GM Info</span>
             </NavLink>
           </li>
           <li>

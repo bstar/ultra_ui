@@ -5,7 +5,7 @@ import APPCONFIG from 'constants/Config';
 import NavLeftList from './NavLeftList';
 import NavRightList from './NavRightList';
 import { teamColors } from '../../utils';
-
+import $ from 'jquery';
 
 const styles = {
   section: {
@@ -22,15 +22,29 @@ const getHighlightColor = abbrev => {
 
 class Header extends React.Component {
 
-  render () {
+  componentDidMount() {
+    const sidebarToggler = this.sidebarBtn;
+    const $sidebarToggler = $(sidebarToggler);
+    const $body = $('#body');
 
-    const { colorOption } = this.props;
+    $sidebarToggler.on('click', (e) => {
+      $body.toggleClass('sidebar-mobile-open');
+    });
+  }
+
+  render () {
 
     return (
       <section className="app-header" style={styles.section}>
         <div
           style={{ borderBottom: `2px solid ${getHighlightColor('phi')}`, height: '62px', boxShadow: '0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)' }}
           className="appHeaderInner">
+
+          <div className="d-lg-none d-xl-none float-left">
+            <a className="md-button header-icon toggle-sidebar-btn" ref={(c) => { this.sidebarBtn = c; }}>
+              <i className="material-icons">menu</i>
+            </a>
+          </div>
 
           <div className="brand d-none d-lg-inline-block d-xl-inline-block">
             <h2><Link to="/">{APPCONFIG.brand}</Link></h2>
