@@ -191,15 +191,15 @@ class BoidCard extends Component {
 
                     </div>
                     <div>
-                        { list &&
-                            <IconMenu
-                              iconButtonElement={<IconButton iconStyle={{ color: 'rgb(33, 151, 153)' }}><MoreVertIcon /></IconButton>}
-                              multiple={true}
-                            >
-                                <MenuItem
-                                  primaryText="Remove Player"
-                                  onClick={() => this.handleRemovePlayer({ listId: list.id, boidId: boid.id, listName: list.name, boidName: boid.name }) } />
-                            </IconMenu>
+                        { list && ['admin', 'super'].includes(userRole)|| list.type === 'personal' &&
+                          <IconMenu
+                            iconButtonElement={<IconButton iconStyle={{ color: 'rgb(33, 151, 153)' }}><MoreVertIcon /></IconButton>}
+                            multiple={true}
+                          >
+                            <MenuItem
+                              primaryText="Remove Player"
+                              onClick={() => this.handleRemovePlayer({ listId: list.id, boidId: boid.id, listName: list.name, boidName: boid.name }) } />
+                          </IconMenu>
                         }
                     </div>
                 </div>

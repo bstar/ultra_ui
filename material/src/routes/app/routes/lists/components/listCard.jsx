@@ -14,6 +14,7 @@ const mapStateToProps = state => {
     const lists = get(state, 'list.lists');
     const activeListId = get(state, 'list.activeList.id');
     const list = find(lists, { 'id': activeListId });
+    const userRole = get(state, 'user.jwt.role');
 
     return ({ activeListId, activeListName: get(list, 'name', '') });
 };
@@ -78,11 +79,12 @@ class ListCard extends Component {
 
     render () {
 
-        const { list, id, key, activeListId } = this.props;
+        const { list, id, key, activeListId, userRole } = this.props;
 
         return (
             <button className="list-card-container" style={{ ...this.getListStyle(activeListId, id) }}>
                 <div style={{ position: 'absolute', right: '20px', marginTop: '-10px' }}>
+                {['admin', 'super'].includes(userRole)|| list.type === 'personal' &&
                     <IconMenu
                         iconButtonElement={<IconButton iconStyle={{ color: 'rgb(33, 151, 153)' }}><MoreVertIcon /></IconButton>}
                         multiple={true}
@@ -92,6 +94,7 @@ class ListCard extends Component {
                             onClick={() => this.deleteListHandler(list.id)}
                         />
                     </IconMenu>
+                }
                 </div>
                 <div onClick={() => this.listHandler(id, key)}>
                     <div style={{ fontSize: '18px', textTransform: 'capitalize' }}>{list.name}</div>
