@@ -30,7 +30,7 @@ const nhlTeams = [
   { short: 'fla', region: 'Florida', name: 'Panthers' },
   { short: 'lak', region: 'Los Angeles', name: 'Kings' },
   { short: 'min', region: 'Minnesota', name: 'Wild' },
-  { short: 'mon', region: 'Montreal', name: 'Canadiens' },
+  { short: 'mtl', region: 'Montreal', name: 'Canadiens' },
   { short: 'nsh', region: 'Nashville', name: 'Predators' },
   { short: 'njd', region: 'New Jersey', name: 'Devils' },
   { short: 'nyi', region: 'New York', name: 'Islanders' },

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { get, find } from 'lodash';
 import { sortableHandle } from 'react-sortable-hoc';
 import { loadMessage, removePlayerFromList, openModal, closeModal, getLists } from 'actions';
-import { getCOMColor, getAOColor, getGrowthColor, getRatingColor, convertWeighted } from 'utils';
+import { getCOMColor, getAOColor, getGrowthColor, getRatingColor, convertWeighted, hasAccess } from 'utils';
 import { nhlTeams } from '../../../../../constants'
 
 
@@ -18,9 +18,9 @@ const mapStateToProps = state => {
     const activeListKey = get(state, 'list.activeList.key');
     const lists = get(state, `list[${activeListKey}]`);
     const list = find(lists, { 'id': activeListId });
-    const userRole = get(state, 'user.jwt.role');
+    const user = get(state, 'user.jwt');
 
-    return ({ list, lists, activeListKey, userRole });
+    return ({ list, lists, activeListKey, user });
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -128,13 +128,12 @@ class BoidCard extends Component {
 
     render () {
 
-        const { boid, pos, rank, onSortEnd, list, userRole } = this.props;
+        const { boid, pos, rank, onSortEnd, list, user } = this.props;
         const { team, gm, grade } = boid.listdata;
         const technicalWeighted = convertWeighted(boid.technical_off_weighted);
         const mentalWeighted = convertWeighted(boid.mental_off_weighted);
         const physicalWeighted = convertWeighted(boid.physical_off_weighted);
         const DragHandle = sortableHandle(() => <img style={{ height: '22px', cursor: 'move', padding: '0px 0px 3px 0px', filter: 'invert(100%) hue-rotate(20deg)' }} src="assets/img/updown3.png" alt="Move Up/Down" />);
-        console.log("LIST", list)
 
         if (boid) {
 
@@ -146,7 +145,7 @@ class BoidCard extends Component {
                 <div className="boid-card-container" style={{ cursor: 'default', width: 'fit-content', ...this.getBorder(rank, pos, drafted) }}>
                     <div style={{ display: 'flex', userSelect: 'none', alignSelf: 'center', alignItems: 'center', flexDirection: 'column', width: '100px', fontSize: '22px', padding: '0px 18px 0px 10px', textShadow: '1px 1px 2px black' }}>
                         <span>{pos}</span>
-                        {['admin', 'super'].includes(userRole)|| list.type === 'personal' && (
+                        {hasAccess(user, list) && (
                           <span style={{ display: 'flex', alignSelf: 'center', alignItems: 'center', flexDirection: 'column', paddingTop: '8px' }}>
                             <div className="handle"><DragHandle /></div>
                             <div><input onKeyPress={e => handleKeyPress(e, pos, onSortEnd)} style={{ textAlign: 'center', outline: 'none', border: '1px solid #2e6e73', width: '28px', height: '20px', padding: '2px', fontSize: '12px', background: 'none', color: '#eee' }}></input></div>
@@ -191,7 +190,7 @@ class BoidCard extends Component {
 
                     </div>
                     <div>
-                        { list && ['admin', 'super'].includes(userRole)|| list.type === 'personal' &&
+                        { hasAccess(user, list) &&
                           <IconMenu
                             iconButtonElement={<IconButton iconStyle={{ color: 'rgb(33, 151, 153)' }}><MoreVertIcon /></IconButton>}
                             multiple={true}

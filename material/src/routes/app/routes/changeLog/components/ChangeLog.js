@@ -176,7 +176,7 @@ class Blog extends React.Component {
   render () {
 
     const { isAuthed } = this.props;
-    if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px' }}>Not Authenticated</div> };
+    if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px', position: 'relative' }}>Not Authenticated</div> };
 
     return (
       <section className="page-blog container-fluid no-breadcrumbs with-maxwidth-md chapter">

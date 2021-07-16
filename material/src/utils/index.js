@@ -539,6 +539,14 @@ const teamColors = {
   },
 };
 
+const hasAccess = (user, list) => {
+  const isAdmin = ['admin', 'super'].includes(user.role);
+  const isOwner = user.id === list.userName;
+  if (isAdmin || isOwner) return true;
+
+  return false;
+};
+
 export {
   getCombinedColor,
   getTechnicalColor,
@@ -563,4 +571,5 @@ export {
   convertWeighted,
   getRatingColor,
   teamColors,
+  hasAccess,
 };

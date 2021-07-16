@@ -213,7 +213,7 @@ class Lists extends Component {
     const filteredLists = this.filteredLists(lists, key, type);
     const activeList = find(filteredLists, { 'id': activeListId });
 
-    if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px' }}>Not Authenticated</div> };
+    if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px', position: 'relative' }}>Not Authenticated</div> };
 
     return (
         <div>

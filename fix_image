@@ -1,0 +1,2 @@
+mkdir -p ./material/build/static/css/static/media
+cp material/6.3e1d3724.png ./material/build/static/css/static/media

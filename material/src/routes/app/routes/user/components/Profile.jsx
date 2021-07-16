@@ -23,7 +23,7 @@ class Login extends Component {
         const expiration = user && user.exp && moment.unix(user.exp).format('dddd, MMMM Do, YYYY h:mm:ss A');
         const iat = user && user.iat && moment.unix(user.iat).format('dddd, MMMM Do, YYYY h:mm:ss A');
 
-        if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px' }}>Not Authenticated</div> };
+        if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px', position: 'relative' }}>Not Authenticated</div> };
 
         return (
             <div className="container-fluid no-breadcrumbs page-dashboard">

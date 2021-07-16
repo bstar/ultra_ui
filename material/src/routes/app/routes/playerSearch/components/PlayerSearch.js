@@ -429,7 +429,7 @@ class PlayerSearch extends Component {
     const { players, isAuthed } = this.props;
     const playerType = search.positions_short === 'G' ? 'goalies' : 'players';
 
-    if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px' }}>Not Authenticated</div> };
+    if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px', position: 'relative' }}>Not Authenticated</div> };
 
     return (
       <div style={ styles.body }>

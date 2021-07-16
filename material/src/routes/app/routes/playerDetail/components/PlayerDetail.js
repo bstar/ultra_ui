@@ -127,7 +127,7 @@ class Main extends Component {
 
 const PlayerDetail = ({ match, getPlayerById, playerMap, attributesMap, lists, isAuthed, username }) => {
 
-  if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px' }}>Not Authenticated</div> };
+  if (!isAuthed()) { return <div style={{ padding: '20px 0px 0px 30px', position: 'relative' }}>Not Authenticated</div> };
 
   return (
     <div className="container-fluid no-breadcrumbs page-dashboard">

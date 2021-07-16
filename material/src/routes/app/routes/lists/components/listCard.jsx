@@ -7,6 +7,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { connect } from 'react-redux';
 import { get, find } from 'lodash';
 import { setActiveList, getLists, deleteList } from 'actions';
+import { hasAccess } from 'utils';
 
 
 const mapStateToProps = state => {
@@ -14,9 +15,9 @@ const mapStateToProps = state => {
     const lists = get(state, 'list.lists');
     const activeListId = get(state, 'list.activeList.id');
     const list = find(lists, { 'id': activeListId });
-    const userRole = get(state, 'user.jwt.role');
+    const user = get(state, 'user.jwt');
 
-    return ({ activeListId, activeListName: get(list, 'name', '') });
+    return ({ activeListId, activeListName: get(list, 'name', ''), user });
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -79,12 +80,12 @@ class ListCard extends Component {
 
     render () {
 
-        const { list, id, key, activeListId, userRole } = this.props;
+        const { list, id, key, activeListId, user } = this.props;
 
         return (
             <button className="list-card-container" style={{ ...this.getListStyle(activeListId, id) }}>
                 <div style={{ position: 'absolute', right: '20px', marginTop: '-10px' }}>
-                {['admin', 'super'].includes(userRole)|| list.type === 'personal' &&
+                {hasAccess(user, list) &&
                     <IconMenu
                         iconButtonElement={<IconButton iconStyle={{ color: 'rgb(33, 151, 153)' }}><MoreVertIcon /></IconButton>}
                         multiple={true}
