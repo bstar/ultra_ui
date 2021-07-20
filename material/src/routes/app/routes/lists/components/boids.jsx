@@ -249,7 +249,7 @@ class Boids extends Component {
         });
     }
 
-    createCloneList = (name, description, boids) => {
+    createCloneList = (name, description, category, boids) => {
 
         const { cloneList } = this.props;
 
@@ -260,7 +260,7 @@ class Boids extends Component {
         // description: "TEST DESC"
         // name: "TEST"
 
-        cloneList({ name, description }, boids);
+        cloneList({ name, description, category }, boids);
     }
 
     batchUpdatePlayersModalWrapper = ({ title, body, open }) => {
@@ -315,7 +315,7 @@ class Boids extends Component {
             label="Submit"
             primary={true}
             disabled={false}
-            onClick={() => this.createCloneList(this.state.cloneName, this.state.cloneDescription, this.state.boids)}
+            onClick={() => this.createCloneList(this.state.cloneName, this.state.cloneDescription, this.state.cloneCategory, this.state.boids)}
           />,
         ];
 
@@ -345,19 +345,31 @@ class Boids extends Component {
 
     cloneListbody = () => (
         <div>
+          <div>
             <TextField
                 onChange={this.onChangeCloneList}
                 autoFocus
                 hintText="Name"
                 name="cloneName"
-                style={{ marginRight: 20, width: '200px' }}
+                style={{ marginRight: 20, width: '400px' }}
             />
+          </div>
+          <div>
             <TextField
                 onChange={this.onChangeCloneList}
                 hintText="Description"
                 name="cloneDescription"
                 style={{ marginRight: 20, width: '400px' }}
             />
+          </div>
+          <div>
+            <TextField
+                onChange={this.onChangeCloneList}
+                hintText="Category"
+                name="cloneCategory"
+                style={{ marginRight: 20, width: '400px' }}
+            />
+          </div>
         </div>
     )
 
