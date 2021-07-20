@@ -403,12 +403,10 @@ class Boids extends Component {
                     <h5 style={{ margin: '10px 10px 10px 10px', paddingBottom: '10px' }}>
                         <span style={{ marginRight: '10px', textTransform: 'capitalize' }}>{activeListName} - {boids.length} total players</span>
                         <span>
-                            { this.didChange() &&
-                                <span>
-                                    <button title="Sets the player ranks in the list, use when player cards are highlighted in purple" style={styles.button} onClick={this.applyOrder}>[ Set Ranks ]</button>
-                                    <button title="Cancels any order/rank changes you have made" onClick={this.cancelChange} style={styles.button}>[ Cancel Changes ]</button>
-                                </span>
-                            }
+                            <span>
+                                <button title="Sets the player ranks in the list, use when player cards are highlighted in purple" style={styles.button} onClick={this.applyOrder}>[ Apply Ranks ]</button>
+                                <button title="Cancels any order/rank changes you have made" onClick={this.cancelChange} style={styles.button}>[ Clear Changes ]</button>
+                            </span>
                             { ['admin', 'super'].includes(userRole) &&
                                 <button title="Sets the player ranks at player level, use when player cards are highlighted in purple" style={styles.AlertButton} onClick={() => this.setModal('batchUpdatePlayers')}>[ Set Player Rankings ]</button>
                             }
